@@ -53,10 +53,13 @@ class ModelSettings:
 
 class PresenterSettings(tk.Frame):
     """
+
     Summary
         ----------
         Frame that create it's component and manage inputs.
         Use ModeleSettings and ViewSettings.
+        Used to access settings and temporary change them.
+
     """
     def __init__(self, master, filepath):
         super().__init__(master)

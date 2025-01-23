@@ -63,6 +63,15 @@ if __name__ == "__main__":
     print("end mvpControl")
 
 class PresenterControl(tk.Frame):
+    """
+
+    Summary
+        ----------
+        Frame that create it's component and manage inputs.
+        Use ModelControl and ViewControl.
+        Used to control a robot on X and Y axis by manual values and/or buttons.
+
+    """
     def __init__(self, master, modelSettings):
         super().__init__(master)
         self.root = master.nametowidget(".")
@@ -146,9 +155,11 @@ class PresenterControl(tk.Frame):
 
 class ViewControl:
     """
+
     Summary
         ----------
         Manage widget placement and aesthetic of a PresenterControl
+
     """
     def __init__(self, presenter):
         self.presenter = presenter
@@ -158,4 +169,3 @@ class ViewControl:
         # Panels
 
         # Components
-        
