@@ -31,10 +31,13 @@ class ModelSettings:
 
     """
     def __init__(self, filepath):
+        self.filepath = filepath
         self.load(filepath)
         self.reset()
 
-    def load(self, filepath):
+    def load(self, filepath=None):
+        if filepath is None:
+            filepath = self.filepath
         with open(filepath,'r') as settingsFile:
             settings = json.load(settingsFile)
         self.INIT_UNIT = settings["settings"]["unit"]
@@ -73,19 +76,19 @@ class PresenterSettings(tk.Frame):
         self.title = tk.Label(self, text="Settings")
 
         self.lblUnit    = tk.Label(self.pnlSettings, text="Unit")
-        self.inpUnit    = StringVar()
+        self.inpUnit    = tk.StringVar()
         self.entUnit    = tk.Entry(self.pnlSettings, textvariable=self.inpUnit)
 
         self.lblPort    = tk.Label(self.pnlSettings, text="Port")
-        self.inpPort    = StringVar()
+        self.inpPort    = tk.StringVar()
         self.entPort    = tk.Entry(self.pnlSettings, textvariable=self.inpPort)
 
         self.lblBaudrate= tk.Label(self.pnlSettings, text="Baud rate")
-        self.inpBaudrate= StringVar()
+        self.inpBaudrate= tk.StringVar()
         self.entBaudrate= tk.Entry(self.pnlSettings, textvariable=self.inpBaudrate)
 
         self.lblSteprate= tk.Label(self.pnlSettings, text="Step rate")
-        self.inpSteprate= StringVar()
+        self.inpSteprate= tk.StringVar()
         self.entSteprate= tk.Entry(self.pnlSettings, textvariable=self.inpSteprate)
 
         self.btnApply   = tk.Button(self.pnlButtons, text="Apply",  command=self.apply)
