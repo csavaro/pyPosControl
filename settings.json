@@ -1,0 +1,9 @@
+{
+    "settings": {
+        "unit": "mm",
+        "port": "COM1",
+        "baudrate": 9600,
+        "steprate": 100
+    }
+}
+
