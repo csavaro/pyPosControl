@@ -61,11 +61,18 @@ class PresenterSettings(tk.Frame):
         Used to access settings and temporary change them.
 
     """
-    def __init__(self, master, filepath):
+    def __init__(self, master, model=None, filepath=None):
         super().__init__(master)
         self.root = master.nametowidget(".")
 
-        self.model = ModelSettings(filepath=filepath)
+        if(model):
+            self.model = model
+        elif(filepath):
+            self.model = ModelSettings(filepath=filepath)
+        else:
+            print("No model or filepath given in parameter")
+            raise TypeError
+            
 
         self.root.protocol("WM_DELETE_WINDOW", self._close)
         self.master = master
@@ -207,7 +214,10 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Testing Settings frame")
     root.geometry("500x220")
-    app = PresenterSettings(root, config.path+"settings.json")
+
+    model = ModelSettings(config.path+"settings.json")
+    app = PresenterSettings(root, model=model)
+    
     root.mainloop()
 
     # testJson()

@@ -73,13 +73,15 @@ class PresenterControl(tk.Frame):
         Used to control a robot on X and Y axis by manual values and/or buttons.
 
     """
-    def __init__(self, master, modelSettings):
+    def __init__(self, master, modelSettings, modelControl=None):
         super().__init__(master)
         self.root = master.nametowidget(".")
 
         self.modelSettings = modelSettings
-        # Find a way to init its params
-        self.model = ModelControl(steprate=modelSettings.steprate)
+        if(modelControl):
+            self.model = modelControl
+        else:
+            self.model = ModelControl(steprate=modelSettings.steprate)
 
         self.root.protocol("WM_DELETE_WINDOW", self._close)
         self.master = master
@@ -251,12 +253,19 @@ class ViewControl:
         self.presenter.btnReverseX.config(bg="#F15A5A", fg="#FFFFFF", activebackground="#E14A4A", relief=tk.SOLID, bd=1)
         self.presenter.btnReverseY.config(bg="#71C257", fg="#FFFFFF", activebackground="#61B247", relief=tk.SOLID, bd=1)
 
+def ma(lo):
+    print("a")
+    print(lo)
+
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Testing Control frame")
     root.geometry("500x500")
+    
     mSettings = ModelSettings(config.path+"settings.json")
-    app = PresenterControl(root,mSettings)
+    mControl = ModelControl(steprate=mSettings.steprate)
+
+    app = PresenterControl(root,modelSettings=mSettings, modelControl=mControl)
 
     # sett = PresenterSettings(root, config.path+"settings.json")
     # app = PresenterControl(root, sett.model)
@@ -266,5 +275,5 @@ if __name__ == "__main__":
     root.bind("<Down>", lambda event, name="btnDown":   app.pressButton(name, event))
     root.bind("<Right>",lambda event, name="btnRight":  app.pressButton(name, event))
     root.bind("<Left>", lambda event, name="btnLeft":   app.pressButton(name, event))
-    
+
     root.mainloop()
