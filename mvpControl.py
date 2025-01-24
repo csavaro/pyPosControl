@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import StringVar
 from tkinter import ttk
-from mvpSettings import ModelSettings
+from mvpSettings import ModelSettings,PresenterSettings
+import config
 
 class ModelControl:
     """
@@ -99,14 +100,14 @@ class PresenterControl(tk.Frame):
 
         # Better with logo instead
         self.lblY       = tk.Label(self.pnlManual, text="Y")
-        self.lblXunit   = tk.Label(self.pnlManual, text=self.modelSettings.unit)
+        self.lblYunit   = tk.Label(self.pnlManual, text=self.modelSettings.unit)
         self.inpY       = tk.StringVar()
         self.entY       = tk.Spinbox(self.pnlManual, textvariable=self.inpY, from_=-8000000, to=8000000)
 
         # Better with logo instead
         self.btnReset   = tk.Button(self.pnlManual, text="Reset", command=self.reset)
         
-        self.btnMapping = {
+        self.mappingButtons = {
             "btnUp"     : self.incrY,
             "btnDown"   : self.decrY,
             "btnRight"  : self.incrX,
@@ -114,44 +115,67 @@ class PresenterControl(tk.Frame):
         }
 
         # Better with logos instead
-        self.btnUp      = tk.Button(self.pnlButtons, text="Up",     command=self.btnMapping["btnUp"])
-        self.btnDown    = tk.Button(self.pnlButtons, text="Down",   command=self.btnMapping["btnDown"])
-        self.btnRight   = tk.Button(self.pnlButtons, text="Right",  command=self.btnMapping["btnRight"])
-        self.btnLeft    = tk.Button(self.pnlButtons, text="Left",   command=self.btnMapping["btnLeft"])
+        self.btnUp      = tk.Button(self.pnlButtons, text="Up",     command=lambda: self.pressButton("btnUp"))
+        self.btnDown    = tk.Button(self.pnlButtons, text="Down",   command=lambda: self.pressButton("btnDown"))
+        self.btnRight   = tk.Button(self.pnlButtons, text="Right",  command=lambda: self.pressButton("btnRight"))
+        self.btnLeft    = tk.Button(self.pnlButtons, text="Left",   command=lambda: self.pressButton("btnLeft"))
         
         self.btnReverseX = tk.Button(self.pnlReverse, text="Reverse X axis", command=self.reverseX)
         self.btnReverseY = tk.Button(self.pnlReverse, text="Reverse Y axis", command=self.reverseY)
 
+        # Interface
         self.view = ViewControl(self)
         self.refreshXY()
 
+    def _close(self):
+        self.root.quit()
+        self.root.destroy()
+
     def refreshXY(self):
+        print("refresh xy")
         self.inpX.set(self.model.x_move)
         self.inpY.set(self.model.y_move)
 
     def reset(self):
+        print("reset")
         self.model.reset()
+        self.refreshXY()
+
+    def pressButton(self, name, event=None):
+        self.mappingButtons[name]()
         self.refreshXY()
     
     def incrY(self):
+        print("incr y")
+        self.model.y_move += 1
         pass
 
     def decrY(self):
+        print("decr y")
+        self.model.y_move -= 1
         pass
 
     def incrX(self):
+        print("incr x")
+        self.model.x_move += 1
         pass
 
     def decrX(self):
+        print("decr x")
+        self.model.x_move -= 1
         pass
 
     def reverseX(self):
-        self.btnMapping["btnLeft"],self.btnMapping["btnRight"] = self.btnMapping["btnRight"],self.btnMapping["btnLeft"]
+        print("reverse x")
+        self.mappingButtons["btnLeft"],self.mappingButtons["btnRight"] = self.mappingButtons["btnRight"],self.mappingButtons["btnLeft"]
         self.model.reverseX()
+        self.refreshXY()
 
     def reverseY(self):
-        self.btnMapping["btnUp"],self.btnMapping["btnDown"] = self.btnMapping["btnDown"],self.btnMapping["btnUp"]
+        print("reverse y")
+        self.mappingButtons["btnUp"],self.mappingButtons["btnDown"] = self.mappingButtons["btnDown"],self.mappingButtons["btnUp"]
         self.model.reverseY()
+        self.refreshXY()
 
 class ViewControl:
     """
@@ -162,10 +186,85 @@ class ViewControl:
 
     """
     def __init__(self, presenter):
-        self.presenter = presenter
+        # Maybe remove when finished
+        nf = True
+        if nf:
+            self.presenter = presenter
+        else:
+            # For auto-completion
+            self.presenter = PresenterControl()
 
         # Frame
+        self.presenter.columnconfigure((0), weight=1, uniform='a')
+        self.presenter.rowconfigure((1), weight=1, uniform='a')
+        self.presenter.rowconfigure((2), weight=3, uniform='a')
+        self.presenter.rowconfigure((0,3), weight=1, uniform='a')
+        self.presenter.pack(expand=True, fill="both")        
 
         # Panels
+        # self.presenter.pnlManual.config(bg="#FFDDDD")
+        self.presenter.pnlManual.grid(row=1,column=0, sticky="nsew")
+        self.presenter.pnlManual.rowconfigure((0,1), weight=1, uniform='a')
+        self.presenter.pnlManual.columnconfigure((0,2,3), weight=1, uniform='a')
+        self.presenter.pnlManual.columnconfigure((1), weight=2, uniform='a')
+
+        # self.presenter.pnlButtons.config(bg="#DDFFDD")
+        self.presenter.pnlButtons.grid(row=2,column=0, sticky="nsew")
+        self.presenter.pnlButtons.rowconfigure((0,1,2), weight=1, uniform='a')
+        self.presenter.pnlButtons.columnconfigure((0,1,2), weight=1, uniform='a')
+
+        self.presenter.pnlReverse.config(orient=tk.HORIZONTAL)
+        self.presenter.pnlReverse.grid(row=3,column=0, sticky="sew")
+        self.presenter.pnlReverse.rowconfigure(0, weight=1, uniform='a')
+        self.presenter.pnlReverse.columnconfigure((0,1), weight=1, uniform='a')
 
         # Components
+        self.presenter.title.grid(row=0,column=0)
+
+        # Manual
+        self.presenter.lblX     .grid(row=0, column=0, sticky="nse")
+        self.presenter.lblXunit .grid(row=0, column=2, sticky="nsw")
+        self.presenter.entX     .grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
+        self.presenter.entX     .config(width=10)
+
+        self.presenter.lblY     .grid(row=1, column=0, sticky="nse")
+        self.presenter.lblYunit .grid(row=1, column=2, sticky="nsw")
+        self.presenter.entY     .grid(row=1, column=1, sticky="nsew", padx=5, pady=5)
+        self.presenter.entY     .config(width=10)
+
+        self.presenter.btnReset .grid(row=0, column=3, rowspan=2, sticky="nsew", padx=3, pady=3)
+        self.presenter.btnReset .config(bg="#EFED91", activebackground="#DFDD81", relief=tk.FLAT, width=5, height=5)
+
+        # Buttons
+        self.presenter.btnUp    .grid(row=0, column=1, sticky="nsew")
+        self.presenter.btnDown  .grid(row=2, column=1, sticky="nsew")
+        self.presenter.btnRight .grid(row=1, column=2, sticky="nsew")
+        self.presenter.btnLeft  .grid(row=1, column=0, sticky="nsew")
+        self.presenter.btnUp    .config(bg="#D9D9D9", activebackground="#C9C9C9", relief=tk.FLAT, width=10, height=5)
+        self.presenter.btnDown  .config(bg="#D9D9D9", activebackground="#C9C9C9", relief=tk.FLAT, width=10, height=5)
+        self.presenter.btnRight .config(bg="#D9D9D9", activebackground="#C9C9C9", relief=tk.FLAT, width=10, height=5)
+        self.presenter.btnLeft  .config(bg="#D9D9D9", activebackground="#C9C9C9", relief=tk.FLAT, width=10, height=5)
+        
+        # Reverse
+        self.presenter.btnReverseX.grid(row=0, column=0, sticky="nsew", padx=3)
+        self.presenter.btnReverseY.grid(row=0, column=1, sticky="nsew", padx=3)
+        self.presenter.btnReverseX.config(bg="#F15A5A", fg="#FFFFFF", activebackground="#E14A4A", relief=tk.SOLID, bd=1)
+        self.presenter.btnReverseY.config(bg="#71C257", fg="#FFFFFF", activebackground="#61B247", relief=tk.SOLID, bd=1)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Testing Control frame")
+    root.geometry("500x500")
+    mSettings = ModelSettings(config.path+"settings.json")
+    app = PresenterControl(root,mSettings)
+
+    # sett = PresenterSettings(root, config.path+"settings.json")
+    # app = PresenterControl(root, sett.model)
+
+    # Shortcuts
+    root.bind("<Up>",   lambda event, name="btnUp":     app.pressButton(name, event))
+    root.bind("<Down>", lambda event, name="btnDown":   app.pressButton(name, event))
+    root.bind("<Right>",lambda event, name="btnRight":  app.pressButton(name, event))
+    root.bind("<Left>", lambda event, name="btnLeft":   app.pressButton(name, event))
+    
+    root.mainloop()
