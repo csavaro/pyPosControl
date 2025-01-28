@@ -107,16 +107,39 @@ class PresenterSettings(tk.Frame):
 
         self.lblValUnit     = tk.Label(self.pnlCurrentVal)
         self.lblValPort     = tk.Label(self.pnlCurrentVal)
-        self.lblValBaudrate    = tk.Label(self.pnlCurrentVal)
+        self.lblValBaudrate = tk.Label(self.pnlCurrentVal)
         self.lblValSteprate = tk.Label(self.pnlCurrentVal)
 
+        # Callbacks
+        self.inpUnit    .trace_add("write", lambda name,index,mode,sv=self.entUnit      ,mv=self.model.unit     : self.unsave(sv,mv))
+        self.inpPort    .trace_add("write", lambda name,index,mode,sv=self.entPort      ,mv=self.model.port     : self.unsave(sv,mv))
+        self.inpBaudrate.trace_add("write", lambda name,index,mode,sv=self.entBaudrate  ,mv=self.model.baudrate : self.unsave(sv,mv))
+        self.inpSteprate.trace_add("write", lambda name,index,mode,sv=self.entSteprate  ,mv=self.model.steprate : self.unsave(sv,mv))
+
+        # Setup
         self.view = ViewSettings(self)
         self.refresh()
         self.cancel()
+        self.initApplied()
 
     def _close(self):
         self.root.quit()
         self.root.destroy()
+
+    def unsave(self, entry, savedVal):
+        # print("ent:"+entry.get()+"; val:"+str(savedVal))
+        if entry.get() != str(savedVal):
+            # print("is diff")
+            entry.config(bg="#EFED91")
+        else:
+            # print("is the same")
+            entry.config(bg="#FFFFFF")
+    
+    def initApplied(self):
+        self.entUnit.config(bg="#FFFFFF")
+        self.entPort.config(bg="#FFFFFF")
+        self.entBaudrate.config(bg="#FFFFFF")
+        self.entSteprate.config(bg="#FFFFFF")
 
     def refresh(self):
         self.lblValUnit.config(text=self.model.unit)
@@ -131,6 +154,7 @@ class PresenterSettings(tk.Frame):
         self.model.baudrate = int(self.inpBaudrate.get())
         self.model.steprate = int(self.inpSteprate.get())
         self.refresh()
+        self.initApplied()
 
     def cancel(self):
         print("cancel current settings")
@@ -138,12 +162,14 @@ class PresenterSettings(tk.Frame):
         self.inpPort.set(self.model.port)
         self.inpBaudrate.set(str(self.model.baudrate))
         self.inpSteprate.set(str(self.model.steprate))
+        self.initApplied()
 
     def reset(self):
         print("reset current settings")
         self.model.reset()
         self.cancel()
         self.refresh()
+        self.initApplied()
 
 class ViewSettings:
     """
