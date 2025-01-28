@@ -97,14 +97,17 @@ class PresenterControl(tk.Frame):
         # Better with logo instead
         self.lblX       = tk.Label(self.pnlManual, text="X")
         self.lblXunit   = tk.Label(self.pnlManual, text=self.modelSettings.unit)
-        self.inpX       = tk.StringVar()
+        self.inpX       = tk.StringVar(value=0)
+        self.inpX.trace_add("write", lambda name, index, mode, sv=self.inpX: self.changeX())
         self.entX       = tk.Spinbox(self.pnlManual, textvariable=self.inpX, from_=-8000000, to=8000000)
 
         # Better with logo instead
         self.lblY       = tk.Label(self.pnlManual, text="Y")
         self.lblYunit   = tk.Label(self.pnlManual, text=self.modelSettings.unit)
-        self.inpY       = tk.StringVar()
+        self.inpY       = tk.StringVar(value=0)
+        self.inpY.trace_add("write", lambda name, index, mode, sv=self.inpY: self.changeY())
         self.entY       = tk.Spinbox(self.pnlManual, textvariable=self.inpY, from_=-8000000, to=8000000)
+        # self.entY.config(validate="all", validatecommand=)
 
         # Better with logo instead
         self.btnReset   = tk.Button(self.pnlManual, text="Reset", command=self.reset)
@@ -146,25 +149,37 @@ class PresenterControl(tk.Frame):
     def pressButton(self, name, event=None):
         self.mappingButtons[name]()
         self.refreshXY()
-    
+
+    def changeX(self):
+        if self.inpX.get():
+            print(f"found x = {float(self.inpX.get())}")
+            self.model.x_move = float(self.inpX.get())
+
+    def changeY(self):
+        if self.inpY.get():
+            print(f"found y = {float(self.inpY.get())}")
+            self.model.y_move = float(self.inpY.get())
+
     def incrY(self):
-        print("incr y")
-        self.model.y_move += 1
-        pass
+        if(self.root.focus_get() not in (self.entY,self.entX)):
+            print("incr y")
+            self.model.y_move += 1
 
     def decrY(self):
-        print("decr y")
-        self.model.y_move -= 1
-        pass
+        if(self.root.focus_get() not in (self.entY,self.entX)):
+            print("decr y")
+            self.model.y_move -= 1
 
     def incrX(self):
-        print("incr x")
-        self.model.x_move += 1
+        if(self.root.focus_get() not in (self.entY,self.entX)):
+            print("incr x")
+            self.model.x_move += 1
         pass
 
     def decrX(self):
-        print("decr x")
-        self.model.x_move -= 1
+        if(self.root.focus_get() not in (self.entY,self.entX)):
+            print("decr x")
+            self.model.x_move -= 1
         pass
 
     def reverseX(self):
