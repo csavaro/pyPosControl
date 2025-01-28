@@ -51,7 +51,7 @@ class ModelControl:
         pass
 
     def getCommand(self):
-        cmd = f"@0a{self.x_move},{self.x_speed},{self.y_move},{self.y_speed}"
+        cmd = f"@0a{int(self.x_move*self.steprate)},{self.x_speed},{int(self.y_move*self.steprate)},{self.y_speed}"
         print(cmd)
         return bytes(cmd,'ascii')
     
