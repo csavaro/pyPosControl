@@ -1,1 +1,0 @@
-path = "C:\\Users\\toto\\titi\\FromLabViewToPython\\"
