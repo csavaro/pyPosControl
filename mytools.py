@@ -31,6 +31,16 @@ class AxisLabeledEntry:
             self.spbSpeedAxis = tk.Spinbox(master, textvariable=self.inpSpeedAxis, from_=0, to=8000000, width=20)
             if unit:
                 self.lblSpeedUnit = tk.Label(master, text=unit+"/s")
+    
+        # Callbacks
+        self.inpSpeedAxis.trace_add("write", lambda name,index,mode : self.checkSpeed())
+
+    def checkAxis(self):
+        pass
+
+    def checkSpeed(self):
+        inpOk = checkPosInput(self.inpSpeedAxis)
+        pass
 
 class AxisFrame(tk.Frame):
     """
@@ -345,11 +355,114 @@ class SettingsFrame(tk.Frame):
                     widget.pack_forget()
                     widget.grid_forget()
 
+class ControlFrame(tk.Frame):
+    def __init__(self, master: tk.Widget, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+        # ! TO CLEANUP !
+        # Example
+        # ex_options = {
+        #     "control1": {
+        #         "name": "Incrémental",
+        #         "frame": mytools.AxisFrame(self,('X','Y','Z'))
+        #     },
+        #     "control2": {
+        #         "name": "Absolu",
+        #         "frame": mytools.AxisFrame(self,('X','Y'))
+        #     },
+        # }
+        
+        self.options = {}
+        self.btnNav = {}
+        self.pnlNavbar = tk.PanedWindow(self, orient=tk.HORIZONTAL, relief="solid", borderwidth=1)
+        self.content = None
+        self.apply_layout()
+
+    def setOptions(self, options: dict):
+        self.options = options
+        self.btnNav = {}
+        for key,oneOption in options.items():
+            oneOption["frame"].pack_forget()
+            oneOption["frame"].grid_forget()
+            self.btnNav.update(
+                {
+                    key:
+                    tk.Button(
+                        self.pnlNavbar,
+                        text=oneOption["name"],
+                        command=lambda k=key: self.activateContent(k),
+                        relief=tk.FLAT
+                    )
+                }
+            )
+        self.apply_layout()
+        if len(self.btnNav) >= 1:
+            self.activateContent(list(self.btnNav.keys())[0])
+
+    def setContent(self, frame: tk.Frame, event=None):
+        self.reset_layout()
+        self.content = frame
+        self.apply_layout()
+
+    def activateContent(self, button_key, event=None):
+        # Mark button pressed as active
+        self.btnNav[button_key].config(state="active", bg="#F8F8F8")
+
+        # Unmark other buttons
+        for key,oneBtnNav in self.btnNav.items(): 
+            if key != button_key:
+                oneBtnNav.config(state="normal", bg="#DDDDDD")
+
+        # Adapt content
+        self.setContent(self.options[button_key]["frame"])
+            
+
+    def apply_layout(self):
+        self.pack(fill="x")
+        
+        # Panels
+        self.pnlNavbar.pack(fill="x", padx=10)
+        self.pnlNavbar.rowconfigure((0), weight=1, uniform='a')
+        if len(self.options)>0:
+            self.pnlNavbar.columnconfigure(tuple(range(len(self.options))), weight=1, uniform='a')
+        else:
+            self.pnlNavbar.columnconfigure((0), weight=1, uniform='a')
+        if self.content:
+            self.content.pack(fill="x")
+
+        # Components
+        idx = 0
+        for key,oneBtnNav in self.btnNav.items():
+            oneBtnNav.grid(row=0, column=idx, sticky="ew", ipady=5)
+            idx += 1
+
+    def reset_layout(self):
+        self.pack_forget()
+        self.grid_forget()
+
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.grid_forget()
+
 ## USEFULL FUNCTIONS
 def searchByName(data: dict, name: str) -> dict:
     for val in data.values():
         if val["name"] == name:
             return val
+
+def checkPosInput(input: DoubleVar):
+    """
+    Check if an input number like DoubleVar is negative, and remove it's sign if so.
+    Also return -1 if the input value is a wrong type.
+    """
+    try:
+        if input.get() < 0:
+            input.set(-input.get())
+        return 0
+    except tk.TclError as e:
+        print("wrong value type.")
+        print(e)
+        return -1
+
 
 
 ## TRASH
@@ -452,6 +565,31 @@ def testSettingsFrame():
     frame.pack()
     root.mainloop()
 
+def testControlFrame():
+    print("stat testControlFrame")
+    root = tk.Tk()
+
+    cf = ControlFrame(root)
+
+    ex_options = {
+            "control1": {
+                "name": "Incrémental",
+                "frame": AxisFrame(cf,('X','Y','Z'))
+            },
+            "control2": {
+                "name": "Absolu",
+                "frame": AxisFrame(cf,('X','Y'))
+            },
+        }
+    
+    ex_options["control2"]["frame"].config(bg="#ff00ff", borderwidth=2, relief="groove")
+
+    cf.setOptions(ex_options)
+    # cf.reset_layout()
+
+    cf.pack()
+    tk.mainloop()
+
 def testDict():
     dico = {
         "platine1": {
@@ -472,7 +610,8 @@ if __name__ == "__main__":
     print("start")
 
     # testIconButton()
-    testAxisFrame()
+    # testAxisFrame()
     # testSettingsFrame()
+    testControlFrame()
 
     print("end")
