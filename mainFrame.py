@@ -32,12 +32,28 @@ class ControlFrame(tk.Frame):
                     tk.Button(
                         self.pnlNavbar,
                         text=oneOption["name"],
-                        command=lambda ct=oneOption["frame"]: self.setContent
+                        command=lambda k=key: self.buttonPressed(k)
                     )
                 }
             )
+    def setContent(self, frame: tk.Frame, event):
+        ## maybe remove old layout
+        self.content = frame
+        ## probably apply new layout
+
+    def buttonPressed(self, button_key):
+        pass
+
+    def apply_layout(self):
+        pass
+
+    def reset_layout(self):
+        pass
 
 
 
 if __name__ == "__main__":
     print("start")
+
+    pnlAxis = [ 10 ] *3
+    print(pnlAxis)

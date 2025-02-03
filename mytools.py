@@ -15,13 +15,22 @@ class AxisLabeledEntry:
         - spbAxis: spinbox, input of the axis value.
         - inpAxis: doublevar, value from the input spbAxis.
         - lblUnit (optional): label, additional info like unit of the axis value.
+        - spbSpeedAxis: spinbox, input of the axis speed value.
+        - inpSpeedAxis: doublevar, value from the input spbSpeedAxis.
+        - lblSpeedUnit (optional): label, additional info like unit of the axis speed value.
     """
-    def __init__(self,master: tk.Widget,label: str,unit: str = None):
+    def __init__(self,master: tk.Widget,label: str,unit: str = None, speed: bool = True):
         self.lblAxis = tk.Label(master, text=label)
         self.inpAxis = DoubleVar(value=0.0)
         self.spbAxis = tk.Spinbox(master, textvariable=self.inpAxis, from_=-8000000, to=8000000, width=20)
         if unit:
             self.lblUnit = tk.Label(master, text=unit)
+        self.hasSpeed = speed
+        if speed:
+            self.inpSpeedAxis = DoubleVar(value=0.0)
+            self.spbSpeedAxis = tk.Spinbox(master, textvariable=self.inpSpeedAxis, from_=0, to=8000000, width=20)
+            if unit:
+                self.lblSpeedUnit = tk.Label(master, text=unit+"/s")
 
 class AxisFrame(tk.Frame):
     """
@@ -38,29 +47,40 @@ class AxisFrame(tk.Frame):
         
         if not axis_names:
             axis_names = ('X','Y','Z')
-        self.axis = [ AxisLabeledEntry(self,axis_name,"mm") for axis_name in axis_names ]
 
-        self.btnReset = tk.Button(self, text="Reset", bg="#EFED91", relief=tk.GROOVE, command=self.reset_values)
+        self.pnlAxis = [ tk.Frame(self) for i in range(len(axis_names)) ]
+        self.axis = [ AxisLabeledEntry(self.pnlAxis[axis_names.index(axis_name)],axis_name,"mm",True) for axis_name in axis_names ]
 
         self.apply_layout()
-
-    def reset_values(self):
-        for oneAxis in self.axis:
-            oneAxis.inpAxis.set(0)
         
     def apply_layout(self):
         self.pack(fill="x")
-        self.columnconfigure((0,2,3), weight=1, uniform='a')
-        self.columnconfigure((1), weight=2, uniform='a')
-        self.rowconfigure(tuple(range(len(self.axis))), weight=1, uniform='a')
+        self.columnconfigure((0), weight=1, uniform='a')
+        # self.rowconfigure(tuple(range(len(self.axis))), weight=1, uniform='a')
+        self.rowconfigure((0,1,2), weight=1, uniform='a')
 
+        # colorss = ("#ff0000","#00ff00","#0000ff")
+        # for idxAxis in range(3):
+        #     # a = tk.Label(self, text=f"Slt {idxAxis}").grid(row=idxAxis, column=0, sticky="ew")
+        #     # a = tk.Frame(self, bg=colorss[idxAxis], width=30, height=20).grid(row=idxAxis, column=0, sticky="ew")
+        #     self.pnlAxis[idxAxis].config(bg=colorss[idxAxis], width=30, height=20)
+        #     self.pnlAxis[idxAxis].grid(row=idxAxis, column=0, sticky="ew")
         for idxAxis in range(len(self.axis)):
-            self.axis[idxAxis].lblAxis.grid(column=0, row=idxAxis)
+            # Panels
+            self.pnlAxis[idxAxis].grid(row=idxAxis, column=0, sticky="ew", pady=10, padx=10)
+            self.pnlAxis[idxAxis].columnconfigure((0,2,4), weight=1, uniform='a')
+            self.pnlAxis[idxAxis].columnconfigure((1,3), weight=3, uniform='a')
+            self.pnlAxis[idxAxis].rowconfigure((0), weight=1, uniform='a')
+            # Components
+            self.axis[idxAxis].lblAxis.grid(column=0, row=idxAxis, sticky="w")
             self.axis[idxAxis].spbAxis.grid(column=1, row=idxAxis, sticky="ew")
-            self.axis[idxAxis].spbAxis.config(from_=0)
+            # self.axis[idxAxis].spbAxis.config(from_=0)
             if self.axis[idxAxis].lblUnit:
-                self.axis[idxAxis].lblUnit.grid(column=2, row=idxAxis)
-        self.btnReset.grid(column=3, row=0, rowspan=len(self.axis), sticky="nsew")
+                self.axis[idxAxis].lblUnit.grid(column=2, row=idxAxis, sticky="ew")
+            if self.axis[idxAxis].hasSpeed:
+                self.axis[idxAxis].spbSpeedAxis.grid(column=3, row=idxAxis, sticky="ew")
+                if self.axis[idxAxis].lblSpeedUnit:
+                    self.axis[idxAxis].lblSpeedUnit.grid(column=4, row=idxAxis, sticky="ew")
 
     def reset_layout(self):
         self.grid_forget()
@@ -123,13 +143,19 @@ class SettingLabeledEntry:
         self.inpValue.set(target_value)
     
     def setVal(self, value):
-        if self.cmbSetting:
+        if value is None:
+            self.inpValue.set('')
+            self.entValue.delete(0,'end')
+            if self.cmbSetting:
+                self.cmbSetting.set('')
+        elif self.cmbSetting:
             # Select the option if found
             if value in self.options.keys():
                 self.cmbSetting.set(self.options[value]["name"])
                 self.applyOption()
                 return
-        self.inpValue.set(value)
+        else:
+            self.inpValue.set(value)
 
 
 class SettingsFrame(tk.Frame):
@@ -150,7 +176,7 @@ class SettingsFrame(tk.Frame):
                     "default": 45
                 },
                 "stepscaleX": {
-                    "name": "Step Scale",
+                    "name": "Platine X",
                     "unit": "step/mm",
                     "options": { # from json
                         "platine1": {
@@ -242,9 +268,12 @@ class SettingsFrame(tk.Frame):
     def apply_config(self, event=None):
         target_config = searchByName(self.options["configs"],self.cmbImport.get())
         target_OptionKey = list(self.options["configs"].keys())[list(self.options["configs"].values()).index(target_config)]
-        for key,val in self.options["configs"][target_OptionKey].items():
-            if key in self.parameters.keys():
-                self.parameters[key].setVal(val)
+        for key in self.options["parameters"].keys():
+            val = None
+            if key in self.options["configs"][target_OptionKey].keys():
+                val = self.options["configs"][target_OptionKey][key]
+            print(f"setting {key} as {val}")
+            self.parameters[key].setVal(val)
 
     def apply(self):
         for callback in self.applyCallbacks:
@@ -275,8 +304,8 @@ class SettingsFrame(tk.Frame):
         # Panels
         self.pnlSettings.grid(row=1, column=0, rowspan=len(self.parameters)+1, sticky="ew")
         self.pnlSettings.rowconfigure(tuple(range(len(self.parameters)+1)), weight=1, uniform='a')
-        self.pnlSettings.columnconfigure((0,1,3), weight=1, uniform='a')
-        self.pnlSettings.columnconfigure((2), weight=2, uniform='a')
+        self.pnlSettings.columnconfigure((0,2,3), weight=1, uniform='a')
+        self.pnlSettings.columnconfigure((1), weight=2, uniform='a')
 
         self.pnlButtons.grid(row=len(self.parameters)+2, column=0, sticky="ew")
         self.pnlButtons.rowconfigure((0), weight=1, uniform='a')
@@ -287,9 +316,9 @@ class SettingsFrame(tk.Frame):
         idx = 0
         for param in self.parameters.values():
             param.lblSetting.grid(row=idx, column=0, pady=5, padx=10, sticky="w")
-            param.entValue.grid(row=idx, column=1, sticky="ew", padx=5)
+            param.entValue.grid(row=idx, column=2, sticky="ew", padx=5)
             if param.cmbSetting:
-                param.cmbSetting.grid(row=idx, column=2, sticky="ew", padx=5)
+                param.cmbSetting.grid(row=idx, column=1, sticky="ew", padx=5)
             else:
                 param.entValue.grid(row=idx, column=1, columnspan=2, sticky="ew")
             if param.lblUnit:
@@ -375,7 +404,7 @@ def testSettingsFrame():
                 "default": 500
             },
             "stepscaleX": {
-                "name": "Step Scale",
+                "name": "Platine X",
                 "unit": "step/mm",
                 "default": "platine2",
                 "options": { # from json
@@ -390,7 +419,7 @@ def testSettingsFrame():
                 }
             },
             "stepscaleY": {
-                "name": "Step Scale",
+                "name": "Platine Y",
                 "unit": "step/mm",
                 "default": 150,
                 "options": { # from json
@@ -443,7 +472,7 @@ if __name__ == "__main__":
     print("start")
 
     # testIconButton()
-    # testAxisFrame()
-    testSettingsFrame()
+    testAxisFrame()
+    # testSettingsFrame()
 
     print("end")
