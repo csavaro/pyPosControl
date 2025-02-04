@@ -11,6 +11,7 @@ class AxisLabeledEntry:
         Bunch of tkinter widgets for axis.
         Used in AxisFrame class.
     Attributes:
+        - name: axis name
         - lblAxis: label, title of the axis.
         - spbAxis: spinbox, input of the axis value.
         - inpAxis: doublevar, value from the input spbAxis.
@@ -20,6 +21,7 @@ class AxisLabeledEntry:
         - lblSpeedUnit (optional): label, additional info like unit of the axis speed value.
     """
     def __init__(self,master: tk.Widget,label: str,unit: str = None, speed: bool = True):
+        self.name = label
         self.lblAxis = tk.Label(master, text=label)
         self.inpAxis = DoubleVar(value=0.0)
         self.spbAxis = tk.Spinbox(master, textvariable=self.inpAxis, from_=-8000000, to=8000000, width=20)
@@ -69,12 +71,6 @@ class AxisFrame(tk.Frame):
         # self.rowconfigure(tuple(range(len(self.axis))), weight=1, uniform='a')
         self.rowconfigure((0,1,2), weight=1, uniform='a')
 
-        # colorss = ("#ff0000","#00ff00","#0000ff")
-        # for idxAxis in range(3):
-        #     # a = tk.Label(self, text=f"Slt {idxAxis}").grid(row=idxAxis, column=0, sticky="ew")
-        #     # a = tk.Frame(self, bg=colorss[idxAxis], width=30, height=20).grid(row=idxAxis, column=0, sticky="ew")
-        #     self.pnlAxis[idxAxis].config(bg=colorss[idxAxis], width=30, height=20)
-        #     self.pnlAxis[idxAxis].grid(row=idxAxis, column=0, sticky="ew")
         for idxAxis in range(len(self.axis)):
             # Panels
             self.pnlAxis[idxAxis].grid(row=idxAxis, column=0, sticky="ew", pady=10, padx=10)
@@ -356,6 +352,11 @@ class SettingsFrame(tk.Frame):
                     widget.grid_forget()
 
 class ControlFrame(tk.Frame):
+    """
+    Summary:
+        Frame with navbar buttons to display frames/functionalities.
+        For example to swap from absolute movement to absolute movement.
+    """
     def __init__(self, master: tk.Widget, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
         # ! TO CLEANUP !
@@ -434,6 +435,83 @@ class ControlFrame(tk.Frame):
         for key,oneBtnNav in self.btnNav.items():
             oneBtnNav.grid(row=0, column=idx, sticky="ew", ipady=5)
             idx += 1
+
+    def reset_layout(self):
+        self.pack_forget()
+        self.grid_forget()
+
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.grid_forget()
+
+class AxisButtons:
+    """
+    Summary:
+        Class containing two buttons. One with positive sign as a text, an another with minus.
+    Parameters:
+        - name : name of the axis those buttons should control
+        - btnPlus : button for positive direction
+        - btnMinus : button for negative direction
+    """
+    def __init__(self, master, name):
+        self.name = name
+        self.btnPlus = tk.Button(master, text="+")
+        self.btnMinus = tk.Button(master, text="-")
+
+    def config_both(self, *args, **kwargs):
+        self.btnPlus.config(*args, **kwargs)
+        self.btnMinus.config(*args, **kwargs)
+
+class AxisButtonsFrame(tk.Frame):
+    """
+    Summary:
+        Frame containing buttons from 1 axis up to 3. Create and position them.
+    Parameters:
+        - btnAxis : list, instances of AxisButton for each axis specified.
+    """
+    def __init__(self, master: tk.Widget, axis_names=None, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+        
+        if not axis_names:
+            axis_names = ('X','Y','Z')
+
+        self.btnAxis = []
+        for axis_name in axis_names:
+            ab = AxisButtons(self, axis_name)
+            # Adjust buttons
+            ab.btnPlus.config(height=1, width=2, font=("Times",30))
+            ab.btnMinus.config(height=1, width=2, font=("Times",30))
+            self.btnAxis.append(ab) 
+
+
+        self.apply_layout()
+    
+    def apply_layout(self):
+        self.pack(fill="x", padx=5, pady=5)
+        if len(self.btnAxis) == 1:
+            self.rowconfigure((0), weight=1, uniform='a')
+            self.columnconfigure((0,1), weight=1, uniform='a')
+
+            self.btnAxis[0].btnPlus .grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+            self.btnAxis[0].btnMinus.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+        elif len(self.btnAxis) == 2:
+            self.rowconfigure((0,1,2), weight=1, uniform='a')
+            self.columnconfigure((0,1,2), weight=1, uniform='a')
+
+            self.btnAxis[0].btnPlus .grid(row=1, column=2, sticky="ew", padx=5, pady=5)
+            self.btnAxis[0].btnMinus.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
+            self.btnAxis[1].btnPlus .grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+            self.btnAxis[1].btnMinus.grid(row=2, column=1, sticky="ew", padx=5, pady=5)
+        elif len(self.btnAxis) == 3:
+            self.rowconfigure((0,1,2), weight=1, uniform='a')
+            self.columnconfigure((0,1,2,3,4,5), weight=1, uniform='a')
+
+            self.btnAxis[0].btnPlus .grid(row=1, column=4, columnspan=2, sticky="ew", padx=5, pady=5)
+            self.btnAxis[0].btnMinus.grid(row=1, column=0, columnspan=2, sticky="ew", padx=5, pady=5)
+            self.btnAxis[1].btnPlus .grid(row=0, column=2, columnspan=2, sticky="ew", padx=5, pady=5)
+            self.btnAxis[1].btnMinus.grid(row=2, column=2, columnspan=2, sticky="ew", padx=5, pady=5)
+            self.btnAxis[2].btnPlus .grid(row=1, column=3, sticky="ew", padx=5, pady=5)
+            self.btnAxis[2].btnMinus.grid(row=1, column=2, sticky="ew", padx=5, pady=5)
 
     def reset_layout(self):
         self.pack_forget()
@@ -590,6 +668,15 @@ def testControlFrame():
     cf.pack()
     tk.mainloop()
 
+def testAxisButtonsFrame():
+    root = tk.Tk()
+
+    axis = ('X','Y','Z')
+
+    abf = AxisButtonsFrame(root, axis)
+
+    root.mainloop()
+
 def testDict():
     dico = {
         "platine1": {
@@ -612,6 +699,7 @@ if __name__ == "__main__":
     # testIconButton()
     # testAxisFrame()
     # testSettingsFrame()
-    testControlFrame()
+    # testControlFrame()
+    testAxisButtonsFrame()
 
     print("end")
