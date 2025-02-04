@@ -1,5 +1,14 @@
 # From LabView to Python
 
+## communications.py
+### Abstract class
+- Commads : set mandatory functions for future commands like c-series. Currently there is `move` and `stop`.
+
+## models.py
+### Classes
+- ModelSettings : store settings data like port, stepscales and baudrate
+- ControlSettings : store control data like axis values and axis speeds.
+
 ## mytools.py
 ### Classes
 - AxisLabeledEntry : lbl+value+speed+units
