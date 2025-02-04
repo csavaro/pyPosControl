@@ -521,7 +521,10 @@ class AxisButtonsFrame(tk.Frame):
             child.pack_forget()
             child.grid_forget()
 
+
+## --------------------------------------
 ## USEFULL FUNCTIONS
+
 def searchByName(data: dict, name: str) -> dict:
     for val in data.values():
         if val["name"] == name:
@@ -542,7 +545,7 @@ def checkPosInput(input: DoubleVar):
         return -1
 
 
-
+## --------------------------------------
 ## TRASH
 
 # It work !
