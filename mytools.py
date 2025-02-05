@@ -400,7 +400,9 @@ class ControlFrame(tk.Frame):
             self.activateContent(list(self.btnNav.keys())[0])
 
     def setContent(self, frame: tk.Frame, event=None):
-        self.reset_layout()
+        if self.content:
+            self.content.grid_forget()
+            self.content.pack_forget()
         self.content = frame
         self.apply_layout()
 
@@ -415,7 +417,6 @@ class ControlFrame(tk.Frame):
 
         # Adapt content
         self.setContent(self.options[button_key]["frame"])
-            
 
     def apply_layout(self):
         self.pack(fill="x")
@@ -437,10 +438,12 @@ class ControlFrame(tk.Frame):
             idx += 1
 
     def reset_layout(self):
+        print("reset layout")
         self.pack_forget()
         self.grid_forget()
 
         for child in self.winfo_children():
+            print("resetting",child)
             child.pack_forget()
             child.grid_forget()
 
@@ -520,6 +523,19 @@ class AxisButtonsFrame(tk.Frame):
         for child in self.winfo_children():
             child.pack_forget()
             child.grid_forget()
+
+    def reverseButtons(self, axis):
+        target_btn: AxisButtons = None
+        for btn in self.btnAxis:
+            if btn.name == axis: 
+                target_btn = btn
+                break
+        if target_btn:
+            trow = target_btn.btnPlus.grid_info()["row"]
+            tcol = target_btn.btnPlus.grid_info()["column"]
+            target_btn.btnPlus.grid(row=target_btn.btnMinus.grid_info()["row"],column=target_btn.btnMinus.grid_info()["column"])
+            target_btn.btnMinus.grid(row=trow, column=tcol)
+            
 
 class ControlGeneralFrame(tk.Frame):
     """
@@ -622,7 +638,38 @@ class ControlGeneralFrame(tk.Frame):
             child.pack_forget()
             child.grid_forget()
 
+class ScrollableFrame(ttk.Frame):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
 
+        # Create scrollable shit
+        self.sclBar = ttk.Scrollbar(self, orient=tk.VERTICAL)
+        self.sclBar.pack(fill=tk.Y, side=tk.RIGHT, expand=False)
+
+        self.canvas = tk.Canvas(self, bd=0, highlightthickness=0, width=200, height=300, yscrollcommand=self.sclBar.set)
+        self.canvas.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+        
+        self.sclBar.config(command=self.canvas.yview)
+
+        # Create scrollable frame
+        self.interior = ttk.Frame(self.canvas)
+        self.interior.bind("<Configure>", self._configure_interior)
+        self.canvas.bind("<Configure>", self._configure_canvas)
+        self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+        self.interior_id = self.canvas.create_window(0, 0, window=self.interior, anchor=tk.NW)
+
+    def _configure_interior(self, event):
+        size = (self.interior.winfo_reqwidth(), self.interior.winfo_reqheight())
+        self.canvas.config(scrollregion=(0, 0, size[0], size[1]))
+        if self.interior.winfo_reqwidth() != self.canvas.winfo_reqwidth():
+            self.canvas.config(width=self.interior.winfo_reqwidth())
+        
+    def _configure_canvas(self, event):
+        if self.interior.winfo_reqwidth() != self.canvas.winfo_width():
+            self.canvas.itemconfigure(self.interior_id, width=self.canvas.winfo_width())
+
+    def _on_mousewheel(self, event):
+        self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 ## --------------------------------------
 ## USEFULL FUNCTIONS
 
