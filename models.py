@@ -3,6 +3,12 @@ class ModelSettings:
         self.port = None # from available ports
         self.stepscales = { axis_name:None for axis_name in axis_names } # platines
         self.baudrate = None # controller
+    
+    def getSettingsDict(self):
+        pass
+
+    def loadSettings(self, path):
+        pass
 
 class ModelControl:
     def __init__(self, axis_names):
