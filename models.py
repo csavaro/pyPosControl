@@ -34,14 +34,17 @@ class ModelSettings:
                     })
             else:
                 if keySett == "port":
-                    # settingDico["parameters"].update({
-                    #     keySett: {
-                    #         "name": "Port",
-                    #         "default": valSett,
-                    #         "options": self.portsData
-                    #     }
-                    # })
-                    pass
+                    settingDico["parameters"].update({
+                        keySett: {
+                            "name": "Port",
+                            "default": valSett,
+                            # "options": self.portsData
+                            "options": {
+                                "COM1": { "name": "COM1", "value": "COM1"},
+                                "COM3": { "name": "COM3", "value": "COM3"}
+                            }
+                        }
+                    })
                 elif keySett == "baudrate":
                     settingDico["parameters"].update({
                         keySett: {
