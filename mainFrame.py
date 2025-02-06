@@ -26,7 +26,9 @@ class MainApp(tk.Tk):
         self.mSettings.loadSettings(config.path)
 
         # TO_IMPLEMENT
-        self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
+        self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings)
+        self.btnOpenSettings.pack(expand=True, fill="both")
+        # self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
         self.controlGeneralFrame = mytools.ControlGeneralFrame(self.frame.interior, self.axis)
@@ -47,6 +49,15 @@ class MainApp(tk.Tk):
         # Dont work well, bad placement unil first control change then its good
         # self.reset_layout()
         # self.apply_layout()
+
+    def openSettings(self):
+        settingWindow = tk.Tk()
+        settingWindow.title = "Settings"
+
+        self.settingsFrame = mytools.SettingsFrame(settingWindow, self.mSettings.getSettingsDict())
+        self.settingsFrame.pack(expand=True, fill="both")
+
+        settingWindow.mainloop()
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
         incrFrame = tk.Frame(master)
