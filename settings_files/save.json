@@ -1,0 +1,19 @@
+{
+    "files": {
+        "path": "C:\\Users\\cleme\\OneDrive\\Documents\\Stage ENSTA\\FromLabViewToPython\\settings_files\\",
+        "controller": "controleurs.json",
+        "platine": "platines.json"
+    },
+    "settings": {
+        "port": "COM3",
+        "stepscaleX": "plat1",
+        "stepscaleY": "plat3",
+        "stepscaleZ": "plat5",
+        "baudrate": "ctrl1"
+    },
+    "default": {
+        "speedX": 500,
+        "speedY": 510,
+        "speedZ": 520
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "ctrl1": {
+        "name": "Controlle 1",
+        "baudrate": 9600
+    },
+    "ctrl2": {
+        "name": "Controlle 2",
+        "baudrate": 2000
+    },
+    "ctrl3": {
+        "name": "Controlle 3",
+        "baudrate": 3000
+    },
+    "ctrl4": {
+        "name": "Controlle 4",
+        "baudrate": 4000
+    },
+    "ctrl5": {
+        "name": "Controlle 5",
+        "baudrate": 5000
+    }
+}
