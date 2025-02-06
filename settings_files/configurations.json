@@ -1,0 +1,26 @@
+{
+    "cnfg1": {
+        "name": "Config 1",
+        "speedX": 60,
+        "speedY": 30,
+        "stepscaleX": "plat2",
+        "stepscaleY": "plat3",
+        "baudrate": "ctrl2"
+    },
+    "cnfg2": {
+        "name": "Config 2",
+        "speedX": 60,
+        "speedY": 30,
+        "speedZ": 50,
+        "stepscaleX": "plat2",
+        "stepscaleY": "plat3",
+        "stepscaleZ": "plat1"
+    },
+    "cnfg3": {
+        "name": "Config 3",
+        "speedX": 60,
+        "speedY": 30,
+        "stepscaleX": "plat2",
+        "stepscaleY": "plat3"
+    }
+}

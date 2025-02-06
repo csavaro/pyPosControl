@@ -23,7 +23,8 @@ class MainApp(tk.Tk):
 
         self.mSettings = models.ModelSettings(self.axis)
 
-        self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
+        # TO_IMPLEMENT
+        # self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
         self.controlGeneralFrame = mytools.ControlGeneralFrame(self.frame.interior, self.axis)
