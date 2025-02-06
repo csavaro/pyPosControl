@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter.font import Font
 import mytools
 import models
+import config
 
 class MainApp(tk.Tk):
     def __init__(self, axis_names, title: str ="", *args, **kwargs):
@@ -22,9 +23,10 @@ class MainApp(tk.Tk):
         self.axis = axis_names
 
         self.mSettings = models.ModelSettings(self.axis)
+        self.mSettings.loadSettings(config.path)
 
         # TO_IMPLEMENT
-        # self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
+        self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
         self.controlGeneralFrame = mytools.ControlGeneralFrame(self.frame.interior, self.axis)

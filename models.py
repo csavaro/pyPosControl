@@ -58,7 +58,7 @@ class ModelSettings:
             valConf: dict
             confDict = { keyConf: {} }
             for keySett,valSett in valConf.items():
-                if keySett in settingDico["parameters"].keys():
+                if keySett in settingDico["parameters"].keys() or keySett == "name":
                     confDict[keyConf].update({
                         keySett: valSett
                     })
@@ -84,13 +84,29 @@ class ModelSettings:
             self.defaultData = saveData["default"]
 
         with open(filesData["path"]+filesData["platine"],"r") as platinesFile:
-            self.platinesData = json.load(platinesFile)
+            platinesRawData: dict = json.load(platinesFile)
+            self.platinesData = {}
+            for key,values in platinesRawData.items():
+                self.platinesData.update({
+                    key: {
+                        "name": values["name"],
+                        "value": values["stepscale"]
+                    }
+                })
 
         with open(filesData["path"]+filesData["controller"],"r") as controllersFile:
-            self.controllersData = json.load(controllersFile)
+            controllersRawData: dict = json.load(controllersFile)
+            self.controllersData = {}
+            for key,values in controllersRawData.items():
+                self.controllersData.update({
+                    key: {
+                        "name": values["name"],
+                        "value": values["baudrate"]
+                    }
+                })
 
         with open(filesData["path"]+filesData["configuration"],"r") as configsFile:
-            self.configsData = json.load(configsFile)
+            self.configsData: dict = json.load(configsFile)
 
     def getAvailablePorts(self):
         self.portsData = {}
