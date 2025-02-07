@@ -61,7 +61,8 @@ class MainApp(tk.Tk):
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
         incrFrame = tk.Frame(master)
-        self.incrAxis = mytools.AxisFrame(incrFrame, self.axis)
+        axis_delta = [ f"Δ{oneAxis}" for oneAxis in self.axis ]
+        self.incrAxis = mytools.AxisFrame(incrFrame, axis_delta)
         self.incrButtons = mytools.AxisButtonsFrame(incrFrame, self.axis)
 
         self.incrReverse = tk.Frame(incrFrame)
