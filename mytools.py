@@ -318,8 +318,11 @@ class SettingsFrame(tk.Frame):
         self.pnlButtons.columnconfigure((0,1,2), weight=1, uniform='a')
 
         # Components
+        # Import Config
+        self.lblImport.grid(row=0, column=0, padx=10, sticky="w")
+        self.cmbImport.grid(row=0, column=1, columnspan=3, sticky="ew", padx=5)
         # Parameters
-        idx = 0
+        idx = 1
         for param in self.parameters.values():
             param.lblSetting.grid(row=idx, column=0, pady=5, padx=10, sticky="w")
             param.entValue.grid(row=idx, column=2, sticky="ew", padx=5)
@@ -330,9 +333,6 @@ class SettingsFrame(tk.Frame):
             if param.lblUnit:
                 param.lblUnit.grid(row=idx, column=3)
             idx += 1
-        # Import Config
-        self.lblImport.grid(row=idx, column=0, padx=10, sticky="w")
-        self.cmbImport.grid(row=idx, column=1, columnspan=3, sticky="ew", padx=5)
         # Buttons
         self.btnApply.grid(row=0, column=0, sticky="ew", ipadx=5, padx=10)
         self.btnCancel.grid(row=0, column=1, sticky="ew", ipadx=5, padx=10)

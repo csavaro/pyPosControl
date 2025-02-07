@@ -6,11 +6,11 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "port": "COM3",
         "platineX": "Platine 2",
         "platineY": "Platine 3",
         "platineZ": "Platine 5",
-        "controller": "Controller 1"
+        "controller": "Controller 1",
+        "port": "COM3"
     },
     "settingsBis": {
         "port": {
