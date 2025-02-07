@@ -11,6 +11,30 @@ class ModelSettings:
         self.stepscales = { axis_name:None for axis_name in axis_names } # platines
         self.baudrate = None # controller
 
+    def applySettings(self, port: str = None, stepscales: dict = None, baudrate: int = None):
+        """
+        Apply settings from parameters in model properties
+        """
+        if port: # and port in self.portsData ?
+            print(f"ModelSetting: setting port as {port}")
+            if(not isinstance(port,str)):
+                raise TypeError(f"port should be a string, not {type(port)} [value:{port}]")
+            self.port = port
+        if stepscales:
+            for keyAxis,valStepScale in stepscales.items():
+                if keyAxis in self.stepscales.keys(): # and valStepScale in self.platinesData ?
+                    if(not isinstance(valStepScale,(float,int))):
+                       raise TypeError(f"stepscales values should be float or int, not {type(valStepScale)} [value:{valStepScale}]")
+                    print(f"ModelSetting: setting stepscale on {keyAxis} axis as {valStepScale}")
+                    self.stepscales.update({
+                        keyAxis: valStepScale
+                    })
+        if baudrate: # and baudrate in self.controllersData ?
+            if(not isinstance(baudrate,int)):
+                print(f"baudrate should be an int, not {type(baudrate)} [value:{baudrate}]")
+            print(f"ModelSetting: setting baudrate as {baudrate}")
+            self.baudrate = baudrate
+
     def getSettingsDict(self):
         settingDico = {
             "parameters": {},
@@ -110,6 +134,21 @@ class ModelSettings:
         with open(filesData["path"]+filesData["configuration"],"r") as configsFile:
             self.configsData: dict = json.load(configsFile)
 
+        # Apply saved settings
+        print("applying settings")
+        stepscales_dict = {} 
+        for keyAxis,valStepScale in self.settingsData.items():
+            if "stepscale" in keyAxis and keyAxis[9:] in self.axis:
+                stepscales_dict.update({
+                    keyAxis[9:]:
+                    float(self.platinesData[valStepScale]["value"])
+                })
+        self.applySettings(
+            port=self.settingsData["port"], 
+            stepscales=stepscales_dict, 
+            baudrate=self.controllersData[self.settingsData["baudrate"]]["value"]
+        )
+    
     def getAvailablePorts(self):
         self.portsData = {}
         pass
