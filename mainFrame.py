@@ -8,7 +8,7 @@ import config
 class MainApp(tk.Tk):
     def __init__(self, axis_names, title: str ="", *args, **kwargs):
         super().__init__(*args,**kwargs)
-        self.title = title
+        self.title(title)
         self.frame = mytools.ScrollableFrame(self)
         self.frame.pack(expand=True, fill="both")
         self.frame.canvas.pack(padx=25, pady=10)
@@ -51,8 +51,8 @@ class MainApp(tk.Tk):
         # self.apply_layout()
 
     def openSettings(self):
-        settingWindow = tk.Tk()
-        settingWindow.title = "Settings"
+        settingWindow = tk.Toplevel(self)
+        settingWindow.title("Settings")
 
         self.settingsFrame = mytools.SettingsFrame(settingWindow, self.mSettings.getSettingsDict())
         self.settingsFrame.pack(expand=True, fill="both")

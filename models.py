@@ -21,9 +21,8 @@ class ModelSettings:
         for keySett,valSett in self.settingsData.items():
             isAxisRel,paramName = self.isAxisRelated(keySett)
             if inWithStartKeys(keySett, self.axisParameters) and isAxisRel:
-                print("AXIS REL",keySett)
+                # print("AXIS REL",keySett)
                 if paramName == "stepscale":
-                    print("SHOULD'VE UPDATED",keySett)
                     settingDico["parameters"].update({
                         keySett: {
                             "name": "Platine "+keySett[len(paramName):],
