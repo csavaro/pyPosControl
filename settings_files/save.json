@@ -7,10 +7,10 @@
     },
     "settings": {
         "port": "COM3",
-        "stepscaleX": "plat1",
-        "stepscaleY": "plat3",
-        "stepscaleZ": "plat5",
-        "baudrate": "ctrl1"
+        "platineX": "Platine 2",
+        "platineY": "Platine 3",
+        "platineZ": "Platine 5",
+        "controller": "Controller 1"
     },
     "settingsBis": {
         "port": {

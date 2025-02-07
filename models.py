@@ -2,7 +2,7 @@ import config
 import json
 
 class ModelSettings:
-    axisParameters = ["stepscale"]
+    axisParameters = ["platine"]
     
     def __init__(self, axis_names):
         self.axis = axis_names
@@ -44,9 +44,10 @@ class ModelSettings:
         self.settingsData: dict
         for keySett,valSett in self.settingsData.items():
             isAxisRel,paramName = self.isAxisRelated(keySett)
+            print(isAxisRel,paramName)
             if inWithStartKeys(keySett, self.axisParameters) and isAxisRel:
                 # print("AXIS REL",keySett)
-                if paramName == "stepscale":
+                if paramName == "platine":
                     settingDico["parameters"].update({
                         keySett: {
                             "name": "Platine "+keySett[len(paramName):],
@@ -68,7 +69,7 @@ class ModelSettings:
                             }
                         }
                     })
-                elif keySett == "baudrate":
+                elif keySett == "controller":
                     settingDico["parameters"].update({
                         keySett: {
                             "name": "Controller",
@@ -115,7 +116,7 @@ class ModelSettings:
             for key,values in platinesRawData.items():
                 self.platinesData.update({
                     key: {
-                        "name": values["name"],
+                        "name": key,
                         "value": values["stepscale"]
                     }
                 })
@@ -126,7 +127,7 @@ class ModelSettings:
             for key,values in controllersRawData.items():
                 self.controllersData.update({
                     key: {
-                        "name": values["name"],
+                        "name": key,
                         "value": values["baudrate"]
                     }
                 })
@@ -146,7 +147,7 @@ class ModelSettings:
         self.applySettings(
             port=self.settingsData["port"], 
             stepscales=stepscales_dict, 
-            baudrate=self.controllersData[self.settingsData["baudrate"]]["value"]
+            baudrate=self.controllersData[self.settingsData["controller"]]["value"]
         )
     
     def getAvailablePorts(self):

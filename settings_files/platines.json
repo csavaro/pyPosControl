@@ -1,22 +1,19 @@
 {
-    "plat1": {
-        "name": "Platine 1",
-        "stepscale": "100"
+    "Platine 1": {
+        "stepscale": "100",
+        "vmax": 500,
+        "rapport": "path"
     },
-    "plat2": {
-        "name": "Platine 2",
+    "Platine 2": {
         "stepscale": "120"
     },
-    "plat3": {
-        "name": "Platine 3",
+    "Platine 3": {
         "stepscale": "130"
     },
-    "plat4": {
-        "name": "Platine 4",
+    "Platine 4": {
         "stepscale": "140"
     },
-    "plat5": {
-        "name": "Platine 5",
+    "Platine 5": {
         "stepscale": "150"
     }
 }

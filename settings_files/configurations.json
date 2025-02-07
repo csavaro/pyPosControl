@@ -3,24 +3,25 @@
         "name": "Config 1",
         "speedX": 60,
         "speedY": 30,
-        "stepscaleX": "plat2",
-        "stepscaleY": "plat3",
-        "baudrate": "ctrl2"
+        "platineX": "Platine 2",
+        "platineY": "Platine 3",
+        "platineZ": "Platine 2",
+        "controller": "Controller 2"
     },
     "cnfg2": {
         "name": "Config 2",
         "speedX": 60,
         "speedY": 30,
         "speedZ": 50,
-        "stepscaleX": "plat2",
-        "stepscaleY": "plat3",
-        "stepscaleZ": "plat1"
+        "platineX": "Platine 2",
+        "platineY": "Platine 3",
+        "platineZ": "Platine 1"
     },
     "cnfg3": {
         "name": "Config 3",
         "speedX": 60,
         "speedY": 30,
-        "stepscaleX": "plat2",
-        "stepscaleY": "plat3"
+        "platineX": "Platine 2",
+        "platineY": "Platine 3"
     }
 }
