@@ -249,27 +249,27 @@ class SettingsFrame(tk.Frame):
 
         # Create buttons widgets
         self.btnApply = tk.Button(self.pnlButtons, text="Apply", command=self.apply, bg="#A5EF91", padx=5, pady=5)
-        self.btnCancel = tk.Button(self.pnlButtons, text="Cancel", command=self.cancel, bg="#EFED91", padx=5, pady=5)
-        self.btnReset = tk.Button(self.pnlButtons, text="Reset", command=self.reset, bg="#F15A5A", padx=5, pady=5)
+        # self.btnCancel = tk.Button(self.pnlButtons, text="Cancel", command=self.cancel, bg="#EFED91", padx=5, pady=5)
+        # self.btnReset = tk.Button(self.pnlButtons, text="Reset", command=self.reset, bg="#F15A5A", padx=5, pady=5)
 
         # Listeners
         self.cmbImport.bind("<<ComboboxSelected>>", self.apply_config)
         
 
         self.applyCallbacks = []
-        self.cancelCallbacks = []
-        self.resetCallbacks = []
+        # self.cancelCallbacks = []
+        # self.resetCallbacks = []
 
         self.apply_layout()
 
     def addApplyCallback(self, callback):
         self.applyCallbacks.append(callback)
 
-    def addCancelCallback(self, callback):
-        self.cancelCallbacks.append(callback)
+    # def addCancelCallback(self, callback):
+    #     self.cancelCallbacks.append(callback)
 
-    def addResetCallback(self, callback):
-        self.resetCallbacks.append(callback)
+    # def addResetCallback(self, callback):
+    #     self.resetCallbacks.append(callback)
 
     def apply_config(self, event=None):
         target_config = searchByName(self.options["configs"],self.cmbImport.get())
@@ -287,19 +287,19 @@ class SettingsFrame(tk.Frame):
         # Interface changes
         pass
 
-    def cancel(self):
-        for callback in self.cancelCallbacks:
-            callback()
-        # Interface changes
-        pass
+    # def cancel(self):
+    #     for callback in self.cancelCallbacks:
+    #         callback()
+    #     # Interface changes
+    #     pass
 
-    def reset(self):
-        for callback in self.resetCallbacks:
-            callback()
-        # Interface changes
-        pass
-        # Update
-        self.apply()
+    # def reset(self):
+    #     for callback in self.resetCallbacks:
+    #         callback()
+    #     # Interface changes
+    #     pass
+    #     # Update
+    #     self.apply()
 
     def apply_layout(self):
         self.pack(fill="x")
@@ -315,7 +315,8 @@ class SettingsFrame(tk.Frame):
 
         self.pnlButtons.grid(row=len(self.parameters)+2, column=0, sticky="ew")
         self.pnlButtons.rowconfigure((0), weight=1, uniform='a')
-        self.pnlButtons.columnconfigure((0,1,2), weight=1, uniform='a')
+        self.pnlButtons.columnconfigure((0), weight=1, uniform='a')
+        # self.pnlButtons.columnconfigure((0,1,2), weight=1, uniform='a')
 
         # Components
         # Import Config
@@ -335,8 +336,8 @@ class SettingsFrame(tk.Frame):
             idx += 1
         # Buttons
         self.btnApply.grid(row=0, column=0, sticky="ew", ipadx=5, padx=10)
-        self.btnCancel.grid(row=0, column=1, sticky="ew", ipadx=5, padx=10)
-        self.btnReset.grid(row=0, column=2, sticky="ew", ipadx=5, padx=10)
+        # self.btnCancel.grid(row=0, column=1, sticky="ew", ipadx=5, padx=10)
+        # self.btnReset.grid(row=0, column=2, sticky="ew", ipadx=5, padx=10)
         
 
     def reset_layout(self):
