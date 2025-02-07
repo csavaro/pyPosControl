@@ -82,6 +82,25 @@ class MainApp(tk.Tk):
             idxAxis += 1
         self.incrReverse.pack(expand=True,fill="both")
 
+        self.incrDisplayCmd = tk.Frame(incrFrame)
+        self.incrDisplayCmd.rowconfigure((0),weight=1,uniform='a')
+        self.incrDisplayCmd.columnconfigure((0), weight=1, uniform='a')
+        self.incrDisplayCmd.columnconfigure((1), weight=2, uniform='a')
+        self.lblIncrCmdTitle = tk.Label(self.incrDisplayCmd, text="Command").grid(row=0,column=0,sticky="ew", pady=10)
+        self.inpIncrCmd = tk.StringVar()
+        self.inpIncrCmd.set("@lorem ipsum dolor sit")
+        self.lblIncrCmd = tk.Label(
+            self.incrDisplayCmd, 
+            textvariable=self.inpIncrCmd,
+            relief="solid",
+            background="#dddddd",
+            fg="#595959",
+            borderwidth=2,
+            anchor="w",
+            font=Font(family="Helvetica", slant="italic", size=10)
+        ).grid(row=0,column=1, sticky="ew")
+        self.incrDisplayCmd.pack(expand=True, fill="both")
+
         return incrFrame
     
     def createAbsoluteFrame(self, master: tk.Widget) -> tk.Frame:
