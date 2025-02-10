@@ -207,18 +207,22 @@ class ModelControl:
         self.speeds.update({ axis:speed })
 
     def incrMove(self, axis_values: dict, axis_speeds: dict = None):
-        print("sending ",self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds))
+        cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
+        print("sending ",cmd)
         for key,incrVal in axis_values.items():
             self.values[key] += incrVal
         print("curr pos: ",self.values)
+        return cmd
 
     def absMove(self, axis_values: dict, axis_speeds: dict = None):
         for key,val in axis_values.items():
             axis_values[key] = -(self.values[key]-val)
-        print("sending ",self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds))
+        cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
+        print("sending ",cmd)
         for key,absVal in axis_values.items():
             self.values[key] = absVal
         print("curr pos: ",self.values)
+        return cmd
 
     def stop(self):
         print("sending ",self.communication.stopCmd())

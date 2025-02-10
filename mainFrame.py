@@ -78,8 +78,12 @@ class MainApp(tk.Tk):
             if sign == "-":
                 incrMoveDict[axis] = -incrMoveDict[axis]
             
-            self.mControl.incrMove(incrMoveDict,incrSpeedDict)
+            cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict)
+            self.inpIncrCmd.set(cmd[:-2])
             self.updateCurrentPosition()
+
+    def absMove(self):
+        pass
 
     def setZero(self):
         self.mControl.setZero()
