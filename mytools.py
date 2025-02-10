@@ -138,15 +138,20 @@ class SettingLabeledEntry:
 
         # Add options to droplist (Combobox)
         if options:
-            listOptions = [ oneOption["name"] for oneOption in options.values() ]
+            listOptions = [ "" ]
+            listOptions += [ oneOption["name"] for oneOption in options.values() ]
             self.cmbSetting.config(values=listOptions)
             self.cmbSetting.bind("<<ComboboxSelected>>", self.applyOption)
         else:
             self.entValue.config(state="normal")
     
     def applyOption(self, event=None):
-        target_value = searchByName(self.options, self.cmbSetting.get())["value"]
-        self.inpValue.set(target_value)
+        if self.cmbSetting.get() == "":
+            self.inpValue.set('')
+            self.entValue.delete(0,'end')
+        else:
+            target_value = searchByName(self.options, self.cmbSetting.get())["value"]
+            self.inpValue.set(target_value)
     
     def setVal(self, value):
         if value is None:
@@ -244,7 +249,8 @@ class SettingsFrame(tk.Frame):
         # Create import settings widgets
         self.lblImport = tk.Label(self.pnlSettings, text="Import settings")
         self.cmbImport = ttk.Combobox(self.pnlSettings, state="readonly")
-        listOptions = [ oneOption["name"] for oneOption in options["configs"].values() ]
+        listOptions = [""]
+        listOptions += [ oneOption["name"] for oneOption in options["configs"].values() ]
         self.cmbImport.config(values=listOptions)
 
         # Create buttons widgets
@@ -272,14 +278,15 @@ class SettingsFrame(tk.Frame):
     #     self.resetCallbacks.append(callback)
 
     def apply_config(self, event=None):
-        target_config = searchByName(self.options["configs"],self.cmbImport.get())
-        target_OptionKey = list(self.options["configs"].keys())[list(self.options["configs"].values()).index(target_config)]
-        for key in self.options["parameters"].keys():
-            val = None
-            if key in self.options["configs"][target_OptionKey].keys():
-                val = self.options["configs"][target_OptionKey][key]
-            print(f"setting {key} as {val}")
-            self.parameters[key].setVal(val)
+        if self.cmbImport.get() != "":
+            target_config = searchByName(self.options["configs"],self.cmbImport.get())
+            target_OptionKey = list(self.options["configs"].keys())[list(self.options["configs"].values()).index(target_config)]
+            for key in self.options["parameters"].keys():
+                val = None
+                if key in self.options["configs"][target_OptionKey].keys():
+                    val = self.options["configs"][target_OptionKey][key]
+                print(f"setting {key} as {val}")
+                self.parameters[key].setVal(val)
 
     def apply(self):
         for callback in self.applyCallbacks:
