@@ -11,6 +11,39 @@ class ModelSettings:
         self.stepscales = { axis_name:None for axis_name in axis_names } # platines
         self.baudrate = None # controller
 
+    def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
+        with open(path+"settings_files\\save.json","r") as saveFile:
+            settingsDict = json.load(saveFile)
+
+        platinesDict = { "platine"+axis:value for axis,value in platines.items() }
+        settingsDict["settings"].update(platinesDict)
+        settingsDict["settings"].update({
+            "controller": controller,
+            "port": port
+        })
+
+        with open(path+"settings_files\\save.json","w") as saveFile:
+            json.dump(settingsDict, saveFile, indent=4)
+
+        # Apply saved settings
+        print("applying settings")
+        stepscales_dict = {} 
+        for keyAxis,valStepScale in self.settingsData.items():
+            if "stepscale" in keyAxis and keyAxis[9:] in self.axis:
+                stepscales_dict.update({
+                    keyAxis[9:]:
+                    float(self.platinesData[valStepScale]["value"])
+                })
+        if (self.settingsData["controller"]):
+            baudrate = self.controllersData[self.settingsData["controller"]]["value"]
+        else:
+            baudrate = 0
+        self.applySettings(
+            port=self.settingsData["port"], 
+            stepscales=stepscales_dict, 
+            baudrate=baudrate
+        )
+
     def applySettings(self, port: str = None, stepscales: dict = None, baudrate: int = None):
         """
         Apply settings from parameters in model properties
@@ -144,10 +177,14 @@ class ModelSettings:
                     keyAxis[9:]:
                     float(self.platinesData[valStepScale]["value"])
                 })
+        if (self.settingsData["controller"]):
+            baudrate = self.controllersData[self.settingsData["controller"]]["value"]
+        else:
+            baudrate = 0
         self.applySettings(
             port=self.settingsData["port"], 
             stepscales=stepscales_dict, 
-            baudrate=self.controllersData[self.settingsData["controller"]]["value"]
+            baudrate=baudrate
         )
     
     def getAvailablePorts(self):
@@ -189,9 +226,14 @@ if __name__ == "__main__":
     ms = ModelSettings(('X','Y'))
     ms.loadSettings(config.path)
 
-    sd = ms.getSettingsDict()
+    ms.saveSettings(config.path, port="COM2", controller="Controller 3", platines={
+        "X": "Platine 3",
+        "Y": "Platine 3"
+    })
 
-    for krsd,vrsd in sd.items(): 
-        print(krsd)
-        for kkrsd, vvrsd in vrsd.items(): 
-            print(kkrsd,vvrsd)
+    # sd = ms.getSettingsDict()
+
+    # for krsd,vrsd in sd.items(): 
+    #     print(krsd)
+    #     for kkrsd, vvrsd in vrsd.items(): 
+    #         print(kkrsd,vvrsd)

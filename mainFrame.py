@@ -51,13 +51,42 @@ class MainApp(tk.Tk):
         # self.apply_layout()
 
     def openSettings(self):
-        settingWindow = tk.Toplevel(self)
-        settingWindow.title("Settings")
+        self.settingWindow = tk.Toplevel(self)
+        self.settingWindow.title("Settings")
 
-        self.settingsFrame = mytools.SettingsFrame(settingWindow, self.mSettings.getSettingsDict())
+        self.mSettings.loadSettings(config.path)
+
+        self.settingsFrame = mytools.SettingsFrame(self.settingWindow, self.mSettings.getSettingsDict())
         self.settingsFrame.pack(expand=True, fill="both")
 
-        settingWindow.mainloop()
+        self.settingsFrame.btnApply.config(command=self.applySettings)
+        # self.settingsFrame.addApplyCallback(
+        #     lambda  port=self.settingsFrame.parameters["port"].inpValue,
+        #             stepscales= stepScalesDict,
+        #             baudrate=self.settingsFrame.parameters["controller"].inpValue:
+        #             self.mSettings.applySettings(port,stepscales,baudrate)
+        # )
+        # self.settingsFrame.addApplyCallback(settingWindow.destroy)
+
+        self.settingWindow.mainloop()
+
+    def applySettings(self):
+        
+        platinesDict = {}
+        for key,stepscale in self.settingsFrame.parameters.items():
+            if "platine" in key:
+                platinesDict.update({
+                    key[len("platine"):]: stepscale.cmbSetting.get()
+                })
+        
+        self.mSettings.saveSettings(
+            config.path,
+            port=self.settingsFrame.parameters["port"].cmbSetting.get(),
+            platines=platinesDict,
+            controller=self.settingsFrame.parameters["controller"].cmbSetting.get()
+        )
+
+        self.settingWindow.destroy()
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
         incrFrame = tk.Frame(master)
