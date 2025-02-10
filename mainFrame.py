@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter.font import Font
 import mytools
 import models
+import communications as cmds
 import config
 
 class MainApp(tk.Tk):
@@ -20,10 +21,13 @@ class MainApp(tk.Tk):
         # self.frame.interior.config(style="TFrame")
         # stylesheet = ttk.Style().configure("TFrame", background="#0fff00")
 
-        self.axis = axis_names
+        self.axis: list = axis_names
 
         self.mSettings = models.ModelSettings(self.axis)
         self.mSettings.loadSettings(config.path)
+        speeds = { axis:100 for axis in self.axis }
+        self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds))
+
 
         # TO_IMPLEMENT
         self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings)
@@ -32,6 +36,10 @@ class MainApp(tk.Tk):
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
         self.controlGeneralFrame = mytools.ControlGeneralFrame(self.frame.interior, self.axis)
+
+        self.controlGeneralFrame.addCallback("stop",self.mControl.stop)
+        self.controlGeneralFrame.addCallback("setzero",self.setZero)
+        self.controlGeneralFrame.addCallback("gozero",self.goZero)
 
         self.controlFrame = mytools.ControlFrame(self.frame.interior)
         self.control_dict = {
@@ -49,6 +57,37 @@ class MainApp(tk.Tk):
         # Dont work well, bad placement unil first control change then its good
         # self.reset_layout()
         # self.apply_layout()
+
+    def updateCurrentPosition(self):
+        for axis,inpCurPos in self.controlGeneralFrame.inpAxisValues.items():
+            inpCurPos.set(self.mControl.values[axis])
+
+    def incrMove(self, sign: str, axis: str):
+        if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
+            incrMoveDict = {}
+            incrSpeedDict = {}
+            for oneAxis in self.axis:
+                incrMoveDict.update({
+                    oneAxis:0
+                })
+                incrSpeedDict.update({
+                    oneAxis:0
+                })
+            incrMoveDict[axis]  = self.incrAxis.axis[self.axis.index(axis)].inpAxis.get()
+            incrSpeedDict[axis] = self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get()
+            if sign == "-":
+                incrMoveDict[axis] = -incrMoveDict[axis]
+            
+            self.mControl.incrMove(incrMoveDict,incrSpeedDict)
+            self.updateCurrentPosition()
+
+    def setZero(self):
+        self.mControl.setZero()
+        pass
+
+    def goZero(self):
+        self.mControl.goZero()
+        pass
 
     def openSettings(self):
         self.settingWindow = tk.Toplevel(self)
@@ -93,6 +132,13 @@ class MainApp(tk.Tk):
         axis_delta = [ f"Δ{oneAxis}" for oneAxis in self.axis ]
         self.incrAxis = mytools.AxisFrame(incrFrame, axis_delta)
         self.incrButtons = mytools.AxisButtonsFrame(incrFrame, self.axis)
+
+        idxAxis = 0
+        for oneBtnAxis in self.incrButtons.btnAxis:
+            oneBtnAxis: mytools.AxisButtons
+            oneBtnAxis.btnPlus  .config(command=lambda sign="+", axis=self.axis[idxAxis]: self.incrMove(sign,axis))
+            oneBtnAxis.btnMinus .config(command=lambda sign="-", axis=self.axis[idxAxis]: self.incrMove(sign,axis))
+            idxAxis += 1
 
         self.incrReverse = tk.Frame(incrFrame)
         self.incrReverse.rowconfigure((0),weight=1,uniform='a')

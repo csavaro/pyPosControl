@@ -1,5 +1,6 @@
 import config
 import json
+import communications as cmds
 
 class ModelSettings:
     axisParameters = ["platine"]
@@ -192,15 +193,43 @@ class ModelSettings:
         pass
 
 class ModelControl:
-    def __init__(self, axis_names):
-        self.values = { axis_name:None for axis_name in axis_names } # usually in mm (unit)
-        self.speeds = { axis_name:None for axis_name in axis_names } # usually in mm/s (unit/s)
+    def __init__(self, axis_names, communication: cmds.Commands = None, settings: ModelSettings = None):
+        self.values = { axis_name:0 for axis_name in axis_names } # usually in mm (unit)
+        self.speeds = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
+        self.settings = settings
+
+        self.communication = communication
     
     def setValue(self, axis, value):
         self.values.update({ axis:value })
 
     def setSpeed(self, axis, speed):
         self.speeds.update({ axis:speed })
+
+    def incrMove(self, axis_values: dict, axis_speeds: dict = None):
+        print("sending ",self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds))
+        for key,incrVal in axis_values.items():
+            self.values[key] += incrVal
+        print("curr pos: ",self.values)
+
+    def absMove(self, axis_values: dict, axis_speeds: dict = None):
+        for key,val in axis_values.items():
+            axis_values[key] = -(self.values[key]-val)
+        print("sending ",self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds))
+        for key,absVal in axis_values.items():
+            self.values[key] = absVal
+        print("curr pos: ",self.values)
+
+    def stop(self):
+        print("sending ",self.communication.stopCmd())
+
+    def goZero(self):
+        print("go zero")
+        pass
+    
+    def setZero(self):
+        print("set as zero")
+        pass
 
 
 def inWithStartKeys(value: str, startkeys: list):
