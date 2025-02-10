@@ -231,15 +231,31 @@ class ModelControl:
         return cmd
 
     def stop(self):
-        print("sending ",self.communication.stopCmd())
+        cmd = self.communication.stopCmd()
+        print("sending ",cmd)
+        return cmd
 
     def goZero(self):
-        print("go zero")
-        pass
+        # Getting axis delta to go to zero
+        axis_values = {}
+        axis_speeds = {}
+        for axis,curPos in self.values.items():
+            axis_values.update({
+                axis: -curPos
+            })
+            axis_speeds.update({
+                axis: 500
+            })
+        # Create and execute command
+        cmd = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
+        print("go zero ",cmd)
+        # Update current position values
+        for axis in self.values.keys(): self.values[axis] = 0
+        return cmd
     
     def setZero(self):
+        for axis in self.values.keys(): self.values[axis] = 0
         print("set as zero")
-        pass
 
 
 def inWithStartKeys(value: str, startkeys: list):

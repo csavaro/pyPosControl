@@ -98,11 +98,11 @@ class MainApp(tk.Tk):
 
     def setZero(self):
         self.mControl.setZero()
-        pass
+        self.updateCurrentPosition()
 
     def goZero(self):
         self.mControl.goZero()
-        pass
+        self.updateCurrentPosition()
 
     def openSettings(self):
         self.settingWindow = tk.Toplevel(self)
