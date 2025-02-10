@@ -210,17 +210,23 @@ class ModelControl:
         cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
         for key,incrVal in axis_values.items():
-            self.values[key] += incrVal
+            if axis_speeds[key] > 0:
+                self.values[key] += incrVal
         print("curr pos: ",self.values)
         return cmd
 
     def absMove(self, axis_values: dict, axis_speeds: dict = None):
+        # Transform absolute values to relative values
+        rel_axis_values = axis_values.copy()
         for key,val in axis_values.items():
-            axis_values[key] = -(self.values[key]-val)
-        cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
+            rel_axis_values[key] = -(self.values[key]-val)
+        # Create and execute command
+        cmd = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
+        # Deduce current value
         for key,absVal in axis_values.items():
-            self.values[key] = absVal
+            if axis_speeds[key] > 0:
+                self.values[key] = absVal
         print("curr pos: ",self.values)
         return cmd
 

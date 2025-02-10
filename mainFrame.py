@@ -83,7 +83,18 @@ class MainApp(tk.Tk):
             self.updateCurrentPosition()
 
     def absMove(self):
-        pass
+        absMoveDict = {}
+        absSpeedDict = {}
+        for oneAxis in self.axis:
+            absMoveDict.update({
+                oneAxis: self.absAxis.axis[self.axis.index(oneAxis)].inpAxis.get()
+            })
+            absSpeedDict.update({
+                oneAxis: self.absAxis.axis[self.axis.index(oneAxis)].inpSpeedAxis.get()
+            })
+        cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
+        self.inpAbsCmd.set(cmd[:-2])
+        self.updateCurrentPosition()
 
     def setZero(self):
         self.mControl.setZero()
@@ -207,7 +218,8 @@ class MainApp(tk.Tk):
 
         self.absBtnMove = tk.Button(
             absFrame, 
-            text="Move", 
+            text="Move",
+            command=self.absMove, 
             bg="#6873D5", 
             fg="#FFFFFF", 
             activebackground="#4853B5",
