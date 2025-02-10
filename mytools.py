@@ -58,7 +58,7 @@ class AxisFrame(tk.Frame):
         super().__init__(master,*args,**kwargs)
         
         if not axis_names:
-            axis_names = ('X','Y','Z')
+            self.axis = ('X','Y','Z')
 
         self.pnlAxis = [ tk.Frame(self) for i in range(len(axis_names)) ]
         self.axis = [ AxisLabeledEntry(self.pnlAxis[axis_names.index(axis_name)],axis_name,"mm",True) for axis_name in axis_names ]
@@ -68,8 +68,7 @@ class AxisFrame(tk.Frame):
     def apply_layout(self):
         self.pack(fill="x")
         self.columnconfigure((0), weight=1, uniform='a')
-        # self.rowconfigure(tuple(range(len(self.axis))), weight=1, uniform='a')
-        self.rowconfigure((0,1,2), weight=1, uniform='a')
+        self.rowconfigure(tuple(range(len(self.axis))), weight=1, uniform='a')
 
         for idxAxis in range(len(self.axis)):
             # Panels
@@ -631,8 +630,8 @@ class ControlGeneralFrame(tk.Frame):
         self.columnconfigure((1), weight=3, uniform='a')
 
         self.btnStop.   grid(row=0, column=0, columnspan=2, sticky="nsew", pady=2)
-        self.btnSetZero.grid(row=4, column=0, columnspan=2, sticky="ew", pady=2)
-        self.btnGoZero. grid(row=5, column=0, columnspan=2, sticky="ew", pady=2)
+        self.btnSetZero.grid(row=len(self.lblNames)+1, column=0, columnspan=2, sticky="ew", pady=2)
+        self.btnGoZero. grid(row=len(self.lblNames)+2, column=0, columnspan=2, sticky="ew", pady=2)
         
         for idxAxis in range(len(self.lblNames)):
             self.lblNames[idxAxis].     grid(row=idxAxis+1, column=0, sticky="ew")
@@ -738,7 +737,8 @@ def testIconButton():
 def testAxisFrame():
     root = tk.Tk()
 
-    frame = AxisFrame(root, ('X','Y','Z'))
+    # frame = AxisFrame(root, ('X','Y','Z'))
+    frame = AxisFrame(root, ('X','Y'))
     
     frame.pack()
     root.mainloop()
@@ -840,7 +840,8 @@ def testControlGeneralFrame():
     print("start testControlGeneralFrame")
     root = tk.Tk()
 
-    cgf = ControlGeneralFrame(root, ('X','Y','Z'))
+    # cgf = ControlGeneralFrame(root, ('X','Y','Z'))
+    cgf = ControlGeneralFrame(root, ('X','Y'))
 
     root.mainloop()
 
