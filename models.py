@@ -29,18 +29,17 @@ class ModelSettings:
         # Apply saved settings
         print("applying settings")
         stepscales_dict = {} 
-        for keyAxis,valStepScale in self.settingsData.items():
-            if "stepscale" in keyAxis and keyAxis[9:] in self.axis:
-                stepscales_dict.update({
-                    keyAxis[9:]:
-                    float(self.platinesData[valStepScale]["value"])
-                })
-        if (self.settingsData["controller"]):
-            baudrate = self.controllersData[self.settingsData["controller"]]["value"]
+        for axis,valPlatine in platines.items():
+            stepscales_dict.update({
+                axis:
+                float(self.platinesData[valPlatine]["value"])
+            })
+        if (controller):
+            baudrate = self.controllersData[controller]["value"]
         else:
             baudrate = 0
         self.applySettings(
-            port=self.settingsData["port"], 
+            port=port, 
             stepscales=stepscales_dict, 
             baudrate=baudrate
         )
@@ -68,6 +67,26 @@ class ModelSettings:
                 print(f"baudrate should be an int, not {type(baudrate)} [value:{baudrate}]")
             print(f"ModelSetting: setting baudrate as {baudrate}")
             self.baudrate = baudrate
+
+    def applySettingsFromData(self):
+        # Apply saved settings
+        print("applying settings")
+        stepscales_dict = {} 
+        for keyAxis,valPlatine in self.settingsData.items():
+            if "platine" in keyAxis and keyAxis[len("platine"):] in self.axis:
+                stepscales_dict.update({
+                    keyAxis[len("platine"):]:
+                    float(self.platinesData[valPlatine]["value"])
+                })
+        if (self.settingsData["controller"]):
+            baudrate = self.controllersData[self.settingsData["controller"]]["value"]
+        else:
+            baudrate = 0
+        self.applySettings(
+            port=self.settingsData["port"], 
+            stepscales=stepscales_dict, 
+            baudrate=baudrate
+        )
 
     def getSettingsDict(self):
         settingDico = {
@@ -168,25 +187,6 @@ class ModelSettings:
 
         with open(filesData["path"]+filesData["configuration"],"r") as configsFile:
             self.configsData: dict = json.load(configsFile)
-
-        # Apply saved settings
-        print("applying settings")
-        stepscales_dict = {} 
-        for keyAxis,valPlatine in self.settingsData.items():
-            if "platine" in keyAxis and keyAxis[len("platine"):] in self.axis:
-                stepscales_dict.update({
-                    keyAxis[len("platine"):]:
-                    float(self.platinesData[valPlatine]["value"])
-                })
-        if (self.settingsData["controller"]):
-            baudrate = self.controllersData[self.settingsData["controller"]]["value"]
-        else:
-            baudrate = 0
-        self.applySettings(
-            port=self.settingsData["port"], 
-            stepscales=stepscales_dict, 
-            baudrate=baudrate
-        )
     
     def getAvailablePorts(self):
         self.portsData = {}
