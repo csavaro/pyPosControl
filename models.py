@@ -97,7 +97,7 @@ class ModelSettings:
         self.settingsData: dict
         for keySett,valSett in self.settingsData.items():
             isAxisRel,paramName = self.isAxisRelated(keySett)
-            print(isAxisRel,paramName)
+            # print(isAxisRel,paramName)
             if inWithStartKeys(keySett, self.axisParameters) and isAxisRel:
                 # print("AXIS REL",keySett)
                 if paramName == "platine":
@@ -208,7 +208,7 @@ class ModelControl:
 
     def convertMmToSteps(self, axis_values: dict):
         for axis,value in axis_values.items():
-            print("val:",value," - stepscale:",self.settings.stepscales[axis])
+            # print("val:",value," - stepscale:",self.settings.stepscales[axis])
             axis_values[axis] = value * self.settings.stepscales[axis]
         return axis_values
 

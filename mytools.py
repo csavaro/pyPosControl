@@ -626,7 +626,6 @@ class ControlGeneralFrame(tk.Frame):
         self.pack(fill="x")
         self.rowconfigure(tuple(range(len(self.lblNames)+3)), weight=3, uniform='a')
         self.rowconfigure((len(self.lblNames)+2), weight=4, uniform='a')
-        print("OwOwOwOwOwOwO",len(self.lblNames)+2)
         self.columnconfigure((0), weight=1, uniform='a')
         self.columnconfigure((1), weight=3, uniform='a')
 

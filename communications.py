@@ -26,7 +26,7 @@ class CSeries(Commands):
             self.speeds = axis_speeds
         axisStr = ""
         for axis,dist in axis_values.items():
-            axisStr+=f"{int(dist)},{int(self.speeds[axis])}," 
+            axisStr+=f"{int(round(dist))},{int(round(self.speeds[axis]))}," 
         return f"@0a {axisStr[:-1]}\n\r".encode("ascii")
     
 if __name__ == "__main__":
