@@ -2,15 +2,18 @@
     "Platine 1": {
         "stepscale": "100",
         "vmax": 500,
-        
+        "vmin": 100,
+
         "rapport": "path",
         "serial_number": 451
     },
     "Platine 2": {
-        "stepscale": "120"
+        "stepscale": "120",
+        "vmax": 600
     },
     "Platine 3": {
-        "stepscale": "130"
+        "stepscale": "130",
+        "vmin": 50
     },
     "Platine 4": {
         "stepscale": "140"

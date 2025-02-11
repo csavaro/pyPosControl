@@ -10,6 +10,7 @@ class ModelSettings:
         # link to controller class for port list
         self.port = None # from available ports
         self.stepscales = { axis_name:None for axis_name in axis_names } # platines
+        self.speed_limits = { axis_name:{ "max":None, "min":None } for axis_name in axis_names } # platines
         self.baudrate = None # controller
 
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
@@ -29,22 +30,31 @@ class ModelSettings:
         # Apply saved settings
         print("applying settings")
         stepscales_dict = {} 
+        speed_limits_dict = {}
         for axis,valPlatine in platines.items():
             stepscales_dict.update({
                 axis:
                 float(self.platinesData[valPlatine]["value"])
             })
+            speed_limits_dict.update({
+                axis: {
+                    "max": self.platinesData[valPlatine]["max_speed"],
+                    "min": self.platinesData[valPlatine]["min_speed"]
+                }
+            })
+
         if (controller):
             baudrate = self.controllersData[controller]["value"]
         else:
             baudrate = 0
         self.applySettings(
             port=port, 
-            stepscales=stepscales_dict, 
+            stepscales=stepscales_dict,
+            speed_limits=speed_limits_dict, 
             baudrate=baudrate
         )
 
-    def applySettings(self, port: str = None, stepscales: dict = None, baudrate: int = None):
+    def applySettings(self, port: str = None, stepscales: dict = None, speed_limits: dict = None, baudrate: int = None):
         """
         Apply settings from parameters in model properties
         """
@@ -62,6 +72,20 @@ class ModelSettings:
                     self.stepscales.update({
                         keyAxis: valStepScale
                     })
+        if speed_limits:
+            for keyAxis,valLimit in speed_limits.items():
+                valLimit: dict
+                if keyAxis in self.speed_limits.keys():
+                    if((valLimit["max"] and not isinstance(valLimit["max"],(float,int))) or (valLimit["min"] and not isinstance(valLimit["min"],(float,int,None)))):
+                        raise TypeError(f"speed limits should be float or int, not {type(valLimit)} [value:{valLimit}]")
+                    print(f"ModelSetting: setting speed limits on {keyAxis} axis as {valLimit}")
+                    self.speed_limits.update({
+                        keyAxis: {
+                            "max": valLimit["max"],
+                            "min": valLimit["min"]
+                        }
+                    })
+                    
         if baudrate: # and baudrate in self.controllersData ?
             if(not isinstance(baudrate,int)):
                 print(f"baudrate should be an int, not {type(baudrate)} [value:{baudrate}]")
@@ -167,10 +191,19 @@ class ModelSettings:
             platinesRawData: dict = json.load(platinesFile)
             self.platinesData = {}
             for key,values in platinesRawData.items():
+                values: dict
+                max_speed = None
+                min_speed = None
+                if "vmax" in values.keys():
+                    max_speed = values["vmax"]
+                if "vmin" in values.keys():
+                    min_speed = values["vmin"]
                 self.platinesData.update({
                     key: {
                         "name": key,
-                        "value": values["stepscale"]
+                        "value": values["stepscale"],
+                        "max_speed": max_speed,
+                        "min_speed": min_speed
                     }
                 })
 
@@ -194,8 +227,8 @@ class ModelSettings:
 
 class ModelControl:
     def __init__(self, axis_names, communication: cmds.Commands = None, settings: ModelSettings = None):
-        self.values = { axis_name:0 for axis_name in axis_names } # usually in mm (unit)
-        self.speeds = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
+        self.values     = { axis_name:0 for axis_name in axis_names } # usually in mm (unit)
+        self.speeds     = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
         self.settings = settings
 
         self.communication = communication
