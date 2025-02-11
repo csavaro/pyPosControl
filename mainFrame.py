@@ -251,5 +251,6 @@ if __name__ == "__main__":
     print("start")
 
     app = MainApp(title="test main",axis_names=('X','Y','Z'))
+    app.geometry("500x650")
 
     app.mainloop()

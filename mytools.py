@@ -625,17 +625,18 @@ class ControlGeneralFrame(tk.Frame):
     def apply_layout(self):
         self.pack(fill="x")
         self.rowconfigure(tuple(range(len(self.lblNames)+3)), weight=3, uniform='a')
-        self.rowconfigure((0), weight=4, uniform='a')
+        self.rowconfigure((len(self.lblNames)+2), weight=4, uniform='a')
+        print("OwOwOwOwOwOwO",len(self.lblNames)+2)
         self.columnconfigure((0), weight=1, uniform='a')
         self.columnconfigure((1), weight=3, uniform='a')
 
-        self.btnStop.   grid(row=0, column=0, columnspan=2, sticky="nsew", pady=2)
-        self.btnSetZero.grid(row=len(self.lblNames)+1, column=0, columnspan=2, sticky="ew", pady=2)
-        self.btnGoZero. grid(row=len(self.lblNames)+2, column=0, columnspan=2, sticky="ew", pady=2)
+        self.btnStop.   grid(row=len(self.lblNames)+2, column=0, columnspan=2, sticky="nsew", pady=5, ipady=3)
+        self.btnSetZero.grid(row=len(self.lblNames), column=0, columnspan=2, sticky="ew", pady=2)
+        self.btnGoZero. grid(row=len(self.lblNames)+1, column=0, columnspan=2, sticky="ew", pady=2)
         
         for idxAxis in range(len(self.lblNames)):
-            self.lblNames[idxAxis].     grid(row=idxAxis+1, column=0, sticky="ew")
-            self.lblAxisValues[idxAxis].grid(row=idxAxis+1, column=1, sticky="ew", padx=10)
+            self.lblNames[idxAxis].     grid(row=idxAxis, column=0, sticky="ew")
+            self.lblAxisValues[idxAxis].grid(row=idxAxis, column=1, sticky="ew", padx=10)
 
     def reset_layout(self):
         self.pack_forget()
