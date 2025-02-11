@@ -214,11 +214,14 @@ class ModelControl:
 
     def incrMove(self, axis_values: dict, axis_speeds: dict = None):
         axis_values = self.convertMmToSteps(axis_values)
+        axis_speeds = self.convertMmToSteps(axis_speeds)
+        # Create and execute command
         cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
+        # Deduce current value
         for key,incrVal in axis_values.items():
             if axis_speeds[key] > 0:
-                self.values[key] += incrVal
+                self.values[key] += incrVal / self.settings.stepscales[key]
         print("curr pos: ",self.values)
         return cmd
 
@@ -227,13 +230,18 @@ class ModelControl:
         rel_axis_values = axis_values.copy()
         for key,val in axis_values.items():
             rel_axis_values[key] = -(self.values[key]-val)
+        print("mmmmmmmh",rel_axis_values)
+
+        rel_axis_values = self.convertMmToSteps(rel_axis_values)
+        axis_speeds = self.convertMmToSteps(axis_speeds)
+        print(rel_axis_values)
         # Create and execute command
         cmd = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
         # Deduce current value
         for key,absVal in axis_values.items():
             if axis_speeds[key] > 0:
-                self.values[key] = absVal
+                self.values[key] = absVal #/ self.settings.stepscales[key]
         print("curr pos: ",self.values)
         return cmd
 
