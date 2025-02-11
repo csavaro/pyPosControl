@@ -21,18 +21,20 @@ class AxisLabeledEntry:
         - lblSpeedUnit (optional): label, additional info like unit of the axis speed value.
     """
     def __init__(self,master: tk.Widget,label: str,unit: str = None, speed: bool = True):
+        sfont = Font(family="Helvetica",size=12)
+        ifont = Font(family="Helvetica",size=12,slant="italic")
         self.name = label
-        self.lblAxis = tk.Label(master, text=label)
+        self.lblAxis = tk.Label(master, text=label, font=sfont)
         self.inpAxis = DoubleVar(value=0.0)
-        self.spbAxis = tk.Spinbox(master, textvariable=self.inpAxis, from_=-8000000, to=8000000, width=20)
+        self.spbAxis = tk.Spinbox(master, textvariable=self.inpAxis, from_=-8000000, to=8000000, width=20, font=sfont)
         if unit:
-            self.lblUnit = tk.Label(master, text=unit)
+            self.lblUnit = tk.Label(master, text=unit, font=ifont)
         self.hasSpeed = speed
         if speed:
             self.inpSpeedAxis = DoubleVar(value=0.0)
-            self.spbSpeedAxis = tk.Spinbox(master, textvariable=self.inpSpeedAxis, from_=0, to=8000000, width=20)
+            self.spbSpeedAxis = tk.Spinbox(master, textvariable=self.inpSpeedAxis, from_=0, to=8000000, width=20, font=sfont)
             if unit:
-                self.lblSpeedUnit = tk.Label(master, text=unit+"/s")
+                self.lblSpeedUnit = tk.Label(master, text=unit+"/s", font=ifont)
     
         # Callbacks
         self.inpSpeedAxis.trace_add("write", lambda name,index,mode : self.checkSpeed())
@@ -122,18 +124,20 @@ class SettingLabeledEntry:
                 "value": 200
             }
         }
+        sfont = Font(family="Helvetica",size=12)
+        ifont = Font(family="Helvetica",size=12,slant="italic")
         self.options = options
 
         # Create widgets
-        self.lblSetting = tk.Label(master, text=label)
+        self.lblSetting = tk.Label(master, text=label, font=sfont)
         self.inpValue = tk.StringVar()
-        self.entValue = tk.Entry(master, textvariable=self.inpValue, state="disabled")
+        self.entValue = tk.Entry(master, textvariable=self.inpValue, state="disabled", font=sfont)
         self.cmbSetting = None
         if options:
-            self.cmbSetting = ttk.Combobox(master, state="readonly") # values=options maybe
+            self.cmbSetting = ttk.Combobox(master, state="readonly", font=sfont) # values=options maybe
         self.lblUnit = None
         if unit:
-            self.lblUnit = tk.Label(master, text=unit, fg="#606060", font=Font(size=10,slant="italic"))
+            self.lblUnit = tk.Label(master, text=unit, fg="#606060", font=ifont)
 
         # Add options to droplist (Combobox)
         if options:
@@ -214,6 +218,7 @@ class SettingsFrame(tk.Frame):
             }
         }
 
+        sfont = Font(family="Helvetica",size=12)
         self.options = options
         # Panels
         self.pnlSettings = tk.PanedWindow(self, orient=tk.VERTICAL)
@@ -246,14 +251,14 @@ class SettingsFrame(tk.Frame):
                 self.parameters[key].setVal(oneOption["default"])
 
         # Create import settings widgets
-        self.lblImport = tk.Label(self.pnlSettings, text="Import settings")
-        self.cmbImport = ttk.Combobox(self.pnlSettings, state="readonly")
+        self.lblImport = tk.Label(self.pnlSettings, text="Import settings", font=sfont)
+        self.cmbImport = ttk.Combobox(self.pnlSettings, state="readonly", font=sfont)
         listOptions = [""]
         listOptions += [ oneOption["name"] for oneOption in options["configs"].values() ]
         self.cmbImport.config(values=listOptions)
 
         # Create buttons widgets
-        self.btnApply = tk.Button(self.pnlButtons, text="Apply", command=self.apply, bg="#A5EF91", padx=5, pady=5)
+        self.btnApply = tk.Button(self.pnlButtons, text="Apply", command=self.apply, bg="#A5EF91", padx=5, pady=5, font=sfont)
         # self.btnCancel = tk.Button(self.pnlButtons, text="Cancel", command=self.cancel, bg="#EFED91", padx=5, pady=5)
         # self.btnReset = tk.Button(self.pnlButtons, text="Reset", command=self.reset, bg="#F15A5A", padx=5, pady=5)
 
@@ -386,6 +391,7 @@ class ControlFrame(tk.Frame):
         self.apply_layout()
 
     def setOptions(self, options: dict):
+        sfont = Font(family="Helvetica",size=11)
         self.options = options
         self.btnNav = {}
         for key,oneOption in options.items():
@@ -398,7 +404,8 @@ class ControlFrame(tk.Frame):
                         self.pnlNavbar,
                         text=oneOption["name"],
                         command=lambda k=key: self.activateContent(k),
-                        relief=tk.FLAT
+                        relief=tk.FLAT,
+                        font=sfont
                     )
                 }
             )
@@ -441,7 +448,7 @@ class ControlFrame(tk.Frame):
         # Components
         idx = 0
         for key,oneBtnNav in self.btnNav.items():
-            oneBtnNav.grid(row=0, column=idx, sticky="ew", ipady=5)
+            oneBtnNav.grid(row=0, column=idx, sticky="ew")#, ipady=1)
             idx += 1
 
     def reset_layout(self):
@@ -489,8 +496,8 @@ class AxisButtonsFrame(tk.Frame):
         for axis_name in axis_names:
             ab = AxisButtons(self, axis_name)
             # Adjust buttons
-            ab.btnPlus.config(height=1, width=2, font=("Times",30))
-            ab.btnMinus.config(height=1, width=2, font=("Times",30))
+            ab.btnPlus.config(height=1, width=2, font=("Times",20))
+            ab.btnMinus.config(height=1, width=2, font=("Times",20))
             self.btnAxis.append(ab) 
 
 
@@ -569,9 +576,12 @@ class ControlGeneralFrame(tk.Frame):
         self.btnSetZero = tk.Button(self, text="Set as Zero",   command=self.setZero)
         self.btnGoZero  = tk.Button(self, text="Go to Zero",    command=self.goZero)
 
+        sfont = Font(family="Arial",size=12)
+        bfont = Font(family="Arial",size=13)
+        hfont = Font(family="Arial",size=14)
         self.btnStop.config(
             height=1, 
-            font=("Arial",13), 
+            font=hfont, 
             bg="#E70606", 
             fg="#FFFFFF", 
             relief="solid", 
@@ -580,7 +590,7 @@ class ControlGeneralFrame(tk.Frame):
             activeforeground="#DDDDDD")
         self.btnSetZero.config(
             height=1, 
-            font=("Arial",12), 
+            font=bfont, 
             bg="#C06C55", 
             fg="#FFFFFF", 
             relief="flat",
@@ -588,16 +598,16 @@ class ControlGeneralFrame(tk.Frame):
             activeforeground="#DDDDDD")
         self.btnGoZero.config(
             height=1, 
-            font=("Arial",12), 
+            font=bfont, 
             bg="#CBB46A", 
             fg="#FFFFFF", 
             relief="flat",
             activebackground="#A89249",
             activeforeground="#DDDDDD")
 
-        self.lblNames = [ tk.Label(self, text=axis_name) for axis_name in axis_names ]
+        self.lblNames = [ tk.Label(self, text=axis_name, font=sfont) for axis_name in axis_names ]
         self.inpAxisValues = { axis_name:tk.DoubleVar() for axis_name in axis_names }
-        self.lblAxisValues = [ tk.Label(self, textvariable=inpAxis, bg="#B5D6C1", anchor="w") for inpAxis in self.inpAxisValues.values() ]
+        self.lblAxisValues = [ tk.Label(self, textvariable=inpAxis, bg="#B5D6C1", anchor="w", font=sfont) for inpAxis in self.inpAxisValues.values() ]
 
         self.callbacks = {
             "stop": [],

@@ -29,7 +29,7 @@ class MainApp(tk.Tk):
         speeds = { axis:100 for axis in self.axis }
         self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds), settings=self.mSettings)
 
-        self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings)
+        self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings, font=Font(family="Helvetica",size=12))
         self.btnOpenSettings.pack(expand=True, fill="both")
         # self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
@@ -144,6 +144,9 @@ class MainApp(tk.Tk):
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
         axisBgColors = ["#F15A5A","#71C257","#DDC96A"]
         axisFgColors = ["#FFFFFF","#FFFFFF","#FFFFFF"]
+        if len(self.axis) > len(axisBgColors) or len(self.axis) > len(axisFgColors):
+            for i in range(len(self.axis)-len(axisBgColors)) : axisBgColors.append("#3D3D3D")
+            for i in range(len(self.axis)-len(axisFgColors)) : axisFgColors.append("#FFFFFF")
 
         incrFrame = tk.Frame(master)
         axis_delta = [ f"Δ{oneAxis}" for oneAxis in self.axis ]
@@ -242,7 +245,7 @@ class MainApp(tk.Tk):
             fg="#FFFFFF", 
             activebackground="#4853B5",
             activeforeground="#DDDDDD",
-            font=Font(family="Helvetica", size=12)
+            font=Font(family="Helvetica", size=15)
         ).pack(expand=True, fill="x")
         return absFrame
 
@@ -269,6 +272,6 @@ if __name__ == "__main__":
     print("start")
 
     app = MainApp(title="test main",axis_names=('X','Y','Z'))
-    app.geometry("500x650")
+    app.geometry("%dx%d" % (600,app.winfo_screenheight()))
 
     app.mainloop()

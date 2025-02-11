@@ -6,38 +6,15 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "platineX": "Platine 1",
+        "platineX": "Platine 2",
         "platineY": "Platine 3",
-        "platineZ": "Platine 2",
-        "controller": "Controller 3",
-        "port": "COM3"
+        "platineZ": "Platine 1",
+        "controller": "",
+        "port": "COM1"
     },
-    "settingsBis": {
-        "port": {
-            "name": "Port",
-            "value": "COM3"
-        },
-        "stepscaleX": {
-            "name": "Platine X",
-            "unit": "step/mm",
-            "value": "plat1"
-        },
-        "stepscaleY": {
-            "name": "Platine Y",
-            "unit": "step/mm",
-            "value": "plat3"
-        },
-        "stepscaleZ": {
-            "name": "Platine Z",
-            "unit": "step/mm",
-            "value": "plat5"
-        },
-        "baudrate": {
-            "name": "Controller",
-            "unit": "baud/s",
-            "value": "ctrl1"
-        }
-    },
+
+
+
     "default": {
         "speedX": 500,
         "speedY": 510,
