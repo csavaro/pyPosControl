@@ -172,11 +172,11 @@ class ModelSettings:
         # Apply saved settings
         print("applying settings")
         stepscales_dict = {} 
-        for keyAxis,valStepScale in self.settingsData.items():
-            if "stepscale" in keyAxis and keyAxis[9:] in self.axis:
+        for keyAxis,valPlatine in self.settingsData.items():
+            if "platine" in keyAxis and keyAxis[len("platine"):] in self.axis:
                 stepscales_dict.update({
-                    keyAxis[9:]:
-                    float(self.platinesData[valStepScale]["value"])
+                    keyAxis[len("platine"):]:
+                    float(self.platinesData[valPlatine]["value"])
                 })
         if (self.settingsData["controller"]):
             baudrate = self.controllersData[self.settingsData["controller"]]["value"]
@@ -206,7 +206,14 @@ class ModelControl:
     def setSpeed(self, axis, speed):
         self.speeds.update({ axis:speed })
 
+    def convertMmToSteps(self, axis_values: dict):
+        for axis,value in axis_values.items():
+            print("val:",value," - stepscale:",self.settings.stepscales[axis])
+            axis_values[axis] = value * self.settings.stepscales[axis]
+        return axis_values
+
     def incrMove(self, axis_values: dict, axis_speeds: dict = None):
+        axis_values = self.convertMmToSteps(axis_values)
         cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
         for key,incrVal in axis_values.items():

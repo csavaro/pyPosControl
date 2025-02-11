@@ -6,10 +6,10 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "platineX": "Platine 1",
-        "platineY": "Platine 4",
-        "platineZ": "Platine 4",
-        "controller": "Controller 3",
+        "platineX": "Platine 2",
+        "platineY": "Platine 3",
+        "platineZ": "Platine 2",
+        "controller": "Controller 2",
         "port": ""
     },
     "settingsBis": {

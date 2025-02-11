@@ -26,7 +26,7 @@ class MainApp(tk.Tk):
         self.mSettings = models.ModelSettings(self.axis)
         self.mSettings.loadSettings(config.path)
         speeds = { axis:100 for axis in self.axis }
-        self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds))
+        self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds), settings=self.mSettings)
 
 
         # TO_IMPLEMENT
