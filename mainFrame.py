@@ -29,8 +29,6 @@ class MainApp(tk.Tk):
         speeds = { axis:100 for axis in self.axis }
         self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds), settings=self.mSettings)
 
-
-        # TO_IMPLEMENT
         self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings)
         self.btnOpenSettings.pack(expand=True, fill="both")
         # self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
@@ -144,16 +142,33 @@ class MainApp(tk.Tk):
         self.settingWindow.destroy()
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
+        axisBgColors = ["#F15A5A","#71C257","#DDC96A"]
+        axisFgColors = ["#FFFFFF","#FFFFFF","#FFFFFF"]
+
         incrFrame = tk.Frame(master)
         axis_delta = [ f"Δ{oneAxis}" for oneAxis in self.axis ]
         self.incrAxis = mytools.AxisFrame(incrFrame, axis_delta)
         self.incrButtons = mytools.AxisButtonsFrame(incrFrame, self.axis)
 
+        # Axis label colors
+        idxAxis = 0
+        for oneAxis in self.incrAxis.axis:
+            oneAxis.lblAxis.config(fg=axisBgColors[idxAxis])
+            idxAxis += 1
+
         idxAxis = 0
         for oneBtnAxis in self.incrButtons.btnAxis:
             oneBtnAxis: mytools.AxisButtons
-            oneBtnAxis.btnPlus  .config(command=lambda sign="+", axis=self.axis[idxAxis]: self.incrMove(sign,axis))
-            oneBtnAxis.btnMinus .config(command=lambda sign="-", axis=self.axis[idxAxis]: self.incrMove(sign,axis))
+            oneBtnAxis.btnPlus  .config(
+                command=lambda sign="+", axis=self.axis[idxAxis]: self.incrMove(sign,axis), 
+                bg=axisBgColors[idxAxis],
+                fg=axisFgColors[idxAxis]
+            )
+            oneBtnAxis.btnMinus .config(
+                command=lambda sign="-", axis=self.axis[idxAxis]: self.incrMove(sign,axis),
+                bg=axisBgColors[idxAxis],
+                fg=axisFgColors[idxAxis]
+            )
             idxAxis += 1
 
         self.incrReverse = tk.Frame(incrFrame)
@@ -167,7 +182,9 @@ class MainApp(tk.Tk):
                 tk.Button(
                     self.incrReverse, 
                     text=f"Reverse {axis_name} axis", 
-                    command=lambda ax=axis_name:self.incrButtons.reverseButtons(ax)
+                    command=lambda ax=axis_name:self.incrButtons.reverseButtons(ax),
+                    bg=axisBgColors[idxAxis],
+                    fg=axisFgColors[idxAxis]
                 ).grid(row=0,column=idxAxis, sticky="ew", padx=5)
             )
             idxAxis += 1

@@ -10,7 +10,7 @@
         "platineY": "Platine 3",
         "platineZ": "Platine 2",
         "controller": "Controller 3",
-        "port": ""
+        "port": "COM3"
     },
     "settingsBis": {
         "port": {
