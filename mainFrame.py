@@ -1,10 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.font import Font
+from tkinter.messagebox import *
 import mytools
 import models
 import communications as cmds
 from pathlib import Path
+from connection import MissingValue
 
 # Current path
 path = str(Path(__file__).parent.absolute())+"\\"
@@ -39,9 +41,9 @@ class MainApp(tk.Tk):
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
         self.controlGeneralFrame = mytools.ControlGeneralFrame(self.frame.interior, self.axis)
 
-        self.controlGeneralFrame.addCallback("stop",self.mControl.stop)
-        self.controlGeneralFrame.addCallback("setzero",self.setZero)
-        self.controlGeneralFrame.addCallback("gozero",self.goZero)
+        self.controlGeneralFrame.addCallback("stop",self.stopAction)
+        self.controlGeneralFrame.addCallback("setzero",self.setZeroAction)
+        self.controlGeneralFrame.addCallback("gozero",self.goZeroAction)
 
         self.controlFrame = mytools.ControlFrame(self.frame.interior)
         self.control_dict = {
@@ -79,10 +81,14 @@ class MainApp(tk.Tk):
             incrSpeedDict[axis] = self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get()
             if sign == "-":
                 incrMoveDict[axis] = -incrMoveDict[axis]
-            
-            cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict)
-            self.inpIncrCmd.set(cmd[:-2])
-            self.updateCurrentPosition()
+
+            try:
+                cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict)
+                self.inpIncrCmd.set(cmd[:-2])
+                self.updateCurrentPosition()
+            except MissingValue as e:
+                print("ERROR: MissingValue",e)
+                showerror(title="Missing value",message=e)
 
     def absMove(self):
         absMoveDict = {}
@@ -94,17 +100,36 @@ class MainApp(tk.Tk):
             absSpeedDict.update({
                 oneAxis: self.absAxis.axis[self.axis.index(oneAxis)].inpSpeedAxis.get()
             })
-        cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
-        self.inpAbsCmd.set(cmd[:-2])
-        self.updateCurrentPosition()
+        try:
+            cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
+            self.inpAbsCmd.set(cmd[:-2])
+            self.updateCurrentPosition()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+            showerror(title="Missing value",message=e)
 
-    def setZero(self):
-        self.mControl.setZero()
-        self.updateCurrentPosition()
+    def stopAction(self):
+        try:
+            self.mControl.stop()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+            showerror(title="Missing value",message=e)
 
-    def goZero(self):
-        self.mControl.goZero()
-        self.updateCurrentPosition()
+    def setZeroAction(self):
+        try:
+            self.mControl.setZero()
+            self.updateCurrentPosition()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+            showerror(title="Missing value",message=e)
+
+    def goZeroAction(self):
+        try:
+            self.mControl.goZero()
+            self.updateCurrentPosition()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+            showerror(title="Missing value",message=e)
 
     def openSettings(self):
         self.settingWindow = tk.Toplevel(self)
@@ -274,7 +299,7 @@ class MainApp(tk.Tk):
 if __name__ == "__main__":
     print("start")
 
-    app = MainApp(title="test main",axis_names=('X','Y','Z'))
+    app = MainApp(title="test main",axis_names=('X','Y'))
     app.geometry("%dx%d" % (600,app.winfo_screenheight()))
 
     app.mainloop()

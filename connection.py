@@ -4,6 +4,9 @@ import time
 import sys
 import glob
 
+class MissingValue(Exception):
+    pass
+
 class SerialConnection:
     def __init__(self, timeout: int = 10, bytesize: int = 8):
         self.port = None
@@ -51,19 +54,31 @@ class SerialConnection:
             - 0 if no acknowledge is recieved, all commands might not have been sent.
             - 1 if all commands were sent and all acknowledges recieved.
         """
+        if not port:
+            port = self.port
+        if not port:
+            raise MissingValue("Missing setting: port is not set. Either give it in function param or set it in class attribute")
+        if not self.baudrate or self.baudrate <= 0:
+            raise TypeError("Missing setting: baudrate is not set. Set it in class attribute")
+        if not self.bytesize or self.bytesize <= 0:
+            raise TypeError("Missing setting: bytesize is not set. Set it in class attribute")
+        if not self.parity:
+            raise TypeError("Missing setting: parity is not set. Set it in class attribute")
+
+        # Simulation
+        # TO_REMOVE
         print("sim connection...")
-        print("port: ",self.port,port)
+        print("port: ",port)
         print("baudrate:",self.baudrate)
         if isinstance(commands,(str,bytes)):
             commands = [commands]
         for cmd in commands:
             print("launch cmd:",cmd)
+            time.sleep(1)
         print("...end of sim connection")
         return 1
 
-
-        if not port:
-            port = self.port
+        # Execution
         with serial.Serial() as ser:
             ser.port        = port
             ser.baudrate    = self.baudrate

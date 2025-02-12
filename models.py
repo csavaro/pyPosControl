@@ -68,17 +68,17 @@ class ModelSettings:
             baudrate=baudrate
         )
 
-    def applySettings(self, port: str = None, stepscales: dict = None, speed_limits: dict = None, baudrate: int = None):
+    def applySettings(self, port: str = -1, stepscales: dict = -1, speed_limits: dict = -1, baudrate: int = -1):
         """
         Apply settings from parameters in model properties
         """
-        if port: # and port in self.portsData ?
+        if port != -1: # and port in self.portsData ?
             print(f"ModelSetting: setting port as {port}")
             if(not isinstance(port,str)):
                 raise TypeError(f"port should be a string, not {type(port)} [value:{port}]")
             self.port = port
             self.connection.port = self.port
-        if stepscales:
+        if stepscales != -1:
             for keyAxis,valStepScale in stepscales.items():
                 if keyAxis in self.stepscales.keys(): # and valStepScale in self.platinesData ?
                     if(not isinstance(valStepScale,(float,int))):
@@ -87,7 +87,7 @@ class ModelSettings:
                     self.stepscales.update({
                         keyAxis: valStepScale
                     })
-        if speed_limits:
+        if speed_limits != -1:
             for keyAxis,valLimit in speed_limits.items():
                 valLimit: dict
                 if keyAxis in self.speed_limits.keys():
@@ -101,7 +101,7 @@ class ModelSettings:
                         }
                     })
                     
-        if baudrate: # and baudrate in self.controllersData ?
+        if baudrate != -1: # and baudrate in self.controllersData ?
             if(not isinstance(baudrate,int)):
                 print(f"baudrate should be an int, not {type(baudrate)} [value:{baudrate}]")
             print(f"ModelSetting: setting baudrate as {baudrate}")
@@ -343,6 +343,7 @@ class ModelControl:
         # Create and execute command
         cmd = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
+        self.connection.executeCmd(cmd)
         # Deduce current value
         for key,absVal in axis_values.items():
             if axis_speeds[key] > 0:
@@ -358,6 +359,7 @@ class ModelControl:
         """
         cmd = self.communication.stopCmd()
         print("sending ",cmd)
+        self.connection.executeCmd(cmd)
         return cmd
 
     def goZero(self):
@@ -391,6 +393,7 @@ class ModelControl:
         # Create and execute command
         cmd = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         print("go zero ",cmd)
+        self.connection.executeCmd(cmd)
         # Update current position values
         for axis in self.values.keys(): self.values[axis] = 0
         return cmd
