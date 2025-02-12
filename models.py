@@ -95,12 +95,19 @@ class ModelSettings:
     def applySettingsFromData(self):
         # Apply saved settings
         print("applying settings")
-        stepscales_dict = {} 
+        stepscales_dict = {}
+        speed_limits_dict = {} 
         for keyAxis,valPlatine in self.settingsData.items():
             if "platine" in keyAxis and keyAxis[len("platine"):] in self.axis:
                 stepscales_dict.update({
                     keyAxis[len("platine"):]:
                     float(self.platinesData[valPlatine]["value"])
+                })
+                speed_limits_dict.update({
+                    keyAxis[len("platine"):]: {
+                        "max": self.platinesData[valPlatine]["max_speed"],
+                        "min": self.platinesData[valPlatine]["min_speed"]
+                    }
                 })
         if (self.settingsData["controller"]):
             baudrate = self.controllersData[self.settingsData["controller"]]["value"]
@@ -108,7 +115,8 @@ class ModelSettings:
             baudrate = 0
         self.applySettings(
             port=self.settingsData["port"], 
-            stepscales=stepscales_dict, 
+            stepscales=stepscales_dict,
+            speed_limits=speed_limits_dict, 
             baudrate=baudrate
         )
 
@@ -263,7 +271,6 @@ class ModelControl:
         rel_axis_values = axis_values.copy()
         for key,val in axis_values.items():
             rel_axis_values[key] = -(self.values[key]-val)
-        print("mmmmmmmh",rel_axis_values)
 
         rel_axis_values = self.convertMmToSteps(rel_axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
