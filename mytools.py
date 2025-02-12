@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk,DoubleVar
 from tkinter.font import Font
-import config
 
 # Custom widgets for the two axis control app
 
@@ -752,7 +751,10 @@ def testIconButton():
     root = tk.Tk()
     frame = tk.Frame(root)
 
-    icon = tk.PhotoImage(file=config.path+"X_symbol.png")
+    from pathlib import Path
+    path = str(Path(__file__).parent.absolute())+"\\"
+
+    icon = tk.PhotoImage(file=path+"X_symbol.png")
     btnIcon = tk.Button(frame, image=icon, relief=tk.FLAT, bg="#afafaf", command=lambda s="pressed":print(s))
     btnIcon.pack()
 

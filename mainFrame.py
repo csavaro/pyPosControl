@@ -4,7 +4,9 @@ from tkinter.font import Font
 import mytools
 import models
 import communications as cmds
-import config
+from pathlib import Path
+
+path = str(Path(__file__).parent.absolute())+"\\"
 
 class MainApp(tk.Tk):
     def __init__(self, axis_names, title: str ="", *args, **kwargs):
@@ -24,7 +26,7 @@ class MainApp(tk.Tk):
         self.axis: list = axis_names
 
         self.mSettings = models.ModelSettings(self.axis)
-        self.mSettings.loadSettings(config.path)
+        self.mSettings.loadSettings(path)
         self.mSettings.applySettingsFromData()
         speeds = { axis:100 for axis in self.axis }
         self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds), settings=self.mSettings)
@@ -107,7 +109,7 @@ class MainApp(tk.Tk):
         self.settingWindow = tk.Toplevel(self)
         self.settingWindow.title("Settings")
 
-        self.mSettings.loadSettings(config.path)
+        self.mSettings.loadSettings(path)
 
         self.settingsFrame = mytools.SettingsFrame(self.settingWindow, self.mSettings.getSettingsDict())
         self.settingsFrame.pack(expand=True, fill="both")
@@ -133,7 +135,7 @@ class MainApp(tk.Tk):
                 })
         
         self.mSettings.saveSettings(
-            config.path,
+            path,
             port=self.settingsFrame.parameters["port"].cmbSetting.get(),
             platines=platinesDict,
             controller=self.settingsFrame.parameters["controller"].cmbSetting.get()

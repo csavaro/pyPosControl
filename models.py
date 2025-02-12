@@ -1,4 +1,3 @@
-import config
 import json
 import communications as cmds
 
@@ -392,11 +391,13 @@ def removeWithStartKey(dico: dict, startkey: str):
 
 if __name__ == "__main__":
     print("start models")
+    from pathlib import Path
+    path = str(Path(__file__).parent.absolute())+"\\"
 
     ms = ModelSettings(('X','Y'))
-    ms.loadSettings(config.path)
+    ms.loadSettings(path)
 
-    ms.saveSettings(config.path, port="COM2", controller="Controller 3", platines={
+    ms.saveSettings(path, port="COM2", controller="Controller 3", platines={
         "X": "Platine 3",
         "Y": "Platine 3"
     })
