@@ -253,7 +253,7 @@ class ModelControl:
             axis_values[axis] = value * self.settings.stepscales[axis]
         return axis_values
     
-    def checkSpeed(self, axis_speed: dict):
+    def checkSpeed(self, axis_speeds: dict):
         """
         check if axis_speed values are within the limits set in the ModelSettings linked.
         Parameters:
@@ -261,6 +261,14 @@ class ModelControl:
         Returns: 
         - same format as axis_speed with speed limit as value if axis_speed values are not in range.
         """
+        for axis,speed in axis_speeds.items():
+            smax = self.settings.speed_limits[axis]["max"]
+            smin = self.settings.speed_limits[axis]["min"]
+            if smax and speed > smax:
+                axis_speeds[axis] = smax
+            elif smin and speed < smin:
+                axis_speeds[axis] = smin
+        return axis_speeds
 
     def incrMove(self, axis_values: dict, axis_speeds: dict = None):
         """
@@ -271,6 +279,7 @@ class ModelControl:
         Returns:
         - command sent to controller.
         """
+        axis_speeds = self.checkSpeed(axis_speeds)
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
@@ -297,6 +306,7 @@ class ModelControl:
         for key,val in axis_values.items():
             rel_axis_values[key] = -(self.values[key]-val)
 
+        axis_speeds = self.checkSpeed(axis_speeds)
         rel_axis_values = self.convertMmToSteps(rel_axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         print(rel_axis_values)
@@ -323,6 +333,7 @@ class ModelControl:
     def goZero(self):
         """
         launch a move command to controller to go position 0 on each axis from the current position values.
+        Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.
         Returns:
         - command sent to controller
         """
@@ -330,12 +341,23 @@ class ModelControl:
         axis_values = {}
         axis_speeds = {}
         for axis,curPos in self.values.items():
+            smax = self.settings.speed_limits[axis]["max"]
+            smin = self.settings.speed_limits[axis]["min"]
+            speed = 5
+            if smax and smin and smax-smin>0:
+                speed = (smin+smax)/2
+            elif smax and smax>0:
+                speed = smax/2
+            elif smin and smin>0:
+                speed = smin*2
             axis_values.update({
                 axis: -curPos
             })
             axis_speeds.update({
-                axis: 500
+                axis: speed
             })
+        axis_values = self.convertMmToSteps(axis_values)
+        axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
         cmd = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         print("go zero ",cmd)
