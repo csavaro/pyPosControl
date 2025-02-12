@@ -252,8 +252,25 @@ class ModelControl:
             # print("val:",value," - stepscale:",self.settings.stepscales[axis])
             axis_values[axis] = value * self.settings.stepscales[axis]
         return axis_values
+    
+    def checkSpeed(self, axis_speed: dict):
+        """
+        check if axis_speed values are within the limits set in the ModelSettings linked.
+        Parameters:
+        - axis_speed: dictionary of str:float|int, speed unit should be mm/s.
+        Returns: 
+        - same format as axis_speed with speed limit as value if axis_speed values are not in range.
+        """
 
     def incrMove(self, axis_values: dict, axis_speeds: dict = None):
+        """
+        launch a command to move to axis_values without taking on board current position.
+        Parameters:
+        - axis_values: dict of str:float|int, values on axis to move to. Units should be mm.
+        - axis_speeds: dict of str:float|int, speed values on axis. Units should be mm/s.
+        Returns:
+        - command sent to controller.
+        """
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
@@ -267,6 +284,14 @@ class ModelControl:
         return cmd
 
     def absMove(self, axis_values: dict, axis_speeds: dict = None):
+        """
+        launch a command to move to axis_values from current position values.
+        Parameters:
+        - axis_values: dict of str:float|int, values on axis to move to. Units should be mm.
+        - axis_speeds: dict of str:float|int, speed values on axis. Units should be mm/s.
+        Returns:
+        - command sent to controller.
+        """
         # Transform absolute values to relative values
         rel_axis_values = axis_values.copy()
         for key,val in axis_values.items():
@@ -286,11 +311,21 @@ class ModelControl:
         return cmd
 
     def stop(self):
+        """
+        launch a command to stop the controller in it's task.
+        Returns:
+        - command sent to controller.
+        """
         cmd = self.communication.stopCmd()
         print("sending ",cmd)
         return cmd
 
     def goZero(self):
+        """
+        launch a move command to controller to go position 0 on each axis from the current position values.
+        Returns:
+        - command sent to controller
+        """
         # Getting axis delta to go to zero
         axis_values = {}
         axis_speeds = {}
@@ -309,6 +344,9 @@ class ModelControl:
         return cmd
     
     def setZero(self):
+        """
+        Set current position values as zero on each axis without moving or sending a command to controller.
+        """
         for axis in self.values.keys(): self.values[axis] = 0
         print("set as zero")
 
