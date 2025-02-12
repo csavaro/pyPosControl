@@ -576,7 +576,7 @@ class ControlGeneralFrame(tk.Frame):
         self.btnSetZero = tk.Button(self, text="Set as Zero",   command=self.setZero)
         self.btnGoZero  = tk.Button(self, text="Go to Zero",    command=self.goZero)
 
-        sfont = Font(family="Arial",size=12)
+        sfont = Font(family="Arial",size=15)
         bfont = Font(family="Arial",size=13)
         hfont = Font(family="Arial",size=14)
         self.btnStop.config(
@@ -634,18 +634,40 @@ class ControlGeneralFrame(tk.Frame):
 
     def apply_layout(self):
         self.pack(fill="x")
-        self.rowconfigure(tuple(range(len(self.lblNames)+3)), weight=3, uniform='a')
-        self.rowconfigure((len(self.lblNames)+2), weight=4, uniform='a')
-        self.columnconfigure((0), weight=1, uniform='a')
-        self.columnconfigure((1), weight=3, uniform='a')
+        # Rows Layout
+        # self.rowconfigure(tuple(range(len(self.lblNames)+3)), weight=3, uniform='a')
+        # self.rowconfigure((len(self.lblNames)+2), weight=4, uniform='a')
+        # self.columnconfigure((0), weight=1, uniform='a')
+        # self.columnconfigure((1), weight=3, uniform='a')
 
-        self.btnStop.   grid(row=len(self.lblNames)+2, column=0, columnspan=2, sticky="nsew", pady=5, ipady=3)
-        self.btnSetZero.grid(row=len(self.lblNames), column=0, columnspan=2, sticky="ew", pady=2)
-        self.btnGoZero. grid(row=len(self.lblNames)+1, column=0, columnspan=2, sticky="ew", pady=2)
+        # self.btnStop.   grid(row=len(self.lblNames)+2, column=0, columnspan=2, sticky="nsew", pady=5, ipady=3)
+        # self.btnSetZero.grid(row=len(self.lblNames), column=0, columnspan=2, sticky="ew", pady=2)
+        # self.btnGoZero. grid(row=len(self.lblNames)+1, column=0, columnspan=2, sticky="ew", pady=2)
         
-        for idxAxis in range(len(self.lblNames)):
-            self.lblNames[idxAxis].     grid(row=idxAxis, column=0, sticky="ew")
-            self.lblAxisValues[idxAxis].grid(row=idxAxis, column=1, sticky="ew", padx=10)
+        # for idxAxis in range(len(self.lblNames)):
+        #     self.lblNames[idxAxis].     grid(row=idxAxis, column=0, sticky="ew")
+        #     self.lblAxisValues[idxAxis].grid(row=idxAxis, column=1, sticky="ew", padx=10)
+
+        # Columns layout
+        self.rowconfigure((0,1,2,3), weight=3, uniform='a')
+        self.rowconfigure((3), weight=4, uniform='a')
+        odd_cols = []
+        even_cols = []
+        for i in range(len(self.lblNames)*2):
+            if i%2 == 1:
+                odd_cols.append(i)
+            else:
+                even_cols.append(i)
+        self.columnconfigure(tuple(even_cols), weight=1, uniform='a')
+        self.columnconfigure(tuple(odd_cols), weight=3, uniform='a')
+
+        self.btnStop.   grid(row=3, column=0, columnspan=len(self.lblNames)*2, sticky="nsew", pady=5, ipady=3)
+        self.btnSetZero.grid(row=1, column=0, columnspan=len(self.lblNames)*2, sticky="ew", pady=2)
+        self.btnGoZero. grid(row=2, column=0, columnspan=len(self.lblNames)*2, sticky="ew", pady=2)
+
+        for idxAxis in range(0,len(self.lblNames)*2,2):
+            self.lblNames[int(idxAxis/2)].     grid(row=0, column=idxAxis, sticky="ew")
+            self.lblAxisValues[int(idxAxis/2)].grid(row=0, column=idxAxis+1, sticky="ew", padx=10)
 
     def reset_layout(self):
         self.pack_forget()
