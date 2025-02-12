@@ -34,16 +34,28 @@ class ModelSettings:
         stepscales_dict = {} 
         speed_limits_dict = {}
         for axis,valPlatine in platines.items():
-            stepscales_dict.update({
-                axis:
-                float(self.platinesData[valPlatine]["value"])
-            })
-            speed_limits_dict.update({
-                axis: {
-                    "max": self.platinesData[valPlatine]["max_speed"],
-                    "min": self.platinesData[valPlatine]["min_speed"]
-                }
-            })
+            if valPlatine:
+                stepscales_dict.update({
+                    axis:
+                    float(self.platinesData[valPlatine]["value"])
+                })
+                speed_limits_dict.update({
+                    axis: {
+                        "max": self.platinesData[valPlatine]["max_speed"],
+                        "min": self.platinesData[valPlatine]["min_speed"]
+                    }
+                })
+            else:
+                stepscales_dict.update({
+                    axis:
+                    0
+                })
+                speed_limits_dict.update({
+                    axis: {
+                        "max": 0,
+                        "min": 0
+                    }
+                })
 
         if (controller):
             baudrate = self.controllersData[controller]["value"]
@@ -103,16 +115,28 @@ class ModelSettings:
         speed_limits_dict = {} 
         for keyAxis,valPlatine in self.settingsData.items():
             if "platine" in keyAxis and keyAxis[len("platine"):] in self.axis:
-                stepscales_dict.update({
-                    keyAxis[len("platine"):]:
-                    float(self.platinesData[valPlatine]["value"])
-                })
-                speed_limits_dict.update({
-                    keyAxis[len("platine"):]: {
-                        "max": self.platinesData[valPlatine]["max_speed"],
-                        "min": self.platinesData[valPlatine]["min_speed"]
-                    }
-                })
+                if valPlatine:
+                    stepscales_dict.update({
+                        keyAxis[len("platine"):]:
+                        float(self.platinesData[valPlatine]["value"])
+                    })
+                    speed_limits_dict.update({
+                        keyAxis[len("platine"):]: {
+                            "max": self.platinesData[valPlatine]["max_speed"],
+                            "min": self.platinesData[valPlatine]["min_speed"]
+                        }
+                    })
+                else:
+                    stepscales_dict.update({
+                        keyAxis[len("platine"):]:
+                        0
+                    })
+                    speed_limits_dict.update({
+                        keyAxis[len("platine"):]: {
+                            "max": 0,
+                            "min": 0
+                        }
+                    })
         if (self.settingsData["controller"]):
             baudrate = self.controllersData[self.settingsData["controller"]]["value"]
         else:
