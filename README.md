@@ -4,6 +4,12 @@
 ### Classes
 - MainFrame : app (tk.Tk()), regroupe tous les éléments graphiques et fait le liens avec les modèles.
 
+## connection.py
+### Exceptions
+- MissingValue : meant to be called when an important parameter or value is not set.
+### Classes
+- SerialConnection : create a serial connection by port and execute raw commands on it. Wait for an acknowledge after sending each command atm.
+
 ## communications.py
 ### Abstract class
 - Commads : set mandatory functions for future commands like c-series. Currently there is `move` and `stop`.
