@@ -1,5 +1,6 @@
 import json
 import communications as cmds
+import connection as co
 
 class ModelSettings:
     axisParameters = ["platine"]
@@ -7,10 +8,12 @@ class ModelSettings:
     def __init__(self, axis_names):
         self.axis = axis_names
         # link to controller class for port list
-        self.port = None # from available ports
-        self.stepscales = { axis_name:None for axis_name in axis_names } # platines
-        self.speed_limits = { axis_name:{ "max":None, "min":None } for axis_name in axis_names } # platines
-        self.baudrate = None # controller
+        self.port: str = None # from available ports
+        self.stepscales: dict = { axis_name:None for axis_name in axis_names } # platines
+        self.speed_limits: dict = { axis_name:{ "max":None, "min":None } for axis_name in axis_names } # platines
+        self.baudrate: int = None # controller
+
+        self.connection: co.SerialConnection = co.SerialConnection() # connection to controller
 
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
         with open(path+"settings_files\\save.json","r") as saveFile:
@@ -62,6 +65,7 @@ class ModelSettings:
             if(not isinstance(port,str)):
                 raise TypeError(f"port should be a string, not {type(port)} [value:{port}]")
             self.port = port
+            self.connection.port = self.port
         if stepscales:
             for keyAxis,valStepScale in stepscales.items():
                 if keyAxis in self.stepscales.keys(): # and valStepScale in self.platinesData ?
@@ -90,6 +94,7 @@ class ModelSettings:
                 print(f"baudrate should be an int, not {type(baudrate)} [value:{baudrate}]")
             print(f"ModelSetting: setting baudrate as {baudrate}")
             self.baudrate = baudrate
+            self.connection.baudrate = self.baudrate
 
     def applySettingsFromData(self):
         # Apply saved settings
@@ -238,7 +243,8 @@ class ModelControl:
         self.speeds     = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
         self.settings = settings
 
-        self.communication = communication
+        self.communication = communication # command's language
+        self.connection = self.settings.connection # controller connection
     
     def setValue(self, axis, value):
         self.values.update({ axis:value })
@@ -284,6 +290,7 @@ class ModelControl:
         # Create and execute command
         cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmd)
+        self.connection.executeCmd(cmd)
         # Deduce current value
         for key,incrVal in axis_values.items():
             if axis_speeds[key] > 0:

@@ -51,6 +51,17 @@ class SerialConnection:
             - 0 if no acknowledge is recieved, all commands might not have been sent.
             - 1 if all commands were sent and all acknowledges recieved.
         """
+        print("sim connection...")
+        print("port: ",self.port,port)
+        print("baudrate:",self.baudrate)
+        if isinstance(commands,(str,bytes)):
+            commands = [commands]
+        for cmd in commands:
+            print("launch cmd:",cmd)
+        print("...end of sim connection")
+        return 1
+
+
         if not port:
             port = self.port
         with serial.Serial() as ser:

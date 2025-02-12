@@ -6,6 +6,7 @@ import models
 import communications as cmds
 from pathlib import Path
 
+# Current path
 path = str(Path(__file__).parent.absolute())+"\\"
 
 class MainApp(tk.Tk):
