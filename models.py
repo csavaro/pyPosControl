@@ -312,15 +312,16 @@ class ModelControl:
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
-        cmd = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
-        print("sending ",cmd)
-        self.connection.executeCmd(cmd)
+        cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
+        print("sending ",cmds)
+        self.connection.executeCmd(cmds)
         # Deduce current value
         for key,incrVal in axis_values.items():
             if axis_speeds[key] > 0:
                 self.values[key] += incrVal / self.settings.stepscales[key]
         print("curr pos: ",self.values)
-        return cmd
+        cmds = [cmd.decode("utf-8") for cmd in cmds]
+        return "\n".join(cmds)
 
     def absMove(self, axis_values: dict, axis_speeds: dict = None):
         """
@@ -341,15 +342,16 @@ class ModelControl:
         axis_speeds = self.convertMmToSteps(axis_speeds)
         print(rel_axis_values)
         # Create and execute command
-        cmd = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
-        print("sending ",cmd)
-        self.connection.executeCmd(cmd)
+        cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
+        print("sending ",cmds)
+        self.connection.executeCmd(cmds)
         # Deduce current value
         for key,absVal in axis_values.items():
             if axis_speeds[key] > 0:
                 self.values[key] = absVal #/ self.settings.stepscales[key]
         print("curr pos: ",self.values)
-        return cmd
+        cmds = [cmd.decode("utf-8") for cmd in cmds]
+        return "\n".join(cmds)
 
     def stop(self):
         """
@@ -391,12 +393,13 @@ class ModelControl:
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
-        cmd = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
-        print("go zero ",cmd)
-        self.connection.executeCmd(cmd)
+        cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
+        print("go zero ",cmds)
+        self.connection.executeCmd(cmds)
         # Update current position values
         for axis in self.values.keys(): self.values[axis] = 0
-        return cmd
+        cmds = [cmd.decode("utf-8") for cmd in cmds]
+        return "\n".join(cmds)
     
     def setZero(self):
         """
