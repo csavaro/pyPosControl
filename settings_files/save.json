@@ -7,9 +7,9 @@
     },
     "settings": {
         "platineX": "Platine 2",
-        "platineY": "Platine 3",
+        "platineY": "",
         "platineZ": "",
-        "controller": "Controller 2",
+        "controller": "Controller 3",
         "port": "COM1"
     },
     "default": {
