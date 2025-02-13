@@ -32,12 +32,14 @@ class MainApp(tk.Tk):
         self.mSettings = models.ModelSettings(self.axis)
         self.mSettings.loadSettings(path)
         self.mSettings.applySettingsFromData()
+        self.mSettings.applyDefault()
         speeds = { axis:100 for axis in self.axis }
         self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=speeds), settings=self.mSettings)
 
         self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings, font=Font(family="Helvetica",size=12))
         self.btnOpenSettings.pack(expand=True, fill="both")
         # self.settingsFrame = mytools.SettingsFrame(self.frame.interior, self.mSettings.getSettingsDict())
+
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
         self.controlGeneralFrame = mytools.ControlGeneralFrame(self.frame.interior, self.axis)
@@ -171,23 +173,30 @@ class MainApp(tk.Tk):
         self.settingWindow.destroy()
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
+        # Colors
         axisBgColors = ["#F15A5A","#71C257","#DDC96A"]
         axisFgColors = ["#FFFFFF","#FFFFFF","#FFFFFF"]
         if len(self.axis) > len(axisBgColors) or len(self.axis) > len(axisFgColors):
             for i in range(len(self.axis)-len(axisBgColors)) : axisBgColors.append("#3D3D3D")
             for i in range(len(self.axis)-len(axisFgColors)) : axisFgColors.append("#FFFFFF")
 
+        # Creating main components
         incrFrame = tk.Frame(master)
         axis_delta = [ f"Δ{oneAxis}" for oneAxis in self.axis ]
         self.incrAxis = mytools.AxisFrame(incrFrame, axis_delta)
         self.incrButtons = mytools.AxisButtonsFrame(incrFrame, self.axis)
 
-        # Axis label colors
+        # Apply default values
+        for axsLabEnt in self.incrAxis.axis:
+            axsLabEnt: mytools.AxisLabeledEntry
+            axsLabEnt.inpSpeedAxis.set(self.mSettings.default_speeds[axsLabEnt.lblAxis.cget("text")[1:]])
+
+        # Apply axis label colors
         idxAxis = 0
         for oneAxis in self.incrAxis.axis:
             oneAxis.lblAxis.config(fg=axisBgColors[idxAxis])
             idxAxis += 1
-
+        # Set commands on buttons
         idxAxis = 0
         for oneBtnAxis in self.incrButtons.btnAxis:
             oneBtnAxis: mytools.AxisButtons
@@ -203,6 +212,7 @@ class MainApp(tk.Tk):
             )
             idxAxis += 1
 
+        # Creating options components
         self.incrReverse = tk.Frame(incrFrame)
         self.incrReverse.rowconfigure((0),weight=1,uniform='a')
         self.incrReverse.columnconfigure(tuple(range(len(self.axis))), weight=1, uniform='a')
@@ -246,6 +256,11 @@ class MainApp(tk.Tk):
     def createAbsoluteFrame(self, master: tk.Widget) -> tk.Frame:
         absFrame = tk.Frame(master)
         self.absAxis = mytools.AxisFrame(absFrame, self.axis)
+
+        # Apply default values
+        for axsLabEnt in self.absAxis.axis:
+            axsLabEnt: mytools.AxisLabeledEntry
+            axsLabEnt.inpSpeedAxis.set(self.mSettings.default_speeds[axsLabEnt.lblAxis.cget("text")])
 
         self.absDisplayCmd = tk.Frame(absFrame)
         self.absDisplayCmd.rowconfigure((0),weight=1,uniform='a')

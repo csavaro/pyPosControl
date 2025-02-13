@@ -15,6 +15,8 @@ class ModelSettings:
         self.speed_limits: dict = { axis_name:{ "max":None, "min":None } for axis_name in axis_names } # platines
         self.baudrate: int = None # controller
 
+        self.default_speeds: dict = { axis_name:None for axis_name in axis_names } # default speed values
+
         self.connection: co.SerialConnection = co.SerialConnection() # connection to controller
 
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
@@ -258,7 +260,15 @@ class ModelSettings:
 
         with open(filesData["path"]+filesData["configuration"],"r") as configsFile:
             self.configsData: dict = json.load(configsFile)
-    
+
+    def applyDefault(self):
+        self.defaultData: dict
+        for key,defData in self.defaultData.items():
+            arel,pname = self.isAxisRelated(key)
+            if arel and pname == "speed":
+                print(f"FOUND SPEED !!! k:{key} - d:{defData}")
+                self.default_speeds[key[len(pname):]] = defData
+
     def getAvailablePorts(self):
         self.portsData = {}
         pass
