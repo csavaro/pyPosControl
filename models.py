@@ -1,6 +1,8 @@
 import json
 import communications as cmds
 import connection as co
+from threading import Thread,Lock
+import time
 
 class ModelSettings:
     axisParameters = ["platine"]
@@ -269,6 +271,9 @@ class ModelControl:
 
         self.communication = communication # command's language
         self.connection = self.settings.connection # controller connection
+        self.teCommands = ThreadExecutor("SerialConnection")
+        
+        self.teCommands.start()
     
     def setValue(self, axis, value):
         self.values.update({ axis:value })
@@ -311,14 +316,19 @@ class ModelControl:
         axis_speeds = self.checkSpeed(axis_speeds)
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
+
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
-        self.connection.executeCmd(cmds)
-        # Deduce current value
-        for key,incrVal in axis_values.items():
-            if axis_speeds[key] > 0:
-                self.values[key] += incrVal / self.settings.stepscales[key]
+        # self.connection.executeCmd(cmds)
+        res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+
+        if res == 0:
+            # Deduce current value
+            for key,incrVal in axis_values.items():
+                if axis_speeds[key] > 0:
+                    self.values[key] += incrVal / self.settings.stepscales[key]
+        
         print("curr pos: ",self.values)
         cmds = [cmd.decode("utf-8") for cmd in cmds]
         return "\n".join(cmds)
@@ -341,14 +351,19 @@ class ModelControl:
         rel_axis_values = self.convertMmToSteps(rel_axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         print(rel_axis_values)
+
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
-        self.connection.executeCmd(cmds)
-        # Deduce current value
-        for key,absVal in axis_values.items():
-            if axis_speeds[key] > 0:
-                self.values[key] = absVal #/ self.settings.stepscales[key]
+        # self.connection.executeCmd(cmds)
+        res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+
+        if res == 0:
+            # Deduce current value
+            for key,absVal in axis_values.items():
+                if axis_speeds[key] > 0:
+                    self.values[key] = absVal #/ self.settings.stepscales[key]
+
         print("curr pos: ",self.values)
         cmds = [cmd.decode("utf-8") for cmd in cmds]
         return "\n".join(cmds)
@@ -392,12 +407,17 @@ class ModelControl:
             })
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
+
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         print("go zero ",cmds)
-        self.connection.executeCmd(cmds)
-        # Update current position values
-        for axis in self.values.keys(): self.values[axis] = 0
+        # self.connection.executeCmd(cmds)
+        res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+
+        if res == 0:
+            # Update current position values
+            for axis in self.values.keys(): self.values[axis] = 0
+
         cmds = [cmd.decode("utf-8") for cmd in cmds]
         return "\n".join(cmds)
     
@@ -407,6 +427,9 @@ class ModelControl:
         """
         for axis in self.values.keys(): self.values[axis] = 0
         print("set as zero")
+
+    def quit(self):
+        self.teCommands.kill()
 
 
 def inWithStartKeys(value: str, startkeys: list):
@@ -425,6 +448,110 @@ def removeWithStartKey(dico: dict, startkey: str):
     for key_to_remove in keys_to_remove:
         del dico[key_to_remove]
     return dico
+
+class ThreadExecutor(Thread):
+    wait_list_size = 3
+
+    def __init__(self, name: str):
+        Thread.__init__(self)
+        self.curr_thread: Thread = None
+        self.wait_list  : list   = []
+        self._lock      : Lock   = Lock()
+        self.name       : str    = name
+        self.killed     : bool   = False
+
+    def run(self):
+        """
+        Run until killed. Run tasks from it's waiting list.
+        """
+        # counter = 0
+        interval_time = 0.5  # seconds
+
+        while not self.killed:
+            # affichages
+            time.sleep(interval_time)
+            #print("\n" + self.name + "\t" + str(counter) + "s")
+            # print(self.curr_thread)
+            # print(self.wait_list)
+            # counter += interval_time
+
+            # gestion concrete
+            if self.wait_list:
+                # si liste non vide
+                with self._lock:
+                    # assignation du thread courant
+                    self.curr_thread = self.wait_list.pop(0)
+                # lancement du thread courant
+                self.curr_thread.start()
+                # attente de la fin du thread courant
+                self.curr_thread.join()
+                # suppression du thread courant execute
+                self.curr_thread = None
+        print(self.name + " has been killed.")
+
+    def addTask(self, newtask, *taskargs):
+        """
+        Create thread for the new task and add it to the waiting list.
+        Returns:
+        - 0 : if everything went well.
+        - 1 : if waiting list was full and task not took into account.
+        """
+        thntask = Thread(target=newtask,args=taskargs)
+        return self.addThreadedTask(thntask)
+
+    # ajout d une tache a la liste d attente a executer
+    def addThreadedTask(self, newthread: Thread):
+        """
+        Add task in a thread to the waiting list if not full.
+        Returns:
+        - 0 : if everything went well.
+        - 1 : if waiting list was full and task not took into account.
+        """
+        # verification de la taille de la liste d attente
+        if len(self.wait_list) < self.wait_list_size:
+            with self._lock:
+                # si il reste de la place, ajout a la liste
+                self.wait_list.append(newthread)
+            return 0
+        else:
+            # si plus de place, affichage de la non prise en compte de la tache
+            print("/!\ Warning /!\ waiting list is too big, thread dropped :" + str(newthread))
+            return -1
+
+    def isRunning(self):
+        return self.curr_thread is not None
+
+    def getState(self):
+        """
+        Return value possibilities:
+        - 0 : nothing is running.
+        - 1 : one task is running, waiting list is empty.
+        - 2 : one task is running, waiting list is full.
+        - 3 : one task is running, waiting list has some tasks.
+        - 4 : no task is running but waiting list has some tasks.
+        """
+        if self.curr_thread is None and len(self.wait_list) == 0:
+            # nothing running and waiting list is empty
+            return 0
+        elif self.curr_thread is not None and len(self.wait_list) == 0:
+            # one task is running and waiting list is empty
+            return 1
+        elif self.curr_thread is not None and len(self.wait_list) == self.wait_list_size:
+            # one task is running and waiting list is full
+            return 2
+        elif self.curr_thread is not None and len(self.wait_list) > 0:
+            # one task is running and waiting list has some tasks
+            return 3
+        elif self.curr_thread is None and len(self.wait_list) > 0:
+            # nothing is running and waiting list has some tasks
+            return 4
+        else:
+            # nothing recognized
+            return 5
+        
+    # termine le threadexecutor
+    def kill(self):
+        self.killed = True
 
 if __name__ == "__main__":
     print("start models")

@@ -15,6 +15,7 @@ class MainApp(tk.Tk):
     def __init__(self, axis_names, title: str ="", *args, **kwargs):
         super().__init__(*args,**kwargs)
         self.title(title)
+        self.protocol("WM_DELETE_WINDOW", self._close)
         self.frame = mytools.ScrollableFrame(self)
         self.frame.pack(expand=True, fill="both")
         self.frame.canvas.pack(padx=25, pady=10)
@@ -294,6 +295,13 @@ class MainApp(tk.Tk):
         # self.controlGeneralFrame.pack_forget()
         # self.controlGeneralFrame.reset_layout()
         # self.controlFrame.reset_layout()
+    
+    def _close(self):
+        # kill threads
+        self.mControl.quit()
+        # kill GUI
+        self.quit()
+        self.destroy()
 
 
 if __name__ == "__main__":
