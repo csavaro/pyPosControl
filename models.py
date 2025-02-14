@@ -307,9 +307,11 @@ class ModelControl:
 
         self.communication = communication # command's language
         self.connection = self.settings.connection # controller connection
-        self.teCommands = ThreadExecutor("SerialConnection")
+
+        self.teCommands = None
+        # self.teCommands = ThreadExecutor("SerialConnection")
         
-        self.teCommands.start()
+        # self.teCommands.start()
     
     def setValue(self, axis, value):
         self.values.update({ axis:value })
@@ -356,8 +358,8 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
-        # self.connection.executeCmd(cmds)
-        res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+        res = self.connection.executeCmd(cmds)
+        # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
         if res == 0:
             # Deduce current value
@@ -391,8 +393,8 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
-        # self.connection.executeCmd(cmds)
-        res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+        res = self.connection.executeCmd(cmds)
+        # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
         if res == 0:
             # Deduce current value
@@ -447,8 +449,8 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         print("go zero ",cmds)
-        # self.connection.executeCmd(cmds)
-        res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+        res = self.connection.executeCmd(cmds)
+        # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
         if res == 0:
             # Update current position values
@@ -465,7 +467,8 @@ class ModelControl:
         print("set as zero")
 
     def quit(self):
-        self.teCommands.kill()
+        if self.teCommands and self.teCommands.isRunning():
+            self.teCommands.kill()
 
 
 def inWithStartKeys(value: str, startkeys: list):
