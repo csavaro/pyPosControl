@@ -78,12 +78,12 @@ class UiConsole:
                 "label": "Go back to settings",
                 "action": lambda s="> going back to settings": print(s)
             },
-            "1": {
+            "e": {
                 "label": "Empty",
                 "action": lambda pd={ axis: "" }: self.saveSettings(platines=pd)
             }
         }
-        idx = 2
+        idx = 1
         for onePlatine in self.mSettings.platinesData.values():
             print("CREATING",onePlatine)
             # add decoration to display on the current platine
@@ -107,13 +107,13 @@ class UiConsole:
                 "label": "Go back to settings",
                 "action": lambda s="> going back to settings": print(s)
             },
-            "1": {
+            "e": {
                 "label": "Empty",
                 "action": lambda cd="": self.saveSettings(controller=cd)
             }
         }
 
-        idx = 2
+        idx = 1
         for oneController in self.mSettings.controllersData.values():
             print("CREATING",oneController)
             # add decoration to display on the current platine
@@ -139,13 +139,13 @@ class UiConsole:
                 "label": "Go back to settings",
                 "action": lambda s="> going back to settings": print(s)
             },
-            "1": {
+            "e": {
                 "label": "Empty",
                 "action": lambda p="": self.saveSettings(port=p)
             }
         }
 
-        idx = 2
+        idx = 1
         for onePort in self.mSettings.portsData.values():
             print("CREATING",onePort)
             # add decoration to display on the current platine
