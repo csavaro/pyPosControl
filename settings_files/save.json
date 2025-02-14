@@ -6,10 +6,10 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "platineX": "Platine 2",
-        "platineY": "",
+        "platineX": "Platine 1",
+        "platineY": "Platine 1",
         "platineZ": "Platine 1",
-        "controller": "",
+        "controller": "Controller 1",
         "port": "COM1"
     },
     "default": {

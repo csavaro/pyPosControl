@@ -28,6 +28,14 @@ class UiConsole:
             "2": {
                 "label": "Go to settings",
                 "action": self.settingsMenu
+            },
+            "3": {
+                "label": "Incremental move",
+                "action": self.incrMove
+            },
+            "4": {
+                "label": "Absolute move",
+                "action": self.absMove
             }
         }
 
@@ -154,6 +162,47 @@ class UiConsole:
             idx += 1
         
         self.menu(portsDict, "0", "Choosing port")
+
+    def incrMove(self):
+        print("not yet implemented")
+        aVals,aSpeeds = self.inputCmd()
+        try:
+            cmd = self.mControl.incrMove(aVals,aSpeeds)
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+
+    def absMove(self):
+        print("not yet implemented")
+        aVals,aSpeeds = self.inputCmd()
+        try:
+            cmd = self.mControl.absMove(aVals,aSpeeds)
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+
+    def inputCmd(self):
+        axis_vals = { oneAxis:0 for oneAxis in self.axis }
+        axis_speeds = { oneAxis:0 for oneAxis in self.axis }
+
+        incorrectFormat = True
+        while incorrectFormat:
+            print("Enter the movement. Axis order is "+str(self.axis)+". Format is {x_val,x_speed,y_val,y_speed} etc")
+            uCmd = input()
+            try:
+                spCmd = uCmd.split(",")
+                if len(spCmd) != len(self.axis)*2:
+                    print(f"Wrong! should've been {len(self.axis)*2}, not {len(spCmd)}. Use , to separate values.")
+                else:
+                    for i in range(0,len(spCmd),2):
+                        axis_vals[self.axis[int(i/2)]] = float(spCmd[i])
+                        axis_speeds[self.axis[int(i/2)]] = float(spCmd[i+1])
+
+                    incorrectFormat = False
+
+            except ValueError:
+                exCmd = ",".join([ "45,10" for i in range(len(self.axis))])
+                print(f"Wrong format! ex: {exCmd}")
+
+        return axis_vals,axis_speeds
 
     def saveSettings(self, platines: dict = None, controller: str = None, port: str = None):
         if platines != None:
