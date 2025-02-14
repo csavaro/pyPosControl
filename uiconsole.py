@@ -65,8 +65,6 @@ class UiConsole:
         self.menu(self.settingsDict, "0", "Settings")
 
     def platinesMenu(self, axis: str):
-        print("not implemented yet")
-
         platinesDict = {
             "0": {
                 "label": "Go back to settings",
@@ -93,7 +91,30 @@ class UiConsole:
 
     def controllerMenu(self):
         print("not implemented yet")
-        pass
+        controllersDict = {
+            "0": {
+                "label": "Go back to settings",
+                "action": lambda s="> going back to settings": print(s)
+            }
+        }
+
+        idx = 1
+        for oneController in self.mSettings.controllersData.values():
+            print("CREATING",oneController)
+            # add decoration to display on the current platine
+            prefix = ""
+            if oneController["name"] == self.settingsData['parameters']['controller']['default']:
+                prefix = "* "
+            # create option
+            controllersDict.update({
+                str(idx): {
+                    "label": prefix+oneController["name"],
+                    "action": lambda cd=oneController["name"]: self.saveSettings(controller=cd)
+                }
+            })
+            idx += 1
+        
+        self.menu(controllersDict, "0", "Chosing controller")
 
     def portMenu(self):
         print("not implemented yet")

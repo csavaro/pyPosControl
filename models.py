@@ -20,16 +20,12 @@ class ModelSettings:
         self.connection: co.SerialConnection = co.SerialConnection() # connection to controller
 
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
-        print("Will save :")
-        print("-*- port:",port)
-        print("-*- controller:",controller)
-        for ax,pl in platines.items(): print(f"-*- platine{ax}:",pl)
-
         with open(path+"settings_files\\save.json","r") as saveFile:
             settingsDict = json.load(saveFile)
 
-        platinesDict = { "platine"+axis:value for axis,value in platines.items() }
-        settingsDict["settings"].update(platinesDict)
+        if platines != None:
+            platinesDict = { "platine"+axis:value for axis,value in platines.items() }
+            settingsDict["settings"].update(platinesDict)
         if controller != None:
             settingsDict["settings"].update({
                 "controller": controller
@@ -46,29 +42,30 @@ class ModelSettings:
         print("applying settings")
         stepscales_dict = {} 
         speed_limits_dict = {}
-        for axis,valPlatine in platines.items():
-            if valPlatine:
-                stepscales_dict.update({
-                    axis:
-                    float(self.platinesData[valPlatine]["value"])
-                })
-                speed_limits_dict.update({
-                    axis: {
-                        "max": self.platinesData[valPlatine]["max_speed"],
-                        "min": self.platinesData[valPlatine]["min_speed"]
-                    }
-                })
-            else:
-                stepscales_dict.update({
-                    axis:
-                    0
-                })
-                speed_limits_dict.update({
-                    axis: {
-                        "max": 0,
-                        "min": 0
-                    }
-                })
+        if (platines != None):
+            for axis,valPlatine in platines.items():
+                if valPlatine:
+                    stepscales_dict.update({
+                        axis:
+                        float(self.platinesData[valPlatine]["value"])
+                    })
+                    speed_limits_dict.update({
+                        axis: {
+                            "max": self.platinesData[valPlatine]["max_speed"],
+                            "min": self.platinesData[valPlatine]["min_speed"]
+                        }
+                    })
+                else:
+                    stepscales_dict.update({
+                        axis:
+                        0
+                    })
+                    speed_limits_dict.update({
+                        axis: {
+                            "max": 0,
+                            "min": 0
+                        }
+                    })
 
         if (controller):
             baudrate = self.controllersData[controller]["value"]
