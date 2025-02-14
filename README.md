@@ -1,8 +1,12 @@
 # From LabView to Python
 
+## uiconsole.py
+### Classes
+- UiConsole: app en console, subtitue a MainFrame. Contient des methodes affichant des menus
+
 ## mainFrame.py
 ### Classes
-- MainFrame : app (tk.Tk()), regroupe tous les éléments graphiques et fait le liens avec les modèles.
+- MainFrame : app graphique (tk.Tk()), regroupe tous les éléments graphiques et fait le liens avec les modèles.
 
 ## connection.py
 ### Exceptions
