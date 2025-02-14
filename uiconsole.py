@@ -36,6 +36,18 @@ class UiConsole:
             "4": {
                 "label": "Absolute move",
                 "action": self.absMove
+            },
+            "5": {
+                "label": "Go to zero",
+                "action": self.goZero
+            },
+            "6": {
+                "label": "Set as zero",
+                "action": self.setZero
+            },
+            "s": {
+                "label": "Stop signal",
+                "action": self.stop
             }
         }
 
@@ -176,6 +188,24 @@ class UiConsole:
         aVals,aSpeeds = self.inputCmd()
         try:
             cmd = self.mControl.absMove(aVals,aSpeeds)
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+
+    def goZero(self):
+        try:
+            self.mControl.goZero()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+
+    def setZero(self):
+        try:
+            self.mControl.setZero()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+
+    def stop(self):
+        try:
+            self.mControl.stop()
         except MissingValue as e:
             print("ERROR: MissingValue",e)
 
