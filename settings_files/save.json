@@ -6,11 +6,11 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "platineX": "Platine 2",
-        "platineY": "",
-        "platineZ": "",
+        "platineX": "Platine 5",
+        "platineY": "Platine 2",
+        "platineZ": "Platine 1",
         "controller": "Controller 3",
-        "port": "COM1"
+        "port": "COM3"
     },
     "default": {
         "speedX": 500,

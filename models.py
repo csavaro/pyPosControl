@@ -20,15 +20,24 @@ class ModelSettings:
         self.connection: co.SerialConnection = co.SerialConnection() # connection to controller
 
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
+        print("Will save :")
+        print("-*- port:",port)
+        print("-*- controller:",controller)
+        for ax,pl in platines.items(): print(f"-*- platine{ax}:",pl)
+
         with open(path+"settings_files\\save.json","r") as saveFile:
             settingsDict = json.load(saveFile)
 
         platinesDict = { "platine"+axis:value for axis,value in platines.items() }
         settingsDict["settings"].update(platinesDict)
-        settingsDict["settings"].update({
-            "controller": controller,
-            "port": port
-        })
+        if controller != None:
+            settingsDict["settings"].update({
+                "controller": controller
+            })
+        if port != None:
+            settingsDict["settings"].update({
+                "port": port
+            })
 
         with open(path+"settings_files\\save.json","w") as saveFile:
             json.dump(settingsDict, saveFile, indent=4)

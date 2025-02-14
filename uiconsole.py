@@ -76,25 +76,15 @@ class UiConsole:
         idx = 1
         for onePlatine in self.mSettings.platinesData.values():
             print("CREATING",onePlatine)
-            # scenario this platine is choosed
-            plChoosed = {}
-            for oneAxis in self.axis:
-                if oneAxis == axis:
-                    plChoosed.update({
-                        oneAxis:
-                        onePlatine["name"]
-                    })
-                else:
-                    print("MAAAAAAAAAAAIS")
-                    plChoosed.update({
-                        oneAxis:
-                        self.settingsData['parameters'][f'platine{axis}']['default']
-                    })
+            # add decoration to display on the current platine
+            prefix = ""
+            if onePlatine["name"] == self.settingsData['parameters'][f'platine{axis}']['default']:
+                prefix = "* "
             # create option
             platinesDict.update({
                 str(idx): {
-                    "label": onePlatine["name"],
-                    "action": lambda pd=plChoosed: self.mSettings.saveSettings(path,platines=pd)
+                    "label": prefix+onePlatine["name"],
+                    "action": lambda pd={ axis: onePlatine["name"] }: self.saveSettings(platines=pd)
                 }
             })
             idx += 1
@@ -109,6 +99,30 @@ class UiConsole:
         print("not implemented yet")
         pass
 
+    def saveSettings(self, platines: dict = None, controller: str = None, port: str = None):
+        if platines != None:
+            plChoosed = {}
+            for oneAxis in self.axis:
+                # Platines to change
+                if oneAxis in platines.keys():
+                    plChoosed.update({
+                        oneAxis: 
+                        platines[oneAxis]
+                    })
+                # Platines to not touch
+                else:
+                    plChoosed.update({
+                        oneAxis: 
+                        self.settingsData['parameters'][f'platine{oneAxis}']['default']
+                    })
+            platines = plChoosed
+        
+        self.mSettings.saveSettings(path, port=port, platines=platines, controller=controller)
+        self.mSettings.loadSettings(path)
+        self.settingsData = self.mSettings.getSettingsDict()
+
+        return "0"
+
     def menu(self, menuDict: dict, stop_inp: str, title: str = ""):
         choice = -1
 
@@ -120,7 +134,9 @@ class UiConsole:
             choice = input()
 
             if choice in menuDict.keys():
-                menuDict[choice]["action"]()
+                ret = menuDict[choice]["action"]()
+                if ret != None:
+                    choice = ret
             else:
                 print("wrong option choosed")
 
