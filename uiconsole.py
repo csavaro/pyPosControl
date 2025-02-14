@@ -69,9 +69,13 @@ class UiConsole:
             "0": {
                 "label": "Go back to settings",
                 "action": lambda s="> going back to settings": print(s)
+            },
+            "1": {
+                "label": "Empty",
+                "action": lambda pd={ axis: "" }: self.saveSettings(platines=pd)
             }
         }
-        idx = 1
+        idx = 2
         for onePlatine in self.mSettings.platinesData.values():
             print("CREATING",onePlatine)
             # add decoration to display on the current platine
@@ -90,15 +94,18 @@ class UiConsole:
         self.menu(platinesDict, "0", "Choosing platine")
 
     def controllerMenu(self):
-        print("not implemented yet")
         controllersDict = {
             "0": {
                 "label": "Go back to settings",
                 "action": lambda s="> going back to settings": print(s)
+            },
+            "1": {
+                "label": "Empty",
+                "action": lambda cd="": self.saveSettings(controller=cd)
             }
         }
 
-        idx = 1
+        idx = 2
         for oneController in self.mSettings.controllersData.values():
             print("CREATING",oneController)
             # add decoration to display on the current platine
@@ -114,11 +121,39 @@ class UiConsole:
             })
             idx += 1
         
-        self.menu(controllersDict, "0", "Chosing controller")
+        self.menu(controllersDict, "0", "Choosing controller")
 
     def portMenu(self):
         print("not implemented yet")
-        pass
+
+        portsDict = {
+            "0": {
+                "label": "Go back to settings",
+                "action": lambda s="> going back to settings": print(s)
+            },
+            "1": {
+                "label": "Empty",
+                "action": lambda p="": self.saveSettings(port=p)
+            }
+        }
+
+        idx = 2
+        for onePort in self.mSettings.portsData.values():
+            print("CREATING",onePort)
+            # add decoration to display on the current platine
+            prefix = ""
+            if onePort["name"] == self.settingsData['parameters']['port']['default']:
+                prefix = "* "
+            # create option
+            portsDict.update({
+                str(idx): {
+                    "label": prefix+onePort["name"],
+                    "action": lambda p=onePort["name"]: self.saveSettings(port=p)
+                }
+            })
+            idx += 1
+        
+        self.menu(portsDict, "0", "Choosing port")
 
     def saveSettings(self, platines: dict = None, controller: str = None, port: str = None):
         if platines != None:

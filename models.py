@@ -196,11 +196,11 @@ class ModelSettings:
                         keySett: {
                             "name": "Port",
                             "default": valSett,
-                            # "options": self.portsData
-                            "options": {
-                                "COM1": { "name": "COM1", "value": "COM1"},
-                                "COM3": { "name": "COM3", "value": "COM3"}
-                            }
+                            "options": self.portsData
+                            # "options": {
+                            #     "COM1": { "name": "COM1", "value": "COM1"},
+                            #     "COM3": { "name": "COM3", "value": "COM3"}
+                            # }
                         }
                     })
                 elif keySett == "controller":
@@ -238,12 +238,14 @@ class ModelSettings:
         return False,""
 
     def loadSettings(self, path):
+        # Saved data
         with open(path+"settings_files\\save.json","r") as saveFile:
             saveData = json.load(saveFile)
             filesData = saveData["files"]
             self.settingsData = saveData["settings"]
             self.defaultData = saveData["default"]
 
+        # Platines data
         with open(filesData["path"]+filesData["platine"],"r") as platinesFile:
             platinesRawData: dict = json.load(platinesFile)
             self.platinesData = {}
@@ -264,6 +266,7 @@ class ModelSettings:
                     }
                 })
 
+        # Controller data
         with open(filesData["path"]+filesData["controller"],"r") as controllersFile:
             controllersRawData: dict = json.load(controllersFile)
             self.controllersData = {}
@@ -275,8 +278,12 @@ class ModelSettings:
                     }
                 })
 
+        # Configs data
         with open(filesData["path"]+filesData["configuration"],"r") as configsFile:
             self.configsData: dict = json.load(configsFile)
+
+        # Ports data
+        self.portsData = self.getAvailablePorts()
 
     def applyDefault(self):
         self.defaultData: dict
@@ -287,8 +294,10 @@ class ModelSettings:
                 self.default_speeds[key[len(pname):]] = defData
 
     def getAvailablePorts(self):
-        self.portsData = {}
-        pass
+        return {
+            "COM1": { "name": "COM1", "value": "COM1"},
+            "COM3": { "name": "COM3", "value": "COM3"}
+        }
 
 class ModelControl:
     def __init__(self, axis_names, communication: cmds.Commands = None, settings: ModelSettings = None):
