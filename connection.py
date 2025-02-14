@@ -59,11 +59,11 @@ class SerialConnection:
         if not port:
             raise MissingValue("Missing setting: port is not set. Either give it in function param or set it in class attribute")
         if not self.baudrate or self.baudrate <= 0:
-            raise TypeError("Missing setting: baudrate is not set. Set it in class attribute")
+            raise MissingValue("Missing setting: baudrate is not set. Set it in class attribute")
         if not self.bytesize or self.bytesize <= 0:
-            raise TypeError("Missing setting: bytesize is not set. Set it in class attribute")
+            raise MissingValue("Missing setting: bytesize is not set. Set it in class attribute")
         if not self.parity:
-            raise TypeError("Missing setting: parity is not set. Set it in class attribute")
+            raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
         # Simulation
         # TO_REMOVE
