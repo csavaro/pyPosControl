@@ -73,13 +73,13 @@ class ModelSettings:
             baudrate = 0
 
         # Disgusting but should works, to change later
-        if not port:
+        if port == None:
             port = -1
-        if not stepscales_dict:
+        if stepscales_dict == None:
             stepscales_dict = -1
-        if not speed_limits_dict:
+        if speed_limits_dict == None:
             speed_limits_dict = -1
-        if not baudrate:
+        if controller == None:
             baudrate = -1
 
         self.applySettings(

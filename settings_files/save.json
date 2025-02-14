@@ -7,10 +7,10 @@
     },
     "settings": {
         "platineX": "Platine 3",
-        "platineY": "Platine 3",
+        "platineY": "",
         "platineZ": "Platine 1",
-        "controller": "Controller 3",
-        "port": ""
+        "controller": "Controller 2",
+        "port": "COM3"
     },
     "default": {
         "speedX": 500,
