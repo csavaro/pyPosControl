@@ -360,8 +360,8 @@ class ModelControl:
         print("sending ",cmds)
         res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
-
-        if res == 0:
+        print("DO SMTH?",res)
+        if res:
             # Deduce current value
             for key,incrVal in axis_values.items():
                 if axis_speeds[key] > 0:
@@ -396,7 +396,7 @@ class ModelControl:
         res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
-        if res == 0:
+        if res:
             # Deduce current value
             for key,absVal in axis_values.items():
                 if axis_speeds[key] > 0:
@@ -452,7 +452,7 @@ class ModelControl:
         res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
-        if res == 0:
+        if res:
             # Update current position values
             for axis in self.values.keys(): self.values[axis] = 0
 

@@ -68,8 +68,29 @@ class MainApp(tk.Tk):
         for axis,inpCurPos in self.controlGeneralFrame.inpAxisValues.items():
             inpCurPos.set(self.mControl.values[axis])
 
+    def changeStateMovementsButtons(self, state: str):
+        self.controlGeneralFrame.btnGoZero.config(state=state)
+        self.controlGeneralFrame.btnSetZero.config(state=state)
+
+        if self.incrButtons:
+            for incrBtn in self.incrButtons.btnAxis:
+                incrBtn.btnPlus.config(state=state)
+                incrBtn.btnMinus.config(state=state)
+        if self.absBtnMove:
+            self.absBtnMove.config(state=state)
+
     def incrMove(self, sign: str, axis: str):
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
+            print("BTN DISABLED")
+            self.changeStateMovementsButtons(tk.DISABLED)
+
+            # FOR DEBUG
+            p = input("enter anything to continue")
+
+            # from threading import Thread
+            # t = Thread(target=self.blaou, args=(sign,axis,))
+            # t.start()
+
             incrMoveDict = {}
             incrSpeedDict = {}
             for oneAxis in self.axis:
@@ -86,13 +107,23 @@ class MainApp(tk.Tk):
 
             try:
                 cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict)
+                # self.changeStateMovementsButtons("normal")
                 self.inpIncrCmd.set(cmd[:-2])
                 self.updateCurrentPosition()
             except MissingValue as e:
                 print("ERROR: MissingValue",e)
                 showerror(title="Missing value",message=e)
 
+            print("BTN BACK TO NM")
+            self.changeStateMovementsButtons("normal")
+
     def absMove(self):
+        print("BTN DISABLED")
+        self.changeStateMovementsButtons("disabled")
+
+        # FOR DEBUG
+        p = input("enter anything to continue")
+
         absMoveDict = {}
         absSpeedDict = {}
         for oneAxis in self.axis:
@@ -110,6 +141,9 @@ class MainApp(tk.Tk):
             print("ERROR: MissingValue",e)
             showerror(title="Missing value",message=e)
 
+        print("BTN BACK TO NM")
+        self.changeStateMovementsButtons("normal")
+
     def stopAction(self):
         try:
             self.mControl.stop()
@@ -126,12 +160,21 @@ class MainApp(tk.Tk):
             showerror(title="Missing value",message=e)
 
     def goZeroAction(self):
+        print("BTN DISABLED")
+        self.changeStateMovementsButtons("disabled")
+        
+        # FOR DEBUG
+        p = input("enter anything to continue")
+
         try:
             self.mControl.goZero()
             self.updateCurrentPosition()
         except MissingValue as e:
             print("ERROR: MissingValue",e)
             showerror(title="Missing value",message=e)
+
+        print("BTN BACK TO NM")
+        self.changeStateMovementsButtons("normal")
 
     def openSettings(self):
         self.settingWindow = tk.Toplevel(self)
