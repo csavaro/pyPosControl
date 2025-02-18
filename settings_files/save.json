@@ -10,11 +10,11 @@
         "platineY": "Platine 3",
         "platineZ": "Platine 1",
         "controller": "Controller 3",
-        "port": "COM3"
+        "port": "COM4"
     },
     "default": {
-        "speedX": 500,
-        "speedY": 510,
-        "speedZ": 520
+        "speedX": 5,
+        "speedY": 5,
+        "speedZ": 10
     }
 }

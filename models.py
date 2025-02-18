@@ -19,6 +19,9 @@ class ModelSettings:
 
         self.connection: co.SerialConnection = co.SerialConnection() # connection to controller
 
+        # Ports data
+        self.portsData = self.getAvailablePorts()
+
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
         with open(path+"settings_files\\save.json","r") as saveFile:
             settingsDict = json.load(saveFile)
@@ -283,7 +286,8 @@ class ModelSettings:
             self.configsData: dict = json.load(configsFile)
 
         # Ports data
-        self.portsData = self.getAvailablePorts()
+        # Take too much time
+        # self.portsData = self.getAvailablePorts()
 
     def applyDefault(self):
         self.defaultData: dict
@@ -294,10 +298,11 @@ class ModelSettings:
                 self.default_speeds[key[len(pname):]] = defData
 
     def getAvailablePorts(self):
-        return {
-            "COM1": { "name": "COM1", "value": "COM1"},
-            "COM3": { "name": "COM3", "value": "COM3"}
-        }
+        return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
+        # return {
+        #     "COM1": { "name": "COM1", "value": "COM1"},
+        #     "COM3": { "name": "COM3", "value": "COM3"}
+        # }
 
 class ModelControl:
     def __init__(self, axis_names, communication: cmds.Commands = None, settings: ModelSettings = None):

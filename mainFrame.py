@@ -81,7 +81,6 @@ class MainApp(tk.Tk):
 
     def incrMove(self, sign: str, axis: str):
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
-            print("BTN DISABLED")
             self.changeStateMovementsButtons(tk.DISABLED)
 
             # FOR DEBUG
@@ -114,11 +113,9 @@ class MainApp(tk.Tk):
                 print("ERROR: MissingValue",e)
                 showerror(title="Missing value",message=e)
 
-            print("BTN BACK TO NM")
             self.changeStateMovementsButtons("normal")
 
     def absMove(self):
-        print("BTN DISABLED")
         self.changeStateMovementsButtons("disabled")
 
         # FOR DEBUG
@@ -141,7 +138,6 @@ class MainApp(tk.Tk):
             print("ERROR: MissingValue",e)
             showerror(title="Missing value",message=e)
 
-        print("BTN BACK TO NM")
         self.changeStateMovementsButtons("normal")
 
     def stopAction(self):
@@ -160,7 +156,6 @@ class MainApp(tk.Tk):
             showerror(title="Missing value",message=e)
 
     def goZeroAction(self):
-        print("BTN DISABLED")
         self.changeStateMovementsButtons("disabled")
         
         # FOR DEBUG
@@ -173,7 +168,6 @@ class MainApp(tk.Tk):
             print("ERROR: MissingValue",e)
             showerror(title="Missing value",message=e)
 
-        print("BTN BACK TO NM")
         self.changeStateMovementsButtons("normal")
 
     def openSettings(self):
@@ -320,7 +314,8 @@ class MainApp(tk.Tk):
             borderwidth=2,
             anchor="w",
             font=Font(family="Helvetica", slant="italic", size=10)
-        ).grid(row=0,column=1, sticky="ew")
+        )
+        self.lblAbsCmd.grid(row=0,column=1, sticky="ew")
         self.absDisplayCmd.pack(expand=True, fill="both")
 
         self.absBtnMove = tk.Button(
@@ -332,7 +327,8 @@ class MainApp(tk.Tk):
             activebackground="#4853B5",
             activeforeground="#DDDDDD",
             font=Font(family="Helvetica", size=15)
-        ).pack(expand=True, fill="x")
+        )
+        self.absBtnMove.pack(expand=True, fill="x")
         return absFrame
 
     def apply_layout(self):
