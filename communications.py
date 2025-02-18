@@ -18,7 +18,7 @@ class CSeries(Commands):
         super().__init__(axis_speeds)
 
     def stopCmd(self)-> str:
-        return "@0R3\n\r".encode(encoding="ascii")
+        return "@0d\n\r".encode(encoding="ascii")
     
     def moveCmd(self, axis_values: dict, axis_speeds: dict = None)-> list:
         commands = []
