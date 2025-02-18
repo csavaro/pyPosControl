@@ -298,7 +298,7 @@ if __name__ == "__main__":
     print("starting")
 
     try:
-        uic = UiConsole(('X','Y','Z'))
+        uic = UiConsole(('X','Y'))
 
         uic.printCurrentPosition()
 

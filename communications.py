@@ -40,7 +40,7 @@ class CSeries(Commands):
             axisDefCode = 3
         elif nbAxis == 3:
             axisDefCode = 7
-        return f"@0{axisDefCode}".encode("ascii")
+        return f"@0{axisDefCode}\n\r".encode("ascii")
 
 if __name__ == "__main__":
     print("start")

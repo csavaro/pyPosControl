@@ -66,17 +66,17 @@ class SerialConnection:
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
         # Simulation
-        # TO_REMOVE
-        print("sim connection...")
-        print("port: ",port)
-        print("baudrate:",self.baudrate)
-        if isinstance(commands,(str,bytes)):
-            commands = [commands]
-        for cmd in commands:
-            print("launch cmd:",cmd)
-            time.sleep(1)
-        print("...end of sim connection")
-        return 1
+        # # TO_REMOVE
+        # print("sim connection...")
+        # print("port: ",port)
+        # print("baudrate:",self.baudrate)
+        # if isinstance(commands,(str,bytes)):
+        #     commands = [commands]
+        # for cmd in commands:
+        #     print("launch cmd:",cmd)
+        #     time.sleep(1)
+        # print("...end of sim connection")
+        # return 1
 
         # Execution
         with serial.Serial() as ser:
@@ -86,6 +86,7 @@ class SerialConnection:
             ser.bytesize    = self.bytesize
             ser.parity      = self.parity
             ser.open()
+            print("serial opened")
             # Manage single command
             if(isinstance(commands,bytes) or isinstance(commands,str)):
                 commands = [commands]
@@ -99,7 +100,11 @@ class SerialConnection:
                     print("sending ",cmd)
                     ser.write(cmd)
                     ack = ser.read()
-                    print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                    try:
+                        print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                    except UnicodeDecodeError as e:
+                        print("WARNING : Could'nt decode a byte recieved after sending a command")
+                        print(e)
                     # check if an acknowledge is recieved
                     if len(ack) == 0:
                         print("no acknowledge recieved")

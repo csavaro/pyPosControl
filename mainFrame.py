@@ -64,6 +64,23 @@ class MainApp(tk.Tk):
         # self.reset_layout()
         # self.apply_layout()
 
+    def animUpdateCurPos(self, axis_values: dict, speed_values: dict):
+        self.tobeincr = 15
+        for ax,inpAxis in self.controlGeneralFrame.inpAxisValues.items():
+            self.after(1000, self.animal, ax)
+        # for lblAxis in self.controlGeneralFrame.lblAxisValues:
+        #     lblAxis.after(1000, self.animO, lblAxis, lblAxis.cget("text")+1)
+
+    def animal(self, ax: tk.DoubleVar):
+        print("ANIM AL, oldval:",self.controlGeneralFrame.inpAxisValues["X"].get())
+        self.tobeincr += 1
+        self.controlGeneralFrame.inpAxisValues["X"].set(self.tobeincr)
+        print("after?",self.controlGeneralFrame.inpAxisValues["X"].get())
+
+    def animO(self, lbl: tk.Label, val: float):
+        print("ANIM, newval:",val," oldval:",lbl.cget("text"))
+        lbl.config(text=str(val))
+
     def updateCurrentPosition(self):
         for axis,inpCurPos in self.controlGeneralFrame.inpAxisValues.items():
             inpCurPos.set(self.mControl.values[axis])
@@ -83,8 +100,8 @@ class MainApp(tk.Tk):
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
             self.changeStateMovementsButtons(tk.DISABLED)
 
-            # FOR DEBUG
-            p = input("enter anything to continue")
+            # # FOR DEBUG
+            # p = input("enter anything to continue")
 
             # from threading import Thread
             # t = Thread(target=self.blaou, args=(sign,axis,))
@@ -105,6 +122,11 @@ class MainApp(tk.Tk):
                 incrMoveDict[axis] = -incrMoveDict[axis]
 
             try:
+                # # TEST
+                # self.animUpdateCurPos(incrMoveDict, incrSpeedDict)
+                # # FOR DEBUG
+                # p = input("enter anything to continue")
+
                 cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict)
                 # self.changeStateMovementsButtons("normal")
                 self.inpIncrCmd.set(cmd[:-2])
@@ -118,8 +140,8 @@ class MainApp(tk.Tk):
     def absMove(self):
         self.changeStateMovementsButtons("disabled")
 
-        # FOR DEBUG
-        p = input("enter anything to continue")
+        # # FOR DEBUG
+        # p = input("enter anything to continue")
 
         absMoveDict = {}
         absSpeedDict = {}
@@ -158,8 +180,8 @@ class MainApp(tk.Tk):
     def goZeroAction(self):
         self.changeStateMovementsButtons("disabled")
         
-        # FOR DEBUG
-        p = input("enter anything to continue")
+        # # FOR DEBUG
+        # p = input("enter anything to continue")
 
         try:
             self.mControl.goZero()
