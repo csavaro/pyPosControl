@@ -176,18 +176,18 @@ class UiConsole:
         self.menu(portsDict, "0", "Choosing port")
 
     def incrMove(self):
-        print("not yet implemented")
         aVals,aSpeeds = self.inputCmd()
         try:
-            cmd = self.mControl.incrMove(aVals,aSpeeds)
+            if aVals and aSpeeds:
+                cmd = self.mControl.incrMove(aVals,aSpeeds)
         except MissingValue as e:
             print("ERROR: MissingValue",e)
 
     def absMove(self):
-        print("not yet implemented")
         aVals,aSpeeds = self.inputCmd()
         try:
-            cmd = self.mControl.absMove(aVals,aSpeeds)
+            if aVals and aSpeeds:
+                cmd = self.mControl.absMove(aVals,aSpeeds)
         except MissingValue as e:
             print("ERROR: MissingValue",e)
 
@@ -215,8 +215,10 @@ class UiConsole:
 
         incorrectFormat = True
         while incorrectFormat:
-            print("Enter the movement. Axis order is "+str(self.axis)+". Format is {x_val,x_speed,y_val,y_speed} etc")
+            print("Enter the movement. Axis order is "+str(self.axis)+". Format is {x_val,x_speed,y_val,y_speed} etc. 0 to quit")
             uCmd = input()
+            if uCmd == "0":
+                return 0,0
             try:
                 spCmd = uCmd.split(",")
                 if len(spCmd) != len(self.axis)*2:
