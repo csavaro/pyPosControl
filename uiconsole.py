@@ -144,8 +144,6 @@ class UiConsole:
         self.menu(controllersDict, "0", "Choosing controller")
 
     def portMenu(self):
-        print("not implemented yet")
-
         portsDict = {
             "0": {
                 "label": "Go back to settings",
