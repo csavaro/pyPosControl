@@ -66,17 +66,17 @@ class SerialConnection:
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
         # Simulation
-        # # TO_REMOVE
-        # print("sim connection...")
-        # print("port: ",port)
-        # print("baudrate:",self.baudrate)
-        # if isinstance(commands,(str,bytes)):
-        #     commands = [commands]
-        # for cmd in commands:
-        #     print("launch cmd:",cmd)
-        #     time.sleep(1)
-        # print("...end of sim connection")
-        # return 1
+        # TO_REMOVE
+        print("sim connection...")
+        print("port: ",port)
+        print("baudrate:",self.baudrate)
+        if isinstance(commands,(str,bytes)):
+            commands = [commands]
+        for cmd in commands:
+            print("launch cmd:",cmd)
+            time.sleep(1)
+        print("...end of sim connection")
+        return 1
 
         # Execution
         with serial.Serial() as ser:

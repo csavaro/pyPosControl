@@ -313,10 +313,10 @@ class ModelControl:
         self.communication = communication # command's language
         self.connection = self.settings.connection # controller connection
 
-        self.teCommands = None
-        # self.teCommands = ThreadExecutor("SerialConnection")
+        # self.teCommands = None
+        self.teCommands = ThreadExecutor("SerialConnection")
         
-        # self.teCommands.start()
+        self.teCommands.start()
     
     def setValue(self, axis, value):
         self.values.update({ axis:value })
@@ -347,7 +347,7 @@ class ModelControl:
                 axis_speeds[axis] = smin
         return axis_speeds
 
-    def incrMove(self, axis_values: dict, axis_speeds: dict = None):
+    def incrMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None):
         """
         launch a command to move to axis_values without taking on board current position.
         Parameters:
@@ -363,20 +363,30 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
-        res = self.connection.executeCmd(cmds)
+        # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+
+        functionList = []
+        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda axv=axis_values,axs=axis_speeds: self.incrUpdate(axv,axs))
+        if callbacks:
+            functionList += callbacks
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs: functionPackage(fl,mv))
+
+        # time.sleep(1)
+
         print("DO SMTH?",res)
-        if res:
-            # Deduce current value
-            for key,incrVal in axis_values.items():
-                if axis_speeds[key] > 0:
-                    self.values[key] += incrVal / self.settings.stepscales[key]
+        # if res == 0:
+        #     # Deduce current value
+        #     for key,incrVal in axis_values.items():
+        #         if axis_speeds[key] > 0:
+        #             self.values[key] += incrVal / self.settings.stepscales[key]
         
         print("curr pos: ",self.values)
         cmds = [cmd.decode("utf-8") for cmd in cmds]
         return "\n".join(cmds)
 
-    def absMove(self, axis_values: dict, axis_speeds: dict = None):
+    def absMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None):
         """
         launch a command to move to axis_values from current position values.
         Parameters:
@@ -398,14 +408,21 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
-        res = self.connection.executeCmd(cmds)
+        # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
-        if res:
-            # Deduce current value
-            for key,absVal in axis_values.items():
-                if axis_speeds[key] > 0:
-                    self.values[key] = absVal #/ self.settings.stepscales[key]
+        functionList = []
+        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda axv=axis_values,axs=axis_speeds: self.absUpdate(axv,axs))
+        if callbacks:
+            functionList += callbacks
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs: functionPackage(fl,mv))
+
+        # if res:
+        #     # Deduce current value
+        #     for key,absVal in axis_values.items():
+        #         if axis_speeds[key] > 0:
+        #             self.values[key] = absVal #/ self.settings.stepscales[key]
 
         print("curr pos: ",self.values)
         cmds = [cmd.decode("utf-8") for cmd in cmds]
@@ -422,7 +439,7 @@ class ModelControl:
         self.connection.executeCmd(cmd)
         return cmd
 
-    def goZero(self):
+    def goZero(self, callbacks: list = None, miss_val_cbs: list = None):
         """
         launch a move command to controller to go position 0 on each axis from the current position values.
         Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.
@@ -454,12 +471,19 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         print("go zero ",cmds)
-        res = self.connection.executeCmd(cmds)
+        # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
-        if res:
-            # Update current position values
-            for axis in self.values.keys(): self.values[axis] = 0
+        functionList = []
+        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(self.zeroUpdate)
+        if callbacks:
+            functionList += callbacks
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs: functionPackage(fl,mv))
+
+        # if res:
+        #     # Update current position values
+        #     for axis in self.values.keys(): self.values[axis] = 0
 
         cmds = [cmd.decode("utf-8") for cmd in cmds]
         return "\n".join(cmds)
@@ -471,8 +495,23 @@ class ModelControl:
         for axis in self.values.keys(): self.values[axis] = 0
         print("set as zero")
 
+    def incrUpdate(self, axis_values: dict, axis_speeds: dict):
+        # Deduce current value
+        for key,incrVal in axis_values.items():
+            if axis_speeds[key] > 0:
+                self.values[key] += incrVal / self.settings.stepscales[key]
+
+    def absUpdate(self, axis_values: dict, axis_speeds: dict):
+        # Deduce current value
+        for key,absVal in axis_values.items():
+            if axis_speeds[key] > 0:
+                self.values[key] = absVal #/ self.settings.stepscales[key]
+
+    def zeroUpdate(self):
+        for axis in self.values.keys(): self.values[axis] = 0
+
     def quit(self):
-        if self.teCommands and self.teCommands.isRunning():
+        if isinstance(self.teCommands,ThreadExecutor):
             self.teCommands.kill()
 
 
@@ -494,7 +533,7 @@ def removeWithStartKey(dico: dict, startkey: str):
     return dico
 
 class ThreadExecutor(Thread):
-    wait_list_size = 3
+    wait_list_size = 1
 
     def __init__(self, name: str):
         Thread.__init__(self)
@@ -552,7 +591,7 @@ class ThreadExecutor(Thread):
         - 1 : if waiting list was full and task not took into account.
         """
         # verification de la taille de la liste d attente
-        if len(self.wait_list) < self.wait_list_size:
+        if len(self.wait_list) < self.wait_list_size or (len(self.wait_list)==0 and not self.isRunning()):
             with self._lock:
                 # si il reste de la place, ajout a la liste
                 self.wait_list.append(newthread)
@@ -597,18 +636,43 @@ class ThreadExecutor(Thread):
     def kill(self):
         self.killed = True
 
+
+def functionPackage(callbacks: list = None, miss_val_cbs: list = None):
+    try:
+        if callbacks:
+            for cb in callbacks:
+                if callable(cb):
+                    cb()
+    except co.MissingValue as e:
+        print("ERROR:",e)
+        if miss_val_cbs:
+            for mvc in miss_val_cbs:
+                if callable(mvc):
+                    mvc()
+
+def tsk1():
+    print("start tsk1")
+    time.sleep(3)
+    print("end tsk1")
+
+def tskRet(number):
+    print("start tskRet")
+    time.sleep(3)
+    print("end tskRet")
+    
+
 if __name__ == "__main__":
     print("start models")
-    from pathlib import Path
-    path = str(Path(__file__).parent.absolute())+"\\"
+    # from pathlib import Path
+    # path = str(Path(__file__).parent.absolute())+"\\"
 
-    ms = ModelSettings(('X','Y'))
-    ms.loadSettings(path)
+    # ms = ModelSettings(('X','Y'))
+    # ms.loadSettings(path)
 
-    ms.saveSettings(path, port="COM2", controller="Controller 3", platines={
-        "X": "Platine 3",
-        "Y": "Platine 3"
-    })
+    # ms.saveSettings(path, port="COM2", controller="Controller 3", platines={
+    #     "X": "Platine 3",
+    #     "Y": "Platine 3"
+    # })
 
     # sd = ms.getSettingsDict()
 

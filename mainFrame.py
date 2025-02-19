@@ -64,28 +64,12 @@ class MainApp(tk.Tk):
         # self.reset_layout()
         # self.apply_layout()
 
-    def animUpdateCurPos(self, axis_values: dict, speed_values: dict):
-        self.tobeincr = 15
-        for ax,inpAxis in self.controlGeneralFrame.inpAxisValues.items():
-            self.after(1000, self.animal, ax)
-        # for lblAxis in self.controlGeneralFrame.lblAxisValues:
-        #     lblAxis.after(1000, self.animO, lblAxis, lblAxis.cget("text")+1)
-
-    def animal(self, ax: tk.DoubleVar):
-        print("ANIM AL, oldval:",self.controlGeneralFrame.inpAxisValues["X"].get())
-        self.tobeincr += 1
-        self.controlGeneralFrame.inpAxisValues["X"].set(self.tobeincr)
-        print("after?",self.controlGeneralFrame.inpAxisValues["X"].get())
-
-    def animO(self, lbl: tk.Label, val: float):
-        print("ANIM, newval:",val," oldval:",lbl.cget("text"))
-        lbl.config(text=str(val))
-
     def updateCurrentPosition(self):
         for axis,inpCurPos in self.controlGeneralFrame.inpAxisValues.items():
             inpCurPos.set(self.mControl.values[axis])
 
     def changeStateMovementsButtons(self, state: str):
+        print("start disabel")
         self.controlGeneralFrame.btnGoZero.config(state=state)
         self.controlGeneralFrame.btnSetZero.config(state=state)
 
@@ -96,11 +80,14 @@ class MainApp(tk.Tk):
         if self.absBtnMove:
             self.absBtnMove.config(state=state)
 
+        print("end disabel")
+
     def incrMove(self, sign: str, axis: str):
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
+
             self.changeStateMovementsButtons(tk.DISABLED)
 
-            # # FOR DEBUG
+            # FOR DEBUG
             # p = input("enter anything to continue")
 
             # from threading import Thread
@@ -126,8 +113,14 @@ class MainApp(tk.Tk):
                 # self.animUpdateCurPos(incrMoveDict, incrSpeedDict)
                 # # FOR DEBUG
                 # p = input("enter anything to continue")
+                updateList = []
+                updateList.append(self.updateCurrentPosition)
+                updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
+                fail_cbs = []
+                fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
+                fail_cbs.append(showerror(title="Missing value",message="Settings are not all set"))
 
-                cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict)
+                cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs)
                 # self.changeStateMovementsButtons("normal")
                 self.inpIncrCmd.set(cmd[:-2])
                 self.updateCurrentPosition()
@@ -135,7 +128,7 @@ class MainApp(tk.Tk):
                 print("ERROR: MissingValue",e)
                 showerror(title="Missing value",message=e)
 
-            self.changeStateMovementsButtons("normal")
+            # self.changeStateMovementsButtons("normal")
 
     def absMove(self):
         self.changeStateMovementsButtons("disabled")
@@ -153,7 +146,16 @@ class MainApp(tk.Tk):
                 oneAxis: self.absAxis.axis[self.axis.index(oneAxis)].inpSpeedAxis.get()
             })
         try:
-            cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
+            # cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
+            updateList = []
+            updateList.append(self.updateCurrentPosition)
+            updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
+            fail_cbs = []
+            fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
+            fail_cbs.append(showerror(title="Missing value",message="Settings are not all set"))
+
+            cmd = self.mControl.absMove(absMoveDict,absSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs)
+
             self.inpAbsCmd.set(cmd[:-2])
             self.updateCurrentPosition()
         except MissingValue as e:
@@ -184,7 +186,14 @@ class MainApp(tk.Tk):
         # p = input("enter anything to continue")
 
         try:
-            self.mControl.goZero()
+            updateList = []
+            updateList.append(self.updateCurrentPosition)
+            updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
+            fail_cbs = []
+            fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
+            fail_cbs.append(showerror(title="Missing value",message="Settings are not all set"))
+
+            self.mControl.goZero(callbacks=updateList, miss_val_cbs=fail_cbs)
             self.updateCurrentPosition()
         except MissingValue as e:
             print("ERROR: MissingValue",e)
@@ -197,6 +206,8 @@ class MainApp(tk.Tk):
         self.settingWindow.title("Settings")
 
         self.mSettings.loadSettings(path)
+
+        print("\n".join([ f"{key}:: {val}" for key,val in self.mSettings.getSettingsDict().items() ]))
 
         self.settingsFrame = mytools.SettingsFrame(self.settingWindow, self.mSettings.getSettingsDict())
         self.settingsFrame.pack(expand=True, fill="both")
@@ -220,7 +231,7 @@ class MainApp(tk.Tk):
                 platinesDict.update({
                     key[len("platine"):]: stepscale.cmbSetting.get()
                 })
-        
+
         self.mSettings.saveSettings(
             path,
             port=self.settingsFrame.parameters["port"].cmbSetting.get(),
