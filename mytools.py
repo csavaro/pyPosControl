@@ -132,7 +132,7 @@ class SettingLabeledEntry:
         self.inpValue = tk.StringVar()
         self.entValue = tk.Entry(master, textvariable=self.inpValue, state="disabled", font=sfont)
         self.cmbSetting = None
-        if options:
+        if options != None:
             self.cmbSetting = ttk.Combobox(master, state="readonly", font=sfont) # values=options maybe
         self.lblUnit = None
         if unit:
