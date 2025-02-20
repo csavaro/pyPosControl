@@ -1,5 +1,17 @@
 # From LabView to Python
 
+# settings_files
+## save.json
+Fichier de sauvegarde principal.
+### files
+Emplacement des fichier pour les configurations, controleurs et platines, simplement nommés `configurations.json`, `controleurs.json` et `platines.json` ici.  
+Ces trois fichiers doivent se trouver dans un même répertoire, cependant il n'est pas obligatoire qu'ils se situent dans le répertoire `settings_files`. Il faut préciser le chemin du répertoire dans lesquels ils se trouveront dans l'attribut `path`. Cela peut être un chemin absolu, mais aussi courant, si vous utilisez *"current"* ce dernier mot sera remplacé par le chemin courant / parent au fichier main.py.
+### settings
+Derniers paramètres enregistrés.
+### default
+Valeur par défaut n'étant pas modifiables depuis l'application. Ici la vitesse, elle est en mm/s.
+
+# python_files
 ## uiconsole.py
 ### Classes
 - UiConsole: app en console, subtitue a MainFrame. Contient des methodes affichant des menus
@@ -24,8 +36,11 @@
 ### Classes
 - ModelSettings : store settings data like port, stepscales and baudrate
 - ControlSettings : store control data like axis values and axis speeds.
+- ThreadExecutor : liste d'attente de threads (de taille 0).
+### Usefull Functions/Methods
+- FunctionPackage : prend deux listes de fonctions en parametres, execute chaque fonction de la premiere et en cas de reception d'erreur MissingValue, execute les fonctions de la deuxieme liste.
 
-## mytools.py
+## guielements.py *(used to be mytools.py)*
 ### Classes
 - AxisLabeledEntry : lbl+value+speed+units
 - AxisFrame

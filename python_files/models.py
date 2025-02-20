@@ -1,6 +1,6 @@
 import json
-import communications as cmds
-import connection as co
+import python_files.communications as cmds
+import python_files.connection as co
 from threading import Thread,Lock
 import time
 
@@ -247,6 +247,11 @@ class ModelSettings:
             filesData = saveData["files"]
             self.settingsData = saveData["settings"]
             self.defaultData = saveData["default"]
+
+        splitted_path = filesData["path"].split("\\")
+        if "current" in splitted_path and "current" == splitted_path[0]:
+            splitted_path[0] = path
+            filesData["path"] = "\\".join(splitted_path)
 
         # Platines data
         with open(filesData["path"]+filesData["platine"],"r") as platinesFile:

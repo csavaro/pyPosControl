@@ -1,7 +1,7 @@
 import models
 from pathlib import Path
-from connection import MissingValue
-import communications as cmds
+from python_files.connection import MissingValue
+import python_files.communications as cmds
 
 # Current path
 path = str(Path(__file__).parent.absolute())+"\\"
