@@ -15,3 +15,7 @@ Reprise d'une bonne partie de la branche preshot. Architecture en couches comme 
 - Modèles, valeurs concrètes : `models.py`
 - Langage de communication, commandes : `communications.py` *retourne commandes aux modèles*
 - Connection au controleur : *à implémenter* 
+### positionControl
+Reprise du contenu de la branche stratum. Objectif rendre l'application créée dans stratum plus propre.  
+Actuellement modification de l'arborescence, et mise a jour du readme.  
+A venir : nettoyage des print de debug.
