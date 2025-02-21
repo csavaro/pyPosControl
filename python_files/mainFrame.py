@@ -120,7 +120,7 @@ class MainApp(tk.Tk):
                 updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
                 fail_cbs = []
                 fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
-                fail_cbs.append(showerror(title="Missing value",message="Settings are not all set"))
+                fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
 
                 cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs)
                 # self.changeStateMovementsButtons("normal")
@@ -154,7 +154,7 @@ class MainApp(tk.Tk):
             updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
             fail_cbs = []
             fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
-            fail_cbs.append(showerror(title="Missing value",message="Settings are not all set"))
+            fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
 
             cmd = self.mControl.absMove(absMoveDict,absSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs)
 
@@ -193,7 +193,7 @@ class MainApp(tk.Tk):
             updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
             fail_cbs = []
             fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
-            fail_cbs.append(showerror(title="Missing value",message="Settings are not all set"))
+            fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
 
             self.mControl.goZero(callbacks=updateList, miss_val_cbs=fail_cbs)
             self.updateCurrentPosition()
