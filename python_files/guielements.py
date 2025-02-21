@@ -38,8 +38,8 @@ class AxisLabeledEntry:
         # Callbacks
         self.inpSpeedAxis.trace_add("write", lambda name,index,mode : self.checkSpeed())
 
-    def checkAxis(self):
-        pass
+    # def checkAxis(self):
+    #     pass
 
     def checkSpeed(self):
         inpOk = checkPosInput(self.inpSpeedAxis)

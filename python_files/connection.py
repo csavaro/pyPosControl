@@ -8,6 +8,16 @@ class MissingValue(Exception):
     pass
 
 class SerialConnection:
+    """
+    Summary:
+        Manage a serial connection to send commands.
+    Attributes:
+        - port: str, port name of the connection.
+        - baudrate: int, information signal speed, unit is baud/s.
+        - timeout: int, maximum time to send a command without any response, unit is s.
+        - bytesize: message length
+        - parity 
+    """
     def __init__(self, timeout: int = 10, bytesize: int = 8):
         self.port = None
         self.baudrate = None
@@ -97,7 +107,7 @@ class SerialConnection:
                     cmd = cmd.encode("ascii")
                 # execute command if good format
                 if isinstance(cmd,bytes):
-                    print("sending ",cmd)
+                    print("launch cmd: ",cmd)
                     ser.write(cmd)
                     ack = ser.read()
                     try:
@@ -111,5 +121,6 @@ class SerialConnection:
                         return 0
             # end of command transmission
             ser.close()
+            print("serial closed")
         return 1
 
