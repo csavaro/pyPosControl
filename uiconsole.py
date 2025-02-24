@@ -1,5 +1,5 @@
-import models
 from pathlib import Path
+import python_files.models as models
 from python_files.connection import MissingValue
 import python_files.communications as cmds
 
