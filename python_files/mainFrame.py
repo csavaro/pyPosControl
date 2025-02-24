@@ -204,7 +204,6 @@ class MainApp(tk.Tk):
         # self.changeStateMovementsButtons("normal")
 
     def closeSettings(self):
-        self.settingWindow.quit()
         self.settingWindow.destroy()
         self.btnOpenSettings.config(state="normal")
 
