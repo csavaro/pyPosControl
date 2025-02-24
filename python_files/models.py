@@ -42,7 +42,7 @@ class ModelSettings:
             json.dump(settingsDict, saveFile, indent=4)
 
         # Apply saved settings
-        print("applying settings")
+        print("saving settings")
         stepscales_dict = {} 
         speed_limits_dict = {}
         if (platines != None):
@@ -299,7 +299,6 @@ class ModelSettings:
         for key,defData in self.defaultData.items():
             arel,pname = self.isAxisRelated(key)
             if arel and pname == "speed":
-                print(f"FOUND SPEED !!! k:{key} - d:{defData}")
                 self.default_speeds[key[len(pname):]] = defData
 
     def getAvailablePorts(self):
@@ -361,15 +360,11 @@ class ModelControl:
         Returns:
         - command sent to controller.
         """
-        print("SZZZD",axis_speeds)
         axis_speeds = self.checkSpeed(axis_speeds)
-        print("SZZZD",axis_speeds)
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
-        print("SZZZD",axis_speeds)
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
-        print("sending ",cmds)
         # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
@@ -382,14 +377,14 @@ class ModelControl:
 
         # time.sleep(1)
 
-        print("DO SMTH?",res)
+        # print("DO SMTH?",res)
         # if res == 0:
         #     # Deduce current value
         #     for key,incrVal in axis_values.items():
         #         if axis_speeds[key] > 0:
         #             self.values[key] += incrVal / self.settings.stepscales[key]
         
-        print("curr pos: ",self.values)
+        # print("curr pos: ",self.values)
         cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
         return "\n".join(cmds)
 
@@ -410,11 +405,11 @@ class ModelControl:
         axis_speeds = self.checkSpeed(axis_speeds)
         rel_axis_values = self.convertMmToSteps(rel_axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
-        print(rel_axis_values)
+        # print(rel_axis_values)
 
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
-        print("sending ",cmds)
+        # print("sending ",cmds)
         # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
@@ -431,7 +426,7 @@ class ModelControl:
         #         if axis_speeds[key] > 0:
         #             self.values[key] = absVal #/ self.settings.stepscales[key]
 
-        print("curr pos: ",self.values)
+        # print("curr pos: ",self.values)
         cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
         return "\n".join(cmds)
 
@@ -442,7 +437,7 @@ class ModelControl:
         - command sent to controller.
         """
         cmd = self.communication.stopCmd()
-        print("sending ",cmd)
+        # print("sending ",cmd)
         self.connection.executeCmd(cmd)
         return cmd
 
@@ -477,7 +472,7 @@ class ModelControl:
 
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
-        print("go zero ",cmds)
+        # print("go zero ",cmds)
         # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
@@ -660,18 +655,7 @@ def functionPackage(callbacks: list = None, miss_val_cbs: list = None, finally_c
         if finally_cbs:
             for fcb in finally_cbs:
                 if callable(fcb):
-                    fcb()
-
-def tsk1():
-    print("start tsk1")
-    time.sleep(3)
-    print("end tsk1")
-
-def tskRet(number):
-    print("start tskRet")
-    time.sleep(3)
-    print("end tskRet")
-    
+                    fcb()   
 
 if __name__ == "__main__":
     print("start models")

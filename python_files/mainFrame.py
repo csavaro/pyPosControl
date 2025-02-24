@@ -71,7 +71,7 @@ class MainApp(tk.Tk):
             inpCurPos.set(self.mControl.values[axis])
 
     def changeStateMovementsButtons(self, state: str):
-        print("start ",state)
+        # print("start ",state)
         self.controlGeneralFrame.btnGoZero.config(state=state)
         self.controlGeneralFrame.btnSetZero.config(state=state)
 
@@ -82,7 +82,7 @@ class MainApp(tk.Tk):
         if self.absBtnMove:
             self.absBtnMove.config(state=state)
 
-        print("end ",state)
+        # print("end ",state)
 
     def incrMove(self, sign: str, axis: str):
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
@@ -217,7 +217,7 @@ class MainApp(tk.Tk):
 
         self.mSettings.loadSettings(path)
 
-        print("\n".join([ f"{key}:: {val}" for key,val in self.mSettings.getSettingsDict().items() ]))
+        # print("\n".join([ f"{key}:: {val}" for key,val in self.mSettings.getSettingsDict().items() ]))
 
         self.settingsFrame = guielements.SettingsFrame(self.settingWindow, self.mSettings.getSettingsDict())
         self.settingsFrame.pack(expand=True, fill="both")

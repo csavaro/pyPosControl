@@ -451,12 +451,12 @@ class ControlFrame(tk.Frame):
             idx += 1
 
     def reset_layout(self):
-        print("reset layout")
+        # print("reset layout")
         self.pack_forget()
         self.grid_forget()
 
         for child in self.winfo_children():
-            print("resetting",child)
+            # print("resetting",child)
             child.pack_forget()
             child.grid_forget()
 
