@@ -71,7 +71,7 @@ class MainApp(tk.Tk):
             inpCurPos.set(self.mControl.values[axis])
 
     def changeStateMovementsButtons(self, state: str):
-        print("start disabel")
+        print("start ",state)
         self.controlGeneralFrame.btnGoZero.config(state=state)
         self.controlGeneralFrame.btnSetZero.config(state=state)
 
@@ -82,7 +82,7 @@ class MainApp(tk.Tk):
         if self.absBtnMove:
             self.absBtnMove.config(state=state)
 
-        print("end disabel")
+        print("end ",state)
 
     def incrMove(self, sign: str, axis: str):
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
@@ -115,16 +115,16 @@ class MainApp(tk.Tk):
                 # self.animUpdateCurPos(incrMoveDict, incrSpeedDict)
                 # # FOR DEBUG
                 # p = input("enter anything to continue")
-                updateList = []
-                updateList.append(self.updateCurrentPosition)
-                updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
-                fail_cbs = []
-                fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
-                fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
+                updateList = [self.updateCurrentPosition]
+                # updateList.append(self.updateCurrentPosition)
+                fail_cbs = [lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg)]
+                # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
+                final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
+                # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
 
-                cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs)
+                cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs,finally_cbs=final_cbs)
                 # self.changeStateMovementsButtons("normal")
-                self.inpIncrCmd.set(cmd[:-2])
+                self.inpIncrCmd.set(cmd)
                 self.updateCurrentPosition()
             except MissingValue as e:
                 print("ERROR: MissingValue",e)
@@ -149,22 +149,22 @@ class MainApp(tk.Tk):
             })
         try:
             # cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
-            updateList = []
-            updateList.append(self.updateCurrentPosition)
-            updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
-            fail_cbs = []
-            fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
-            fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
+            updateList = [self.updateCurrentPosition]
+            # updateList.append(self.updateCurrentPosition)
+            fail_cbs = [lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg)]
+            # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
+            final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
+            # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
 
-            cmd = self.mControl.absMove(absMoveDict,absSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs)
+            cmd = self.mControl.absMove(absMoveDict,absSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs,finally_cbs=final_cbs)
 
-            self.inpAbsCmd.set(cmd[:-2])
+            self.inpAbsCmd.set(cmd)
             self.updateCurrentPosition()
         except MissingValue as e:
             print("ERROR: MissingValue",e)
             showerror(title="Missing value",message=e)
 
-        self.changeStateMovementsButtons("normal")
+        # self.changeStateMovementsButtons("normal")
 
     def stopAction(self):
         try:
@@ -188,23 +188,31 @@ class MainApp(tk.Tk):
         # p = input("enter anything to continue")
 
         try:
-            updateList = []
-            updateList.append(self.updateCurrentPosition)
-            updateList.append(lambda s="normal": self.changeStateMovementsButtons(s))
-            fail_cbs = []
-            fail_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
-            fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
+            updateList = [self.updateCurrentPosition]
+            # updateList.append(self.updateCurrentPosition)
+            fail_cbs = [lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg)]
+            # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
+            final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
+            # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
 
-            self.mControl.goZero(callbacks=updateList, miss_val_cbs=fail_cbs)
+            self.mControl.goZero(callbacks=updateList, miss_val_cbs=fail_cbs, finally_cbs=final_cbs)
             self.updateCurrentPosition()
         except MissingValue as e:
             print("ERROR: MissingValue",e)
             showerror(title="Missing value",message=e)
 
-        self.changeStateMovementsButtons("normal")
+        # self.changeStateMovementsButtons("normal")
+
+    def closeSettings(self):
+        self.settingWindow.quit()
+        self.settingWindow.destroy()
+        self.btnOpenSettings.config(state="normal")
 
     def openSettings(self):
+        self.btnOpenSettings.config(state="disabled")
+
         self.settingWindow = tk.Toplevel(self)
+        self.settingWindow.protocol("WM_DELETE_WINDOW",self.closeSettings)
         self.settingWindow.title("Settings")
 
         self.mSettings.loadSettings(path)
@@ -241,12 +249,14 @@ class MainApp(tk.Tk):
             controller=self.settingsFrame.parameters["controller"].cmbSetting.get()
         )
 
-        self.settingWindow.destroy()
+        self.closeSettings()
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
         # Colors
         axisBgColors = ["#F15A5A","#71C257","#DDC96A"]
         axisFgColors = ["#FFFFFF","#FFFFFF","#FFFFFF"]
+        axisActBgColors = ["#B55959","#5A9746","#BCAA53"]
+        axisActFgColors = ["#DEDEDE","#DEDEDE","#DEDEDE"]
         if len(self.axis) > len(axisBgColors) or len(self.axis) > len(axisFgColors):
             for i in range(len(self.axis)-len(axisBgColors)) : axisBgColors.append("#3D3D3D")
             for i in range(len(self.axis)-len(axisFgColors)) : axisFgColors.append("#FFFFFF")
@@ -274,12 +284,16 @@ class MainApp(tk.Tk):
             oneBtnAxis.btnPlus  .config(
                 command=lambda sign="+", axis=self.axis[idxAxis]: self.incrMove(sign,axis), 
                 bg=axisBgColors[idxAxis],
-                fg=axisFgColors[idxAxis]
+                fg=axisFgColors[idxAxis],
+                activebackground=axisActBgColors[idxAxis],
+                activeforeground=axisActFgColors[idxAxis]
             )
             oneBtnAxis.btnMinus .config(
                 command=lambda sign="-", axis=self.axis[idxAxis]: self.incrMove(sign,axis),
                 bg=axisBgColors[idxAxis],
-                fg=axisFgColors[idxAxis]
+                fg=axisFgColors[idxAxis],
+                activebackground=axisActBgColors[idxAxis],
+                activeforeground=axisActFgColors[idxAxis]
             )
             idxAxis += 1
 
@@ -297,7 +311,9 @@ class MainApp(tk.Tk):
                     text=f"Reverse {axis_name} axis", 
                     command=lambda ax=axis_name:self.incrButtons.reverseButtons(ax),
                     bg=axisBgColors[idxAxis],
-                    fg=axisFgColors[idxAxis]
+                    fg=axisFgColors[idxAxis],
+                    activebackground=axisActBgColors[idxAxis],
+                    activeforeground=axisActFgColors[idxAxis]
                 ).grid(row=0,column=idxAxis, sticky="ew", padx=5)
             )
             idxAxis += 1

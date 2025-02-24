@@ -303,11 +303,11 @@ class ModelSettings:
                 self.default_speeds[key[len(pname):]] = defData
 
     def getAvailablePorts(self):
-        return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
-        # return {
-        #     "COM1": { "name": "COM1", "value": "COM1"},
-        #     "COM3": { "name": "COM3", "value": "COM3"}
-        # }
+        # return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
+        return {
+            "COM1": { "name": "COM1", "value": "COM1"},
+            "COM3": { "name": "COM3", "value": "COM3"}
+        }
 
 class ModelControl:
     def __init__(self, axis_names, communication: cmds.Commands = None, settings: ModelSettings = None):
@@ -352,7 +352,7 @@ class ModelControl:
                 axis_speeds[axis] = smin
         return axis_speeds
 
-    def incrMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None):
+    def incrMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         launch a command to move to axis_values without taking on board current position.
         Parameters:
@@ -361,10 +361,12 @@ class ModelControl:
         Returns:
         - command sent to controller.
         """
+        print("SZZZD",axis_speeds)
         axis_speeds = self.checkSpeed(axis_speeds)
+        print("SZZZD",axis_speeds)
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
-
+        print("SZZZD",axis_speeds)
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         print("sending ",cmds)
@@ -376,7 +378,7 @@ class ModelControl:
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.incrUpdate(axv,axs))
         if callbacks:
             functionList += callbacks
-        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs: functionPackage(fl,mv))
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
         # time.sleep(1)
 
@@ -388,10 +390,10 @@ class ModelControl:
         #             self.values[key] += incrVal / self.settings.stepscales[key]
         
         print("curr pos: ",self.values)
-        cmds = [cmd.decode("utf-8") for cmd in cmds]
+        cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
         return "\n".join(cmds)
 
-    def absMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None):
+    def absMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         launch a command to move to axis_values from current position values.
         Parameters:
@@ -421,7 +423,7 @@ class ModelControl:
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.absUpdate(axv,axs))
         if callbacks:
             functionList += callbacks
-        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs: functionPackage(fl,mv))
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
         # if res:
         #     # Deduce current value
@@ -430,7 +432,7 @@ class ModelControl:
         #             self.values[key] = absVal #/ self.settings.stepscales[key]
 
         print("curr pos: ",self.values)
-        cmds = [cmd.decode("utf-8") for cmd in cmds]
+        cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
         return "\n".join(cmds)
 
     def stop(self):
@@ -444,7 +446,7 @@ class ModelControl:
         self.connection.executeCmd(cmd)
         return cmd
 
-    def goZero(self, callbacks: list = None, miss_val_cbs: list = None):
+    def goZero(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         launch a move command to controller to go position 0 on each axis from the current position values.
         Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.
@@ -484,13 +486,13 @@ class ModelControl:
         functionList.append(self.zeroUpdate)
         if callbacks:
             functionList += callbacks
-        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs: functionPackage(fl,mv))
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
         # if res:
         #     # Update current position values
         #     for axis in self.values.keys(): self.values[axis] = 0
 
-        cmds = [cmd.decode("utf-8") for cmd in cmds]
+        cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
         return "\n".join(cmds)
     
     def setZero(self):
@@ -642,7 +644,7 @@ class ThreadExecutor(Thread):
         self.killed = True
 
 
-def functionPackage(callbacks: list = None, miss_val_cbs: list = None):
+def functionPackage(callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
     try:
         if callbacks:
             for cb in callbacks:
@@ -654,6 +656,11 @@ def functionPackage(callbacks: list = None, miss_val_cbs: list = None):
             for mvc in miss_val_cbs:
                 if callable(mvc):
                     mvc()
+    finally:
+        if finally_cbs:
+            for fcb in finally_cbs:
+                if callable(fcb):
+                    fcb()
 
 def tsk1():
     print("start tsk1")
