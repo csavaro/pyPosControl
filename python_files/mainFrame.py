@@ -117,7 +117,7 @@ class MainApp(tk.Tk):
                 # p = input("enter anything to continue")
                 updateList = [self.updateCurrentPosition]
                 # updateList.append(self.updateCurrentPosition)
-                fail_cbs = [lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg)]
+                fail_cbs = [lambda msg="Settings are not all set", tl="Missing value": showerror(title=tl,message=msg)]
                 # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
                 final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
                 # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
@@ -151,7 +151,7 @@ class MainApp(tk.Tk):
             # cmd = self.mControl.absMove(absMoveDict,absSpeedDict)
             updateList = [self.updateCurrentPosition]
             # updateList.append(self.updateCurrentPosition)
-            fail_cbs = [lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg)]
+            fail_cbs = [lambda msg="Settings are not all set", tl="Missing value": showerror(title=tl,message=msg)]
             # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
             final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
             # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
@@ -190,7 +190,7 @@ class MainApp(tk.Tk):
         try:
             updateList = [self.updateCurrentPosition]
             # updateList.append(self.updateCurrentPosition)
-            fail_cbs = [lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg)]
+            fail_cbs = [lambda msg="Settings are not all set", tl="Missing value": showerror(title=tl,message=msg)]
             # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
             final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
             # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))

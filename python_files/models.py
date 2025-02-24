@@ -650,7 +650,7 @@ def functionPackage(callbacks: list = None, miss_val_cbs: list = None, finally_c
         if miss_val_cbs:
             for mvc in miss_val_cbs:
                 if callable(mvc):
-                    mvc()
+                    mvc(e)
     finally:
         if finally_cbs:
             for fcb in finally_cbs:
