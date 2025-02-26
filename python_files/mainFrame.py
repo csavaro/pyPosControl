@@ -10,7 +10,6 @@ from pathlib import Path
 
 # Current path
 # path = str(Path(__file__).parent.absolute())+"\\"
-# path = "C:\\Users\\cleme\\OneDrive\\Documents\\Stage ENSTA\\FromLabViewToPython\\"
 path = ""
 
 class MainApp(tk.Tk):
@@ -22,14 +21,10 @@ class MainApp(tk.Tk):
         self.frame.pack(expand=True, fill="both")
         self.frame.canvas.pack(padx=25, pady=10)
 
-        # self.label = ttk.Label(self, text="Shrink the window to activate scrollbar")
-        # self.label.pack()
-        # for i in range(10):
-        #     ttk.Button(self.frame.interior, text=f"Button {i}").pack(padx=10, pady=5)
-        # self.frame.interior.config(style="TFrame")
-        # stylesheet = ttk.Style().configure("TFrame", background="#0fff00")
-
         self.axis: list = axis_names
+
+        # self.EventMoveFinished = tk.BooleanVar()
+        # self.EventMoveFinished.trace_add("write",self.afterMove)
 
         self.mSettings = models.ModelSettings(self.axis)
         self.mSettings.loadSettings(path)
@@ -66,11 +61,25 @@ class MainApp(tk.Tk):
         # self.reset_layout()
         # self.apply_layout()
 
+    def afterMove(self,var=None,index=None,mode=None):
+        """
+        Enable movement buttons and update current position labels.
+        """
+        # Not used
+        self.changeStateMovementsButtons("normal")
+        self.updateCurrentPosition()
+
     def updateCurrentPosition(self):
+        """
+        Update current position labels from model control data.
+        """
         for axis,inpCurPos in self.controlGeneralFrame.inpAxisValues.items():
             inpCurPos.set(self.mControl.values[axis])
 
     def changeStateMovementsButtons(self, state: str):
+        """
+        Change the state of movement buttons, state can be set as "normal", "disabled" or "active".
+        """
         # print("start ",state)
         self.controlGeneralFrame.btnGoZero.config(state=state)
         self.controlGeneralFrame.btnSetZero.config(state=state)
@@ -81,20 +90,19 @@ class MainApp(tk.Tk):
                 incrBtn.btnMinus.config(state=state)
         if self.absBtnMove:
             self.absBtnMove.config(state=state)
-
         # print("end ",state)
 
     def incrMove(self, sign: str, axis: str):
+        """
+        Disable movement buttons, then execute the incremental movement on model control for a single axis.
+        Add callbacks to enable back and update position after the move, and show error window if MissingValue is raised. 
+        Parameters:
+        - sign : "+" or "-", direction of the movement,
+        - axis : axis on which the move need to be done.
+        """
         if self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get() > 0 and self.incrAxis.axis[self.axis.index(axis)].inpAxis.get() != 0:
 
             self.changeStateMovementsButtons(tk.DISABLED)
-
-            # FOR DEBUG
-            # p = input("enter anything to continue")
-
-            # from threading import Thread
-            # t = Thread(target=self.blaou, args=(sign,axis,))
-            # t.start()
 
             incrMoveDict = {}
             incrSpeedDict = {}
@@ -111,15 +119,12 @@ class MainApp(tk.Tk):
                 incrMoveDict[axis] = -incrMoveDict[axis]
 
             try:
-                # # TEST
-                # self.animUpdateCurPos(incrMoveDict, incrSpeedDict)
-                # # FOR DEBUG
-                # p = input("enter anything to continue")
                 updateList = [self.updateCurrentPosition]
                 # updateList.append(self.updateCurrentPosition)
                 fail_cbs = [lambda msg="Settings are not all set", tl="Missing value": showerror(title=tl,message=msg)]
                 # fail_cbs.append(lambda tl="Missing value", msg="Settings are not all set": showerror(title=tl,message=msg))
                 final_cbs = [lambda s="normal": self.changeStateMovementsButtons(s)]
+                # final_cbs = [lambda s=True: self.EventMoveFinished.set(s)]
                 # final_cbs.append(lambda s="normal": self.changeStateMovementsButtons(s))
 
                 cmd = self.mControl.incrMove(incrMoveDict,incrSpeedDict,callbacks=updateList,miss_val_cbs=fail_cbs,finally_cbs=final_cbs)
@@ -133,6 +138,10 @@ class MainApp(tk.Tk):
             # self.changeStateMovementsButtons("normal")
 
     def absMove(self):
+        """
+        Disable movement buttons, then execute the absolute movement on model control for all axis.
+        Add callbacks to enable back and update position after the move, and show error window if MissingValue is raised. 
+        """
         self.changeStateMovementsButtons("disabled")
 
         # # FOR DEBUG
@@ -167,6 +176,9 @@ class MainApp(tk.Tk):
         # self.changeStateMovementsButtons("normal")
 
     def stopAction(self):
+        """
+        Execute stop from model control. Show an error window if MissingValue is raised.
+        """
         try:
             self.mControl.stop()
         except MissingValue as e:
@@ -174,6 +186,9 @@ class MainApp(tk.Tk):
             showerror(title="Missing value",message=e)
 
     def setZeroAction(self):
+        """
+        Set current position as zero in model control data and update current position.
+        """
         try:
             self.mControl.setZero()
             self.updateCurrentPosition()
@@ -182,6 +197,10 @@ class MainApp(tk.Tk):
             showerror(title="Missing value",message=e)
 
     def goZeroAction(self):
+        """
+        Disable movement buttons, then execute the go to zero movement on model control for all axis.
+        Add callbacks to enable back and update position after the move, and show error window if MissingValue is raised. 
+        """
         self.changeStateMovementsButtons("disabled")
         
         # # FOR DEBUG
@@ -204,10 +223,16 @@ class MainApp(tk.Tk):
         # self.changeStateMovementsButtons("normal")
 
     def closeSettings(self):
+        """
+        Close setting window and enable back to button to open it again.
+        """
         self.settingWindow.destroy()
         self.btnOpenSettings.config(state="normal")
 
     def openSettings(self):
+        """
+        Create a setting window with the initial data from model setting.
+        """
         self.btnOpenSettings.config(state="disabled")
 
         self.settingWindow = tk.Toplevel(self)
@@ -233,7 +258,9 @@ class MainApp(tk.Tk):
         self.settingWindow.mainloop()
 
     def applySettings(self):
-        
+        """
+        Save and apply current settings selected in setting window to the model setting.
+        """
         platinesDict = {}
         for key,stepscale in self.settingsFrame.parameters.items():
             if "platine" in key:
@@ -251,6 +278,9 @@ class MainApp(tk.Tk):
         self.closeSettings()
 
     def createIncrementalFrame(self, master: tk.Widget) -> tk.Frame:
+        """
+        Create the incremental control frame with axis position and speed values inputs and the buttons frame to execute the movements.
+        """
         # Colors
         axisBgColors = ["#F15A5A","#71C257","#DDC96A"]
         axisFgColors = ["#FFFFFF","#FFFFFF","#FFFFFF"]
@@ -340,6 +370,9 @@ class MainApp(tk.Tk):
         return incrFrame
     
     def createAbsoluteFrame(self, master: tk.Widget) -> tk.Frame:
+        """
+        Create the absolute control frame with axis position and speed values inputs and the button to execute the movement.
+        """
         absFrame = tk.Frame(master)
         self.absAxis = guielements.AxisFrame(absFrame, self.axis)
 
@@ -382,6 +415,7 @@ class MainApp(tk.Tk):
         return absFrame
 
     def apply_layout(self):
+        # Not used
         self.frame.pack(expand=True, fill="both")
         self.frame.canvas.pack(expand=True, side="left", fill="both", padx=25, pady=10)
 
@@ -391,6 +425,7 @@ class MainApp(tk.Tk):
         # self.controlFrame.apply_layout()
 
     def reset_layout(self):
+        # Not used / dont work
         self.frame.pack_forget()
         self.frame.canvas.pack_forget()
 
@@ -400,6 +435,9 @@ class MainApp(tk.Tk):
         # self.controlFrame.reset_layout()
     
     def _close(self):
+        """
+        Make sure to end components well, quitting the potential threads running from model control for example.
+        """
         # kill threads
         self.mControl.quit()
         # kill GUI
