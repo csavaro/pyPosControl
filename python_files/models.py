@@ -544,17 +544,17 @@ class ThreadExecutor(Thread):
         self._lock      : Lock   = Lock()
         self.name       : str    = name
         self.killed     : bool   = False
+        self.interval_time : int = 0.5  # seconds
 
     def run(self):
         """
         Run until killed. Run tasks from it's waiting list.
         """
         # counter = 0
-        interval_time = 0.5  # seconds
 
         while not self.killed:
             # affichages
-            time.sleep(interval_time)
+            time.sleep(self.interval_time)
             #print("\n" + self.name + "\t" + str(counter) + "s")
             # print(self.curr_thread)
             # print(self.wait_list)
@@ -655,7 +655,7 @@ def functionPackage(callbacks: list = None, miss_val_cbs: list = None, finally_c
         if finally_cbs:
             for fcb in finally_cbs:
                 if callable(fcb):
-                    fcb()   
+                    fcb()
 
 if __name__ == "__main__":
     print("start models")
