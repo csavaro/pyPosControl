@@ -7,7 +7,7 @@ import glob
 class MissingValue(Exception):
     pass
 
-class SerialConnection:
+class SerialConnection(Serial):
     """
     Summary:
         Manage a serial connection to send commands.
@@ -19,8 +19,9 @@ class SerialConnection:
         - parity 
     """
     def __init__(self, timeout: int = 10, bytesize: int = 8):
+        super().__init__()
         self.port = None
-        self.baudrate = None
+        self.baudrate = 0
         self.timeout = timeout
         self.bytesize = bytesize
         self.parity = serial.PARITY_NONE
@@ -53,6 +54,53 @@ class SerialConnection:
             except (OSError, serial.SerialException):
                 pass
         return result
+
+    def executeSelfCmd(self, commands, port=None):
+        """
+        Execute a single command or a list of commands.
+        Params:
+            - commands: str,byte,list of str or list of bytes - commands to be executed, byte format should be ascii.
+            - port (Optional) : port to send to commands to.
+        Returns: 
+            - 0 if no acknowledge is recieved, all commands might not have been sent.
+            - 1 if all commands were sent and all acknowledges recieved.
+        """
+        if not port:
+            port = self.port
+        if not port:
+            raise MissingValue("Missing setting: port is not set. Either give it in function param or set it in class attribute")
+        if not self.baudrate or self.baudrate <= 0:
+            raise MissingValue("Missing setting: baudrate is not set. Set it in class attribute")
+        if not self.bytesize or self.bytesize <= 0:
+            raise MissingValue("Missing setting: bytesize is not set. Set it in class attribute")
+        if not self.parity:
+            raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
+
+        # Manage single command
+        if(isinstance(commands,bytes) or isinstance(commands,str)):
+            commands = [commands]
+        # Execute commands
+        for cmd in commands:
+            # encode to ascii format if not already done
+            if isinstance(cmd,str):
+                cmd = cmd.encode("ascii")
+            # execute command if good format
+            if isinstance(cmd,bytes):
+                print("launch cmd: ",cmd)
+                self.write(cmd)
+                ack = self.read()
+                try:
+                    print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                except UnicodeDecodeError as e:
+                    print("WARNING : Could'nt decode a byte recieved after sending a command")
+                    print(e)
+                # check if an acknowledge is recieved
+                if len(ack) == 0:
+                    print("no acknowledge recieved")
+                    return 0
+        # end of command transmission
+        print("end of command transmission")
+        return 1
 
     def executeCmd(self, commands, port=None):
         """
@@ -89,7 +137,7 @@ class SerialConnection:
         return 1
 
         # Execution
-        with serial.Serial() as ser:
+        with self as ser:
             ser.port        = port
             ser.baudrate    = self.baudrate
             ser.timeout     = self.timeout
