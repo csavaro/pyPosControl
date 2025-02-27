@@ -434,7 +434,8 @@ class ModelControl:
         """
         launch a command to stop the controller in it's task.
         Returns:
-        - command sent to controller.
+            str:
+            command sent to controller.
         """
         cmd = self.communication.stopCmd()
         # print("sending ",cmd)
@@ -446,7 +447,7 @@ class ModelControl:
         launch a move command to controller to go position 0 on each axis from the current position values.
         Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.
         Returns:
-        - command sent to controller
+          command sent to controller
         """
         # Getting axis delta to go to zero
         axis_values = {}
@@ -514,6 +515,7 @@ class ModelControl:
 
     def quit(self):
         if isinstance(self.teCommands,ThreadExecutor):
+            self.connection.close()
             self.teCommands.kill()
 
 
