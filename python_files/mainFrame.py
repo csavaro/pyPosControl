@@ -2,10 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.font import Font
 from tkinter.messagebox import *
-import python_files.guielements as guielements
-import python_files.models as models
-import python_files.communications as cmds
-from python_files.connection import MissingValue
+# import python_files.guielements as guielements
+from .guielements import ScrollableFrame,ControlGeneralFrame,ControlFrame,SettingsFrame,AxisFrame,AxisButtonsFrame,AxisLabeledEntry,AxisButtons
+# import python_files.models as models
+from .models import ModelControl, ModelSettings
+# import python_files.communications as cmds
+from .communications import CSeries
+from .connection import MissingValue
 from pathlib import Path
 
 # Current path
@@ -17,7 +20,7 @@ class MainApp(tk.Tk):
         super().__init__(*args,**kwargs)
         self.title(title)
         self.protocol("WM_DELETE_WINDOW", self._close)
-        self.frame = guielements.ScrollableFrame(self)
+        self.frame = ScrollableFrame(self)
         self.frame.pack(expand=True, fill="both")
         self.frame.canvas.pack(padx=25, pady=10)
 
@@ -26,11 +29,13 @@ class MainApp(tk.Tk):
         # self.EventMoveFinished = tk.BooleanVar()
         # self.EventMoveFinished.trace_add("write",self.afterMove)
 
-        self.mSettings = models.ModelSettings(self.axis)
+        # self.mSettings = models.ModelSettings(self.axis)
+        self.mSettings = ModelSettings(self.axis)
         self.mSettings.loadSettings(path)
         self.mSettings.applySettingsFromData()
         self.mSettings.applyDefault()
-        self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=self.mSettings.default_speeds), settings=self.mSettings)
+        # self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=self.mSettings.default_speeds), settings=self.mSettings)
+        self.mControl = ModelControl(self.axis, CSeries(axis_speeds=self.mSettings.default_speeds), settings=self.mSettings)
 
         self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings, font=Font(family="Helvetica",size=12))
         self.btnOpenSettings.pack(expand=True, fill="both")
@@ -38,13 +43,13 @@ class MainApp(tk.Tk):
 
         self.incrFrame = self.createIncrementalFrame(self.frame.interior)
         self.absFrame = self.createAbsoluteFrame(self.frame.interior)
-        self.controlGeneralFrame = guielements.ControlGeneralFrame(self.frame.interior, self.axis)
+        self.controlGeneralFrame = ControlGeneralFrame(self.frame.interior, self.axis)
 
         self.controlGeneralFrame.addCallback("stop",self.stopAction)
         self.controlGeneralFrame.addCallback("setzero",self.setZeroAction)
         self.controlGeneralFrame.addCallback("gozero",self.goZeroAction)
 
-        self.controlFrame = guielements.ControlFrame(self.frame.interior)
+        self.controlFrame = ControlFrame(self.frame.interior)
         self.control_dict = {
             "incrmove": {
                 "name": "Incrémental",
@@ -243,7 +248,7 @@ class MainApp(tk.Tk):
 
         # print("\n".join([ f"{key}:: {val}" for key,val in self.mSettings.getSettingsDict().items() ]))
 
-        self.settingsFrame = guielements.SettingsFrame(self.settingWindow, self.mSettings.getSettingsDict())
+        self.settingsFrame = SettingsFrame(self.settingWindow, self.mSettings.getSettingsDict())
         self.settingsFrame.pack(expand=True, fill="both")
 
         self.settingsFrame.btnApply.config(command=self.applySettings)
@@ -293,12 +298,12 @@ class MainApp(tk.Tk):
         # Creating main components
         incrFrame = tk.Frame(master)
         axis_delta = [ f"Δ{oneAxis}" for oneAxis in self.axis ]
-        self.incrAxis = guielements.AxisFrame(incrFrame, axis_delta)
-        self.incrButtons = guielements.AxisButtonsFrame(incrFrame, self.axis)
+        self.incrAxis = AxisFrame(incrFrame, axis_delta)
+        self.incrButtons = AxisButtonsFrame(incrFrame, self.axis)
 
         # Apply default values
         for axsLabEnt in self.incrAxis.axis:
-            axsLabEnt: guielements.AxisLabeledEntry
+            axsLabEnt: AxisLabeledEntry
             axsLabEnt.inpSpeedAxis.set(self.mSettings.default_speeds[axsLabEnt.lblAxis.cget("text")[1:]])
 
         # Apply axis label colors
@@ -309,7 +314,7 @@ class MainApp(tk.Tk):
         # Set commands on buttons
         idxAxis = 0
         for oneBtnAxis in self.incrButtons.btnAxis:
-            oneBtnAxis: guielements.AxisButtons
+            oneBtnAxis: AxisButtons
             oneBtnAxis.btnPlus  .config(
                 command=lambda sign="+", axis=self.axis[idxAxis]: self.incrMove(sign,axis), 
                 bg=axisBgColors[idxAxis],
@@ -374,11 +379,11 @@ class MainApp(tk.Tk):
         Create the absolute control frame with axis position and speed values inputs and the button to execute the movement.
         """
         absFrame = tk.Frame(master)
-        self.absAxis = guielements.AxisFrame(absFrame, self.axis)
+        self.absAxis = AxisFrame(absFrame, self.axis)
 
         # Apply default values
         for axsLabEnt in self.absAxis.axis:
-            axsLabEnt: guielements.AxisLabeledEntry
+            axsLabEnt: AxisLabeledEntry
             axsLabEnt.inpSpeedAxis.set(self.mSettings.default_speeds[axsLabEnt.lblAxis.cget("text")])
 
         self.absDisplayCmd = tk.Frame(absFrame)
