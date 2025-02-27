@@ -76,6 +76,10 @@ class SerialConnection(Serial):
         if not self.parity:
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
+        if not self.is_open:
+            print("Openning the serial")
+            self.open()
+
         # Manage single command
         if(isinstance(commands,bytes) or isinstance(commands,str)):
             commands = [commands]
@@ -172,3 +176,9 @@ class SerialConnection(Serial):
             print("serial closed")
         return 1
 
+    def close(self):
+        if self.is_open:
+            print("Closing the serial")
+            self.close()
+        else:
+            print("serial is not open, already closed")
