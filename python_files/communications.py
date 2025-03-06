@@ -24,6 +24,20 @@ class Commands(ABC):
         """
         pass
 
+    @abstractmethod
+    def goHome(self, nbAxis: int)-> list:
+        """
+        Returns a list of commands to go home
+        """
+        pass
+
+    @abstractmethod
+    def setHome(self, nbAxis: int)-> list:
+        """
+        Returns a list of commands to set current position as home
+        """
+        pass
+
 class CSeries(Commands):
     """
     Summary:
@@ -61,6 +75,12 @@ class CSeries(Commands):
 
         return commands
 
+    def goHome(self, nbAxis: int):
+        return f"@0R{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")
+
+    def setHome(self, nbAxis: int):
+        return f"@0n{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")
+
     def axisDefinitionCmd(self, nbAxis: int)-> str:
         """
         Parameters:
@@ -68,6 +88,10 @@ class CSeries(Commands):
         Returns:
         - command to define axis meant to move.
         """
+        axisDefCode = self.axisDefinition(nbAxis=nbAxis)
+        return f"@0{axisDefCode}\n\r".encode("ascii")
+
+    def axisDefinition(self, nbAxis: int)-> int:
         axisDefCode = 0
         if nbAxis == 1:
             axisDefCode = 1
@@ -75,7 +99,7 @@ class CSeries(Commands):
             axisDefCode = 3
         elif nbAxis == 3:
             axisDefCode = 7
-        return f"@0{axisDefCode}\n\r".encode("ascii")
+        return axisDefCode
 
 if __name__ == "__main__":
     print("start")
