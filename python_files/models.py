@@ -503,7 +503,7 @@ class ModelControl:
         Send list of commands converted in ascii into the serial connection.
         """
         for cmd in commands:
-            cmd = cmd.format("ascii")
+            cmd = cmd.encode("ascii")
 
         functionList = []
         functionList.append(lambda c=commands: self.connection.executeCmd(c))
