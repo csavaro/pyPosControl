@@ -508,7 +508,7 @@ class ModelControl:
         #     functionList += callbacks
         # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
-        cmds = self.communication.goHome()
+        cmds = self.communication.goHome(len(self.settings.axis))
         # print("sending ",cmd)
         self.connection.executeCmd(cmds)
         return self.communication.commandsToString(cmds)
@@ -526,7 +526,7 @@ class ModelControl:
         #     functionList += callbacks
         # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
-        cmds = self.communication.setHome()
+        cmds = self.communication.setHome(len(self.settings.axis))
         # print("sending ",cmd)
         self.connection.executeCmd(cmds)
         return self.communication.commandsToString(cmds)

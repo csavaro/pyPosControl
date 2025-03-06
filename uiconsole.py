@@ -45,7 +45,17 @@ class UiConsole:
                 "label": "Set as zero",
                 "action": self.setZero
             },
+            
             "7": {
+                "label": "Go to home",
+                "action": self.goHome
+            },
+            
+            "8": {
+                "label": "Set as home",
+                "action": self.setHome
+            },
+            "9": {
                 "label": "Send raw command",
                 "action": self.rawCmd
             },
@@ -237,6 +247,17 @@ class UiConsole:
                 print(f"Wrong format! ex: {exCmd}")
 
         return axis_vals,axis_speeds
+
+    def goHome(self):
+        try:
+            self.mControl.goHome()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
+    def setHome(self):
+        try:
+            self.mControl.setHome()
+        except MissingValue as e:
+            print("ERROR: MissingValue",e)
 
     def rawCmd(self):
         print("Enter the commands you want to send into the serial connection.")
