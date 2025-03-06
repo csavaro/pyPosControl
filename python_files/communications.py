@@ -38,6 +38,13 @@ class Commands(ABC):
         """
         pass
 
+    @abstractmethod
+    def commandsToString(self, commands: list)-> list:
+        """
+        Returns a list of commands in string type
+        """
+        pass
+
 class CSeries(Commands):
     """
     Summary:
@@ -50,7 +57,7 @@ class CSeries(Commands):
         """
         Returns one command to make the controller stop it's current action.
         """
-        return "@0d\n\r".encode(encoding="ascii")
+        return list(["@0d\n\r".encode(encoding="ascii")])
     
     def moveCmd(self, axis_values: dict, axis_speeds: dict = None)-> list:
         """
@@ -75,11 +82,15 @@ class CSeries(Commands):
 
         return commands
 
-    def goHome(self, nbAxis: int):
-        return f"@0R{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")
+    def goHome(self, nbAxis: int)-> list:
+        return [f"@0R{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")]
 
-    def setHome(self, nbAxis: int):
-        return f"@0n{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")
+    def setHome(self, nbAxis: int)-> list:
+        return [f"@0n{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")]
+
+    def commandsToString(self, commands: list)-> list:
+        cmds = [cmd.decode("utf-8")[:-2] for cmd in commands]
+        return "\n".join(cmds)
 
     def axisDefinitionCmd(self, nbAxis: int)-> str:
         """

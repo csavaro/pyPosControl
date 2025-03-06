@@ -1,5 +1,5 @@
 import json
-import python_files.communications as cmds
+import python_files.communications as com
 import python_files.connection as co
 from threading import Thread,Lock
 import time
@@ -309,7 +309,7 @@ class ModelSettings:
         }
 
 class ModelControl:
-    def __init__(self, axis_names, communication: cmds.Commands = None, settings: ModelSettings = None):
+    def __init__(self, axis_names, communication: com.Commands = None, settings: ModelSettings = None):
         self.values     = { axis_name:0 for axis_name in axis_names } # usually in mm (unit)
         self.speeds     = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
         self.settings = settings
@@ -358,7 +358,7 @@ class ModelControl:
         - axis_values: dict of str:float|int, values on axis to move to. Units should be mm.
         - axis_speeds: dict of str:float|int, speed values on axis. Units should be mm/s.
         Returns:
-        - command sent to controller.
+        - command(s) sent to controller.
         """
         axis_speeds = self.checkSpeed(axis_speeds)
         axis_values = self.convertMmToSteps(axis_values)
@@ -385,8 +385,8 @@ class ModelControl:
         #             self.values[key] += incrVal / self.settings.stepscales[key]
         
         # print("curr pos: ",self.values)
-        cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
-        return "\n".join(cmds)
+        return self.communication.commandsToString(cmds)
+
 
     def absMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
@@ -395,7 +395,7 @@ class ModelControl:
         - axis_values: dict of str:float|int, values on axis to move to. Units should be mm.
         - axis_speeds: dict of str:float|int, speed values on axis. Units should be mm/s.
         Returns:
-        - command sent to controller.
+        - command(s) sent to controller.
         """
         # Transform absolute values to relative values
         rel_axis_values = axis_values.copy()
@@ -427,27 +427,26 @@ class ModelControl:
         #             self.values[key] = absVal #/ self.settings.stepscales[key]
 
         # print("curr pos: ",self.values)
-        cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
-        return "\n".join(cmds)
+        return self.communication.commandsToString(cmds)
 
     def stop(self):
         """
         launch a command to stop the controller in it's task.
         Returns:
-            str:
-            command sent to controller.
+        - command(s) sent to controller.
         """
-        cmd = self.communication.stopCmd()
+        cmds = self.communication.stopCmd()
         # print("sending ",cmd)
-        self.connection.executeCmd(cmd)
-        return cmd
+        self.connection.executeCmd(cmds)
+        
+        return self.communication.commandsToString(cmds)
 
     def goZero(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         launch a move command to controller to go position 0 on each axis from the current position values.
         Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.
         Returns:
-          command sent to controller
+        - command(s) sent to controller.
         """
         # Getting axis delta to go to zero
         axis_values = {}
@@ -488,8 +487,7 @@ class ModelControl:
         #     # Update current position values
         #     for axis in self.values.keys(): self.values[axis] = 0
 
-        cmds = [cmd.decode("utf-8")[:-2] for cmd in cmds]
-        return "\n".join(cmds)
+        return self.communication.commandsToString(cmds)
     
     def setZero(self):
         """
@@ -498,19 +496,59 @@ class ModelControl:
         for axis in self.values.keys(): self.values[axis] = 0
         print("set as zero")
 
+    def goHome(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
+        """
+        Set current position as home on the controller.
+        Returns:
+        - command(s) sent to controller.
+        """
+        # functionList = []
+        # functionList.append(lambda c=self.communication.goHome: self.connection.executeCmd(c))
+        # if callbacks:
+        #     functionList += callbacks
+        # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
+
+        cmds = self.communication.goHome()
+        # print("sending ",cmd)
+        self.connection.executeCmd(cmds)
+        return self.communication.commandsToString(cmds)
+
+
+    def setHome(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
+        """
+        Go to current home position on the controller.
+        Returns:
+        - command(s) sent to controller.
+        """
+        # functionList = []
+        # functionList.append(lambda c=self.communication.setHome: self.connection.executeCmd(c))
+        # if callbacks:
+        #     functionList += callbacks
+        # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
+
+        cmds = self.communication.setHome()
+        # print("sending ",cmd)
+        self.connection.executeCmd(cmds)
+        return self.communication.commandsToString(cmds)
+
+
     def rawAction(self, commands: list[str], callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         Send list of commands converted in ascii into the serial connection.
+        Returns:
+        - command(s) sent to controller.
         """
+        cmds = []
         for cmd in commands:
-            cmd = cmd.encode("ascii")
+            cmds.append(cmd.encode("ascii"))
 
         functionList = []
-        functionList.append(lambda c=commands: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
         if callbacks:
             functionList += callbacks
         res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
-        
+
+        return "\n".join(commands)
 
     def incrUpdate(self, axis_values: dict, axis_speeds: dict):
         # Deduce current value
