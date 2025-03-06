@@ -45,6 +45,10 @@ class UiConsole:
                 "label": "Set as zero",
                 "action": self.setZero
             },
+            "7": {
+                "label": "Send raw command",
+                "action": self.rawCmd
+            },
             "s": {
                 "label": "Stop signal",
                 "action": self.stop
@@ -233,6 +237,25 @@ class UiConsole:
                 print(f"Wrong format! ex: {exCmd}")
 
         return axis_vals,axis_speeds
+
+    def rawCmd(self):
+        print("Enter the commands you want to send into the serial connection.")
+        incorrectFormat = True
+        while incorrectFormat:
+            print("how much commands do you want to write ?")
+            nbCommands = input()
+            try:
+                nbCommands = int(nbCommands)
+            except ValueError:
+                print(f"Wrong! should be an integer instead of a {type(nbCommands)} for {nbCommands} value.")
+                continue
+            incorrectFormat = False
+
+        commands = []
+        for nCmd in range(nbCommands):
+            commands.append(input(f"Enter command number {nCmd+1} :\n"))
+        
+        self.mControl.rawAction(commands=commands)
 
     def saveSettings(self, platines: dict = None, controller: str = None, port: str = None):
         if platines != None:

@@ -498,6 +498,20 @@ class ModelControl:
         for axis in self.values.keys(): self.values[axis] = 0
         print("set as zero")
 
+    def rawAction(self, commands: list[str], callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
+        """
+        Send list of commands converted in ascii into the serial connection.
+        """
+        for cmd in commands:
+            cmd = cmd.format("ascii")
+
+        functionList = []
+        functionList.append(lambda c=commands: self.connection.executeCmd(c))
+        if callbacks:
+            functionList += callbacks
+        res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
+        
+
     def incrUpdate(self, axis_values: dict, axis_speeds: dict):
         # Deduce current value
         for key,incrVal in axis_values.items():
