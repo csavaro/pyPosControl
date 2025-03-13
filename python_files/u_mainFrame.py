@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter.font import Font
 from tkinter.messagebox import *
 # import python_files.guielements as guielements
-from .guielements import ScrollableFrame,ControlGeneralFrame,ControlFrame,SettingsFrame,AxisFrame,AxisButtonsFrame,AxisLabeledEntry,AxisButtons
+from .u_guielements import ScrollableFrame,ControlGeneralFrame,ControlFrame,SettingsFrame,AxisFrame,AxisButtonsFrame,AxisLabeledEntry,AxisButtons
 # import python_files.models as models
 from .models import ModelControl, ModelSettings
 # import python_files.communications as cmds
