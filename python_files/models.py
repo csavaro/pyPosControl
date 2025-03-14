@@ -302,11 +302,11 @@ class ModelSettings:
                 self.default_speeds[key[len(pname):]] = defData
 
     def getAvailablePorts(self):
-        # return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
-        return {
-            "COM1": { "name": "COM1", "value": "COM1"},
-            "COM3": { "name": "COM3", "value": "COM3"}
-        }
+        return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
+        # return {
+        #     "COM1": { "name": "COM1", "value": "COM1"},
+        #     "COM3": { "name": "COM3", "value": "COM3"}
+        # }
 
 class ModelControl:
     def __init__(self, axis_names, communication: com.Commands = None, settings: ModelSettings = None):
@@ -369,7 +369,7 @@ class ModelControl:
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
         functionList = []
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.incrUpdate(axv,axs))
         if callbacks:
             functionList += callbacks
@@ -414,7 +414,7 @@ class ModelControl:
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
         functionList = []
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.absUpdate(axv,axs))
         if callbacks:
             functionList += callbacks
@@ -437,7 +437,7 @@ class ModelControl:
         """
         cmds = self.communication.stopCmd()
         # print("sending ",cmd)
-        self.connection.executeCmd(cmds)
+        self.connection.executeSelfCmd(cmds)
         
         return self.communication.commandsToString(cmds)
 
@@ -477,7 +477,7 @@ class ModelControl:
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
         functionList = []
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         functionList.append(self.zeroUpdate)
         if callbacks:
             functionList += callbacks
@@ -510,7 +510,7 @@ class ModelControl:
 
         cmds = self.communication.goHome(len(self.settings.axis))
         # print("sending ",cmd)
-        self.connection.executeCmd(cmds)
+        self.connection.executeSelfCmd(cmds)
         return self.communication.commandsToString(cmds)
 
 
@@ -528,7 +528,7 @@ class ModelControl:
 
         cmds = self.communication.setHome(len(self.settings.axis))
         # print("sending ",cmd)
-        self.connection.executeCmd(cmds)
+        self.connection.executeSelfCmd(cmds)
         return self.communication.commandsToString(cmds)
 
 
@@ -543,7 +543,7 @@ class ModelControl:
             cmds.append(cmd.encode("ascii"))
 
         functionList = []
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         if callbacks:
             functionList += callbacks
         res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
