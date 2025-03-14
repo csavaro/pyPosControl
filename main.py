@@ -22,7 +22,7 @@ if __name__ == "__main__":
         MaM = mm.MoveAndMeasure(axis_names=('X','Y','Z'), filepath=filepath)
         MaM.loadMoveSet(filepath=filepath)
 
-        MaM.run(simulateMeasure,(100,100,100))
+        MaM.run(simulateMeasure,(5,5,5))
 
     finally:
         MaM.quit()

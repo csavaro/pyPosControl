@@ -8,8 +8,10 @@ from time import sleep
 path = ""
 
 class MoveAndMeasure:
-    def __init__(self, axis_names: tuple, filepath: str):
+    def __init__(self, axis_names: tuple):
         self.axis = axis_names
+
+        self.roadmap = None
 
         self.mSettings = ModelSettings(self.axis)
         self.mSettings.loadSettings(path)
@@ -34,8 +36,10 @@ class MoveAndMeasure:
             self.saveSettings(platines=platines)
 
     def run(self, measurementFunc, speeds: list):
+        if self.roadmap is None:
+            raise AttributeError("!! ERROR !! no roadmap has been loaded, use .loadMoveSet(filepath) before running")
         if not callable(measurementFunc):
-            print("!! ERROR !! measurementFunc must be callable !")
+            raise TypeError("!! ERROR !! measurementFunc must be callable !")
 
         self.move_finished_event = Event()
         
@@ -61,7 +65,7 @@ class MoveAndMeasure:
             plChoosed = {}
             for oneAxis in self.axis:
                 # Platines to change
-                if oneAxis in platines.keys():
+                if oneAxis in platines.keys() and platines[oneAxis] != "default":
                     plChoosed.update({
                         oneAxis: 
                         platines[oneAxis]
@@ -70,7 +74,7 @@ class MoveAndMeasure:
                 else:
                     plChoosed.update({
                         oneAxis: 
-                        self.settingsData['parameters'][f'platine{oneAxis}']['default']
+                        self.mSettings.getSettingsDict()['parameters'][f'platine{oneAxis}']['default']
                     })
             platines = plChoosed
         
