@@ -8,6 +8,13 @@ from time import sleep
 path = ""
 
 class MoveAndMeasure:
+    """
+    Attributes :
+    - axis (tuple) : names of axis ex ('x','y','z'). Up to 3 axis supported.
+    - roadmap (list[list[str]]) : 2d list of positions loaded.
+    - move_finished_event (threading.Event) : event when running, wait until set before doing a measurement.
+    - settingsData (dict) : loaded and effective settings.
+    """
     def __init__(self, axis_names: tuple):
         self.axis = axis_names
 
