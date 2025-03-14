@@ -20,7 +20,7 @@ def my_measure(position,param1,param2):
 
 # Libraries
 ## Mandatory
-- pyserial
+- serial : **INSTALL REQUIREMENT : pyserial**
 - threading
 - csv
 - json
@@ -30,4 +30,4 @@ def my_measure(position,param1,param2):
 - abc
 ## Used but optional
 - pathlib
-- measpy
+- measpy **INSTALL REQUIREMENT : measpy**
