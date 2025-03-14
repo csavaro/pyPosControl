@@ -2,12 +2,12 @@ import measpy as mp
 from measpy.audio import audio_run_measurement
 import time
 
-def simulateMeasure():
-    print("doing a measurement...")
+def simulateMeasure(position):
+    print(f"doing a measurement at {position}...")
     time.sleep(3)
-    print("measurement ended !")
+    print(f"measurement at {position} ended !")
 
-def simpleMeasure():
+def simpleMeasure(position):
     sout = mp.Signal.noise(fs=44100, freq_min=20, freq_max=20000, dur=5)
     sin1 = mp.Signal(desc = 'Pressure', dbfs=5.0, cal=1.0, unit="Pa")
     sin2 = mp.Signal(desc = 'Acceleration', dbfs=5.0, cal=0.1, unit="m*s**(-2)")

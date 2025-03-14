@@ -35,7 +35,15 @@ class MoveAndMeasure:
     
             self.saveSettings(platines=platines)
 
-    def run(self, measurementFunc, speeds: list):
+    def run(self, measurementFunc, speeds: list, *args, **kwargs):
+        """
+        Run a measure after every move. measurementFunc will be called as measurementFunc(position,*args,**kwargs)
+        Parameters :
+        - measurementFunc : a callable function without it's parameters.
+        - speeds (list) : list of speeds for each axis.
+        - *args : as many parameters without name for the measurementFunc.
+        - **kwargs : as many parameters with a name for the the measurementFunc.
+        """
         if self.roadmap is None:
             raise AttributeError("!! ERROR !! no roadmap has been loaded, use .loadMoveSet(filepath) before running")
         if not callable(measurementFunc):
@@ -56,7 +64,7 @@ class MoveAndMeasure:
             while not self.move_finished_event.isSet():
                 sleep(0.5)
             print("start measurement")
-            measurementFunc()
+            measurementFunc(place,*args,**kwargs)
 
         print("run ended")
 
