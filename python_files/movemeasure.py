@@ -1,9 +1,10 @@
 from .models import ModelSettings,ModelControl
 from .communications import CSeries
 from pathlib import Path
-import csv
+# import csv
 from threading import Event
 from time import sleep
+import pandas as pd
 
 path = ""
 
@@ -30,17 +31,32 @@ class MoveAndMeasure:
 
     def loadMoveSet(self, filepath: str):
         self.roadmap = []
-        with open(filepath,"r") as roadmapFile:
-            spamreader = csv.reader(roadmapFile, delimiter=',')
-            spamreader = list(spamreader)
+        if filepath[-3:] == "csv":
+            df = pd.read_csv(filepath)
+            # with open(filepath,"r") as roadmapFile:
+                # spamreader = csv.reader(roadmapFile, delimiter=',')
+                # spamreader = list(spamreader)
 
-            plats = list(spamreader)[:1][0]
-            self.roadmap = list(spamreader)[1:]
-            print(self.roadmap)
+                # plats = list(spamreader)[:1][0]
+                # self.roadmap = list(spamreader)[1:]
+                # print(self.roadmap)
 
-            platines={ self.axis[i]:plats[i] for i in range(len(self.axis))}
-    
-            self.saveSettings(platines=platines)
+                # platines={ self.axis[i]:plats[i] for i in range(len(self.axis))}
+        
+                # self.saveSettings(platines=platines)
+        elif filepath[-4:] == "xlsx":
+            df = pd.read_excel(filepath)
+            
+        print("DFFFF",list(df.columns))
+        plats = list(df.columns)
+        self.roadmap = [ list(pos) for pos in df.values ]
+        print(self.roadmap)
+
+        platines={ self.axis[i]:plats[i] for i in range(len(self.axis))}
+
+        print(platines)
+
+        self.saveSettings(platines=platines)
 
     def run(self, measurementFunc, speeds: list, *args, **kwargs):
         """
@@ -80,7 +96,7 @@ class MoveAndMeasure:
             plChoosed = {}
             for oneAxis in self.axis:
                 # Platines to change
-                if oneAxis in platines.keys() and platines[oneAxis] != "default":
+                if oneAxis in platines.keys() and "default" not in platines[oneAxis]:
                     plChoosed.update({
                         oneAxis: 
                         platines[oneAxis]

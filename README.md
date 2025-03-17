@@ -22,7 +22,7 @@ def my_measure(position,param1,param2):
 ## Mandatory
 - serial : **INSTALL REQUIREMENT : pyserial**
 - threading
-- csv
+- pandas
 - json
 - time
 - sys

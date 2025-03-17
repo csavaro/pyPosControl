@@ -21,12 +21,16 @@ if __name__ == "__main__":
     # app.mainloop()
 
     mm.path = str(Path(__file__).parent.absolute())+"\\"
-    filepath = str(Path(__file__).parent.absolute())+"\\moveset.csv"
+    filepath = str(Path(__file__).parent.absolute())+"\\moveset.xlsx"
 
     try:
 
         MaM = mm.MoveAndMeasure(axis_names=('X','Y'))
         MaM.loadMoveSet(filepath=filepath)
+
+        print("road map :")
+        for pos in MaM.roadmap:
+            print("-",pos,type(pos))
 
         MaM.run(measure,(5,5),"param1",par2="param2")
 
