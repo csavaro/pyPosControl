@@ -48,8 +48,8 @@ class MoveAndMeasure:
             df = pd.read_excel(filepath)
             
         print("DFFFF",list(df.columns))
-        plats = list(df.columns)
-        self.roadmap = [ list(pos) for pos in df.values ]
+        plats = list(df.values[:1][0])
+        self.roadmap = [ list(pos) for pos in df.values[1:] ]
         print(self.roadmap)
 
         platines={ self.axis[i]:plats[i] for i in range(len(self.axis))}

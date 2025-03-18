@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # app.mainloop()
 
     mm.path = str(Path(__file__).parent.absolute())+"\\"
-    filepath = str(Path(__file__).parent.absolute())+"\\moveset.xlsx"
+    filepath = str(Path(__file__).parent.absolute())+"\\moveset.csv"
 
     try:
 
