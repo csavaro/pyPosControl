@@ -1,3 +1,6 @@
+# This branch is useless and will become obsolete
+# It has been merged with branch controlPosition
+
 # Look at main.py
 ## What you need to have
 - A csv file with positions, first line should be for configuration. Position values unit is in mm from start position.
