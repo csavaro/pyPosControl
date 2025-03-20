@@ -380,14 +380,14 @@ class ModelControl:
         axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
-        # res = self.connection.executeCmd(cmds)
-        # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+        # res = self.connection.executeSelfCmd(cmds)
+        # res = self.teCommands.addTask(self.connection.executeSelfCmd, cmds)
 
         tth = Thread(target=time.sleep,args=(self.calcMoveTime(axis_values,axis_speeds),))
 
         functionList = []
         functionList.append(tth.start)
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         functionList.append(tth.join)
         # functionList.append(lambda t=self.calcMoveTime(axis_values,axis_speeds): time.sleep(t))
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.incrUpdate(axv,axs))
@@ -430,14 +430,14 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         # print("sending ",cmds)
-        # res = self.connection.executeCmd(cmds)
-        # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+        # res = self.connection.executeSelfCmd(cmds)
+        # res = self.teCommands.addTask(self.connection.executeSelfCmd, cmds)
 
         tth = Thread(target=time.sleep,args=(self.calcMoveTime(rel_axis_values,axis_speeds),))
 
         functionList = []
         functionList.append(tth.start)
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         # functionList.append(lambda t=self.calcMoveTime(rel_axis_values,axis_speeds): time.sleep(t))
         functionList.append(tth.join)
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.absUpdate(axv,axs))
@@ -463,7 +463,7 @@ class ModelControl:
         """
         cmds = self.communication.stopCmd()
         # print("sending ",cmd)
-        Thread(target=self.connection.executeCmd, args=(cmds,)).start()
+        Thread(target=self.connection.executeSelfCmd, args=(cmds,)).start()
 
         
         return self.communication.commandsToString(cmds)
@@ -500,14 +500,14 @@ class ModelControl:
         # Create and execute command
         cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         # print("go zero ",cmds)
-        # res = self.connection.executeCmd(cmds)
-        # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
+        # res = self.connection.executeSelfCmd(cmds)
+        # res = self.teCommands.addTask(self.connection.executeSelfCmd, cmds)
 
         tth = Thread(target=time.sleep,args=(self.calcMoveTime(axis_values,axis_speeds),))
 
         functionList = []
         functionList.append(tth.start)
-        functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(lambda c=cmds: self.connection.executeSelfCmd(c))
         # functionList.append(lambda t=self.calcMoveTime(axis_values,axis_speeds): time.sleep(t))
         functionList.append(tth.join)
         functionList.append(self.zeroUpdate)
@@ -535,7 +535,7 @@ class ModelControl:
         - command(s) sent to controller.
         """
         # functionList = []
-        # functionList.append(lambda c=self.communication.goHome: self.connection.executeCmd(c))
+        # functionList.append(lambda c=self.communication.goHome: self.connection.executeSelfCmd(c))
         # if callbacks:
         #     functionList += callbacks
         # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
@@ -553,7 +553,7 @@ class ModelControl:
         - command(s) sent to controller.
         """
         # functionList = []
-        # functionList.append(lambda c=self.communication.setHome: self.connection.executeCmd(c))
+        # functionList.append(lambda c=self.communication.setHome: self.connection.executeSelfCmd(c))
         # if callbacks:
         #     functionList += callbacks
         # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))

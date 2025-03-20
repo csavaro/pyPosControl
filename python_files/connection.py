@@ -76,6 +76,19 @@ class SerialConnection(Serial):
         if not self.parity:
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
+        # Simulation
+        # TO_REMOVE
+        print("sim connection...")
+        print("port: ",port)
+        print("baudrate:",self.baudrate)
+        if isinstance(commands,(str,bytes)):
+            commands = [commands]
+        for cmd in commands:
+            print("launch cmd:",cmd)
+            time.sleep(1)
+        print("...end of sim connection")
+        return 1
+
         if not self.is_open:
             print("Openning the serial")
             self.open()
@@ -178,10 +191,7 @@ class SerialConnection(Serial):
 
     def close(self):
         if self.is_open:
-            try:
-                print("Closing the serial")
-                self.close()
-            except RecursionError as e:
-                print("Recursion error : ",e)
+            print("Closing the serial")
+            super().close()
         else:
             print("serial is not open, already closed")
