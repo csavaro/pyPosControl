@@ -3,12 +3,12 @@ from tkinter import ttk
 from tkinter.font import Font
 from tkinter.messagebox import *
 # import python_files.guielements as guielements
-from .u_guielements import ScrollableFrame,ControlGeneralFrame,ControlFrame,SettingsFrame,AxisFrame,AxisButtonsFrame,AxisLabeledEntry,AxisButtons
+from .guielements import ScrollableFrame,ControlGeneralFrame,ControlFrame,SettingsFrame,AxisFrame,AxisButtonsFrame,AxisLabeledEntry,AxisButtons
 # import python_files.models as models
-from .models import ModelControl, ModelSettings
+from python_files.models import ModelControl, ModelSettings
 # import python_files.communications as cmds
-from .communications import CSeries
-from .connection import MissingValue
+from python_files.communications import CSeries
+from python_files.connection import MissingValue
 from pathlib import Path
 
 # Current path

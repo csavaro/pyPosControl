@@ -1,5 +1,5 @@
-from .models import ModelSettings,ModelControl
-from .communications import CSeries
+from ..models import ModelSettings,ModelControl
+from ..communications import CSeries
 from pathlib import Path
 # import csv
 from threading import Event

@@ -3,6 +3,7 @@ import python_files.communications as com
 import python_files.connection as co
 from threading import Thread,Lock
 import time
+from copy import deepcopy
 
 class ModelSettings:
     axisParameters = ["platine"]
@@ -328,7 +329,21 @@ class ModelControl:
     def setSpeed(self, axis, speed):
         self.speeds.update({ axis:speed })
 
+    def calcMoveTime(self, axis_values: dict, axis_speeds: dict, bonus_time = 1)->float:
+        """
+        bonus is additional time
+        """
+        dtimes = []
+        for axis in axis_values.keys():
+            if axis_speeds[axis] != 0:
+                dtimes.append(abs(axis_values[axis])/axis_speeds[axis])
+        t = max(dtimes)+bonus_time
+        print(f"movement time is expected to be {t} (with {bonus_time} bonus time)")
+        return t
+
+
     def convertMmToSteps(self, axis_values: dict):
+        axis_values = deepcopy(axis_values)
         for axis,value in axis_values.items():
             # print("val:",value," - stepscale:",self.settings.stepscales[axis])
             axis_values[axis] = value * self.settings.stepscales[axis]
@@ -368,8 +383,13 @@ class ModelControl:
         # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
+        tth = Thread(target=time.sleep,args=(self.calcMoveTime(axis_values,axis_speeds),))
+
         functionList = []
+        functionList.append(tth.start)
         functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        functionList.append(tth.join)
+        # functionList.append(lambda t=self.calcMoveTime(axis_values,axis_speeds): time.sleep(t))
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.incrUpdate(axv,axs))
         if callbacks:
             functionList += callbacks
@@ -413,12 +433,18 @@ class ModelControl:
         # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
+        tth = Thread(target=time.sleep,args=(self.calcMoveTime(rel_axis_values,axis_speeds),))
+
         functionList = []
+        functionList.append(tth.start)
         functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        # functionList.append(lambda t=self.calcMoveTime(rel_axis_values,axis_speeds): time.sleep(t))
+        functionList.append(tth.join)
         functionList.append(lambda axv=axis_values,axs=axis_speeds: self.absUpdate(axv,axs))
         if callbacks:
             functionList += callbacks
         res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
+        
 
         # if res:
         #     # Deduce current value
@@ -437,7 +463,8 @@ class ModelControl:
         """
         cmds = self.communication.stopCmd()
         # print("sending ",cmd)
-        self.connection.executeCmd(cmds)
+        Thread(target=self.connection.executeCmd, args=(cmds,)).start()
+
         
         return self.communication.commandsToString(cmds)
 
@@ -476,8 +503,13 @@ class ModelControl:
         # res = self.connection.executeCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeCmd, cmds)
 
+        tth = Thread(target=time.sleep,args=(self.calcMoveTime(axis_values,axis_speeds),))
+
         functionList = []
+        functionList.append(tth.start)
         functionList.append(lambda c=cmds: self.connection.executeCmd(c))
+        # functionList.append(lambda t=self.calcMoveTime(axis_values,axis_speeds): time.sleep(t))
+        functionList.append(tth.join)
         functionList.append(self.zeroUpdate)
         if callbacks:
             functionList += callbacks
@@ -632,11 +664,13 @@ class ThreadExecutor(Thread):
         """
         Create thread for the new task and add it to the waiting list.
         Returns:
-        - 0 : if everything went well.
+        - thread : if everything went well.
         - 1 : if waiting list was full and task not took into account.
         """
         thntask = Thread(target=newtask,args=taskargs)
-        return self.addThreadedTask(thntask)
+        self.addThreadedTask(thntask)
+        return thntask
+        # return self.addThreadedTask(thntask)
 
     # ajout d une tache a la liste d attente a executer
     def addThreadedTask(self, newthread: Thread):
