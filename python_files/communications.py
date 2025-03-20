@@ -78,7 +78,7 @@ class CSeries(Commands):
         axisStr = ""
         for axis,dist in axis_values.items():
             axisStr+=f"{int(round(dist))},{int(round(self.speeds[axis]))}," 
-        commands.append(f"@0a {axisStr[:-1]}\n\r".encode("ascii"))
+        commands.append(f"@0A {axisStr[:-1]}\n\r".encode("ascii"))
 
         return commands
 
