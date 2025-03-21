@@ -11,7 +11,7 @@ if __name__ == "__main__":
     print("start")
 
     mm.path = str(Path(__file__).parent.absolute())+"\\"
-    filepath = str(Path(__file__).parent.absolute())+"\\moveset.csv"
+    filepath = str(Path(__file__).parent.absolute())+"\\external_files\\moveset.csv"
 
     try:
 
