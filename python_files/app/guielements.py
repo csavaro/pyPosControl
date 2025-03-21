@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk,DoubleVar
 from tkinter.font import Font
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Custom widgets for the two axis control app
 
@@ -288,7 +291,8 @@ class SettingsFrame(tk.Frame):
                 val = None
                 if key in self.options["configs"][target_OptionKey].keys():
                     val = self.options["configs"][target_OptionKey][key]
-                print(f"setting {key} as {val}")
+                # print(f"setting {key} as {val}")
+                logger.debug(f"setting {key} as {val}")
                 self.parameters[key].setVal(val)
 
     def apply(self):
@@ -726,8 +730,9 @@ def checkPosInput(input: DoubleVar):
             input.set(-input.get())
         return 0
     except tk.TclError as e:
-        print("wrong value type.")
-        print(e)
+        # print("wrong value type.")
+        # print(e)
+        logger.debug(f"Wrong value type. {e}")
         return -1
 
 

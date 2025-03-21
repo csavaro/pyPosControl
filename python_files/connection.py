@@ -3,6 +3,9 @@ import serial.tools.list_ports
 import time
 import sys
 import glob
+import logging
+
+logger = logging.getLogger(__name__)
 
 class MissingValue(Exception):
     pass
@@ -76,8 +79,22 @@ class SerialConnection(Serial):
         if not self.parity:
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
+        # Simulation
+        # TO_REMOVE OR COMMENT
+        logger.info("simulate connection...")
+        logger.debug(f"port: {port}")
+        logger.debug(f"baudrate: {self.baudrate}")
+        if isinstance(commands,(str,bytes)):
+            commands = [commands]
+        for cmd in commands:
+            logger.debug(f"launch cmd: {cmd}")
+            time.sleep(1)
+        logger.info("...end of simulated connection")
+        return 1
+
         if not self.is_open:
-            print("Openning the serial")
+            # print("Openning the serial connection")
+            logger.info("Openning the serial connection")
             self.open()
 
         # Manage single command
@@ -90,20 +107,24 @@ class SerialConnection(Serial):
                 cmd = cmd.encode("ascii")
             # execute command if good format
             if isinstance(cmd,bytes):
-                print("launch cmd: ",cmd)
+                # print("launch cmd: ",cmd)
+                logger.debug(f"launch cmd: {cmd}")
                 self.write(cmd)
                 ack = self.read()
                 try:
-                    print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                    # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                    logger.debug(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
                 except UnicodeDecodeError as e:
-                    print("WARNING : Could'nt decode a byte recieved after sending a command")
-                    print(e)
+                    # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                    logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
                 # check if an acknowledge is recieved
                 if len(ack) == 0:
-                    print("no acknowledge recieved")
-                    return 0
+                    # print("no acknowledge recieved")
+                    logger.debug("no acknowledge recieved")
+                    # return 0
         # end of command transmission
-        print("end of command transmission")
+        # print("end of command transmission")
+        logger.debug("end of command transmission")
         return 1
 
     def executeCmd(self, commands, port=None):
@@ -128,16 +149,16 @@ class SerialConnection(Serial):
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
         # Simulation
-        # TO_REMOVE
-        print("sim connection...")
-        print("port: ",port)
-        print("baudrate:",self.baudrate)
+        # TO_REMOVE OR COMMENT
+        logger.info("simulate connection...")
+        logger.debug(f"port: {port}")
+        logger.debug(f"baudrate: {self.baudrate}")
         if isinstance(commands,(str,bytes)):
             commands = [commands]
         for cmd in commands:
-            print("launch cmd:",cmd)
+            logger.debug(f"launch cmd: {cmd}")
             time.sleep(1)
-        print("...end of sim connection")
+        logger.info("...end of simulated connection")
         return 1
 
         # Execution
@@ -148,7 +169,8 @@ class SerialConnection(Serial):
             ser.bytesize    = self.bytesize
             ser.parity      = self.parity
             ser.open()
-            print("serial opened")
+            # print("serial opened")
+            logger.debug("serial opened")
             # Manage single command
             if(isinstance(commands,bytes) or isinstance(commands,str)):
                 commands = [commands]
@@ -159,26 +181,32 @@ class SerialConnection(Serial):
                     cmd = cmd.encode("ascii")
                 # execute command if good format
                 if isinstance(cmd,bytes):
-                    print("launch cmd: ",cmd)
+                    # print("launch cmd: ",cmd)
+                    logger.debug(f"launch cmd: {cmd}")
                     ser.write(cmd)
                     ack = ser.read()
                     try:
-                        print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                        # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                        logger.debug(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
                     except UnicodeDecodeError as e:
-                        print("WARNING : Could'nt decode a byte recieved after sending a command")
-                        print(e)
+                        # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                        logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
                     # check if an acknowledge is recieved
                     if len(ack) == 0:
-                        print("no acknowledge recieved")
-                        return 0
+                        # print("no acknowledge recieved")
+                        logger.debug("no acknowledge recieved")
+                        # return 0
             # end of command transmission
             ser.close()
-            print("serial closed")
+            # print("serial closed")
+            logger.debug("serial closed")
         return 1
 
     def close(self):
         if self.is_open:
-            print("Closing the serial")
-            self.close()
+            # print("Closing the serial")
+            logger.debug("Closing the serial")
+            super().close()
         else:
-            print("serial is not open, already closed")
+            # print("serial is not open, already closed")
+            logger.debug("serial is not open, already closed")

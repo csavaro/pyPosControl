@@ -1,5 +1,6 @@
 from pathlib import Path
 import python_files.otheruses.movemeasure as mm
+import logging
 
 def measure(position,par1, par2):
     from time import sleep
@@ -10,6 +11,8 @@ def measure(position,par1, par2):
 if __name__ == "__main__":
     print("start")
 
+    logging.basicConfig(level=logging.INFO)
+
     mm.path = str(Path(__file__).parent.absolute())+"\\"
     filepath = str(Path(__file__).parent.absolute())+"\\external_files\\moveset.csv"
 
@@ -18,9 +21,9 @@ if __name__ == "__main__":
         MaM = mm.MoveAndMeasure(axis_names=('X','Y'))
         MaM.loadMoveSet(filepath=filepath)
 
-        print("road map :")
-        for pos in MaM.roadmap:
-            print("-",pos,type(pos))
+        # print("road map :")
+        # for pos in MaM.roadmap:
+        #     print("-",pos,type(pos))
 
         MaM.run(measure,(5,5),"param1",par2="param2")
 

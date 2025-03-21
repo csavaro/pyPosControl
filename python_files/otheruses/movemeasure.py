@@ -5,6 +5,9 @@ from pathlib import Path
 from threading import Event
 from time import sleep
 import pandas as pd
+import logging
+
+logger = logging.getLogger(__name__)
 
 path = ""
 
@@ -47,14 +50,17 @@ class MoveAndMeasure:
         elif filepath[-4:] == "xlsx":
             df = pd.read_excel(filepath)
             
-        print("DFFFF",list(df.columns))
+        # print("DFFFF",list(df.columns))
         plats = list(df.values[:1][0])
         self.roadmap = [ list(pos) for pos in df.values[1:] ]
-        print(self.roadmap)
+        # print(self.roadmap)
+        logger.info("roadmap loaded")
+        logger.debug(self.roadmap)
 
         platines={ self.axis[i]:plats[i] for i in range(len(self.axis))}
 
-        print(platines)
+        # print(platines)
+        logger.debug(f"platines loaded\n{platines}")
 
         self.saveSettings(platines=platines)
 
@@ -78,18 +84,21 @@ class MoveAndMeasure:
         for place in self.roadmap:
             aVals = { self.axis[i]:float(place[i]) for i in range(len(self.axis)) }
 
-            print("vals:",aVals)
-            print("speeds:",aSpeeds)
+            # print("position:",aVals)
+            # print("speeds:",aSpeeds)
+            logger.debug(f"position : {aVals}")
+            logger.debug(f"speeds : {aSpeeds}")
             self.move_finished_event.clear()
             cmd = self.mControl.absMove(aVals,aSpeeds,[self.move_finished_event.set])
-            print(f"command executed: {cmd}")
-            print(f"move at {aVals}")
+            # print(f"command executed: {cmd}")
+            logger.debug(f"move at {aVals}")
             while not self.move_finished_event.isSet():
                 sleep(0.5)
-            print("start measurement")
+            # print("start measurement")
+            logger.debug("execute callback")
             measurementFunc(place,*args,**kwargs)
 
-        print("run ended")
+        logger.info("MoveAndMeasure run ended")
 
     def saveSettings(self, platines: dict = None, controller: str = None, port: str = None):
         if platines != None:
