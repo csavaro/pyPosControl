@@ -69,7 +69,7 @@ default,Platine 1, Platine 1
 5,5,5
 0,0,0
 ```
-- A function that take position as first parameter.
+- A function that takes a position as first parameter.
 It can be a measurement for example.
 other ex:
 ```python
