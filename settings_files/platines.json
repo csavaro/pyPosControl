@@ -1,5 +1,5 @@
 {
-    "Platine 1": {
+    "Platine initiale": {
         "stepscale": "100",
         "vmax": 50,
         "vmin": 0.5,
@@ -7,18 +7,27 @@
         "rapport": "path",
         "serial_number": 451
     },
-    "Platine 2": {
+    "Platine Equipax 1": {
+        "stepscale": "160",
+        "vmax": 90
+    },
+    "Platine Equipax 2": {
+        "stepscale": "800",
+        "vmax": 6
+    },
+
+    "Test Platine 2": {
         "stepscale": "120",
         "vmax": 60
     },
-    "Platine 3": {
+    "Test Platine 3": {
         "stepscale": "130",
         "vmin": 10
     },
-    "Platine 4": {
+    "Test Platine 4": {
         "stepscale": "140"
     },
-    "Platine 5": {
+    "Test Platine 5": {
         "stepscale": "150"
     }
 }

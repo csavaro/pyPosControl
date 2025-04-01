@@ -1,17 +1,33 @@
 {
-    "Controller 1": {
+    "Controleur initial": {
         "baudrate": 9600
     },
-    "Controller 2": {
-        "baudrate": 2000
+
+    "Test Controller 115200": {
+        "baudrate": 115200
     },
-    "Controller 3": {
-        "baudrate": 3000
+    "Test Controller 57600": {
+        "baudrate": 57600
     },
-    "Controller 4": {
-        "baudrate": 4000
+    "Test Controller 38400": {
+        "baudrate": 38400
     },
-    "Controller 5": {
-        "baudrate": 5000
+    "Test Controller 19200": {
+        "baudrate": 19200
+    },
+    "Test Controller 4800": {
+        "baudrate": 4800
+    },
+    "Test Controller 2400": {
+        "baudrate": 2400
+    },
+    "Test Controller 1800": {
+        "baudrate": 1800
+    },
+    "Test Controller 1200": {
+        "baudrate": 1200
+    },
+    "Test Controller 600": {
+        "baudrate": 600
     }
 }

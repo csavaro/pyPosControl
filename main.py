@@ -6,7 +6,7 @@ def launchApp(axis_names: tuple[str] = ('X','Y','Z')):
     # Current path used to find settings files
     mf.path = str(Path(__file__).parent.absolute())+"\\"
 
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
 
     app = mf.MainApp(title="control app",axis_names=axis_names)
     app.geometry("%dx%d" % (600,app.winfo_screenheight()))
@@ -16,6 +16,7 @@ def launchApp(axis_names: tuple[str] = ('X','Y','Z')):
 if __name__ == "__main__":
     print("start")
 
-    launchApp(('X','Y','Z'))
+    # launchApp(('X','Y'))
+    launchApp(('X','Y'))
 
     print("end")

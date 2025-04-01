@@ -1,4 +1,5 @@
 from abc import ABC,abstractmethod
+import struct
 
 # Abstract class with all methods each language should implement. Functionalities of the app.
 class Commands(ABC):
@@ -57,6 +58,7 @@ class CSeries(Commands):
         """
         Returns one command to make the controller stop it's current action.
         """
+        return list([struct.pack('B',255)])
         return list(["@0d\n\r".encode(encoding="ascii")])
     
     def moveCmd(self, axis_values: dict, axis_speeds: dict = None)-> list:
@@ -78,7 +80,17 @@ class CSeries(Commands):
         axisStr = ""
         for axis,dist in axis_values.items():
             axisStr+=f"{int(round(dist))},{int(round(self.speeds[axis]))}," 
-        commands.append(f"@0A {axisStr[:-1]}\n\r".encode("ascii"))
+        commands.append(f"@0a {axisStr[:-1]}\n\r".encode("ascii"))
+
+        # # Test like the 2nd LabView
+        # commands.append("@03\n".encode("ascii"))
+        # commands.append("\r".encode("ascii"))
+        # # Create movement command
+        # axisStr = ""
+        # for axis,dist in axis_values.items():
+        #     axisStr+=f"{int(round(dist))},{int(round(self.speeds[axis]))}," 
+        # commands.append(f"@0a {axisStr[:-1]}\n\r".encode("ascii"))
+        # commands.append("\r".encode("ascii"))
 
         return commands
 

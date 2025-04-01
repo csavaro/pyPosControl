@@ -40,6 +40,7 @@ class AxisLabeledEntry:
     
         # Callbacks
         self.inpSpeedAxis.trace_add("write", lambda name,index,mode : self.checkSpeed())
+        # self.inpAxis.trace_add("write", lambda name,index,mode : self.checkValue())
 
     # def checkAxis(self):
     #     pass
@@ -47,6 +48,8 @@ class AxisLabeledEntry:
     def checkSpeed(self):
         inpOk = checkPosInput(self.inpSpeedAxis)
         pass
+    def checkValue(self):
+        inpOk = checkNumberInput(self.inpAxis)
 
 class AxisFrame(tk.Frame):
     """
@@ -735,6 +738,22 @@ def checkPosInput(input: DoubleVar):
         logger.debug(f"Wrong value type. {e}")
         return -1
 
+def checkNumberInput(input: DoubleVar):
+    """
+    Check if an input number like DoubleVar is really a number, and set is as 0 if not recognized.
+    Also return -1 if the input value is not a number.
+    """
+    try:
+        inp = input.get()
+        if inp != int(inp):
+            input.set(int(inp))
+        return 0
+    except tk.TclError as e:
+        # print("wrong value type.")
+        # print(e)
+        logger.debug(f"Wrong value type. Should be an int {e}")
+        input.set(0)
+        return -1
 
 ## --------------------------------------
 ## TRASH

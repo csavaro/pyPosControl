@@ -79,18 +79,18 @@ class SerialConnection(Serial):
         if not self.parity:
             raise MissingValue("Missing setting: parity is not set. Set it in class attribute")
 
-        # Simulation
-        # TO_REMOVE OR COMMENT
-        logger.info("simulate connection...")
-        logger.debug(f"port: {port}")
-        logger.debug(f"baudrate: {self.baudrate}")
-        if isinstance(commands,(str,bytes)):
-            commands = [commands]
-        for cmd in commands:
-            logger.debug(f"launch cmd: {cmd}")
-            time.sleep(1)
-        logger.info("...end of simulated connection")
-        return 1
+        # # Simulation
+        # # TO_REMOVE OR COMMENT
+        # logger.info("simulate connection...")
+        # logger.debug(f"port: {port}")
+        # logger.debug(f"baudrate: {self.baudrate}")
+        # if isinstance(commands,(str,bytes)):
+        #     commands = [commands]
+        # for cmd in commands:
+        #     logger.debug(f"launch cmd: {cmd}")
+        #     time.sleep(1)
+        # logger.info("...end of simulated connection")
+        # return 1
 
         if not self.is_open:
             # print("Openning the serial connection")
@@ -110,10 +110,12 @@ class SerialConnection(Serial):
                 # print("launch cmd: ",cmd)
                 logger.debug(f"launch cmd: {cmd}")
                 self.write(cmd)
+                # ack = self.readline()
                 ack = self.read()
                 try:
                     # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
-                    logger.debug(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                    logger.debug(f"raw recieved ({len(ack)}): {ack}")
+                    logger.debug(f"recieved ({len(ack)}): {ack.decode('utf-16')}")
                 except UnicodeDecodeError as e:
                     # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
                     logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")

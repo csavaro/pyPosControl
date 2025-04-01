@@ -116,10 +116,10 @@ class MainApp(tk.Tk):
                     oneAxis:0
                 })
                 incrSpeedDict.update({
-                    oneAxis:0
+                    oneAxis:self.incrAxis.axis[self.axis.index(oneAxis)].inpSpeedAxis.get()
                 })
             incrMoveDict[axis]  = self.incrAxis.axis[self.axis.index(axis)].inpAxis.get()
-            incrSpeedDict[axis] = self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get()
+            # incrSpeedDict[axis] = self.incrAxis.axis[self.axis.index(axis)].inpSpeedAxis.get()
             if sign == "-":
                 incrMoveDict[axis] = -incrMoveDict[axis]
 
