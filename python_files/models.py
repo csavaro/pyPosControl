@@ -10,9 +10,16 @@ logger = logging.getLogger(__name__)
 
 
 class ModelSettings:
+    """
+    Load, store and update settings to send the signal.
+    """
     axisParameters = ["platine"]
     
-    def __init__(self, axis_names):
+    def __init__(self, axis_names : tuple):
+        """
+        :param axis_names: list of axis names, up to 3 axis implemented
+        :type axis_names: tuple, list
+        """
         self.axis = axis_names
         # link to controller class for port list
         self.port: str = None # from available ports
@@ -28,6 +35,18 @@ class ModelSettings:
         self.portsData = self.getAvailablePorts()
 
     def saveSettings(self, path: str, port: str = None, platines: dict = None, controller: str = None):
+        """
+        Save and apply settings in parameters and current into json files.
+
+        :param path: absolute path of the current app files, will be used to look at `$\\settings_files\\save.json`
+        :type path: str
+        :param port: *(Optional)* computer port to communicate with the controller. *ex: `'COM3'`*
+        :type port: str
+        :param platines: *(Optional)* platines settings as a dict with key as axis. *ex: `{ 'x':"Platine Name" }`*
+        :type platines: dict[str:str]
+        :param controller: *(Optional)* controller name to communicate with.
+        :type controller: str
+        """
         with open(path+"settings_files\\save.json","r") as saveFile:
             settingsDict = json.load(saveFile)
 
@@ -100,7 +119,15 @@ class ModelSettings:
 
     def applySettings(self, port: str = -1, stepscales: dict = -1, speed_limits: dict = -1, baudrate: int = -1):
         """
-        Apply settings from parameters in model properties
+        Apply concrete settings from parameters to model properties
+
+        :param port: *(Optional)* computer port to communicate with the controller. *ex: `'COM3'`*
+        :type port: str
+        :param stepscales: *(Optional)* stepscale of platines in `step/mm` unit by axis as key used to convert input to command. *ex: `{ 'x':500 }`*
+        :type stepscales: dict[str:int]
+        :param speed_limits: *(Optional)* speed limits in `mm/s` unit by axis as key used to secure speed in commands. *ex: `{ 'x':50 }`*
+        :type speed_limits: dict[str:int]
+        :param baudrate: *(Optional)* baudrate in `baud/s` unit to communicate with the controller.
         """
         if port != -1: # and port in self.portsData ?
             # print(f"ModelSetting: setting port as {port}")
@@ -144,6 +171,9 @@ class ModelSettings:
             self.connection.baudrate = self.baudrate
 
     def applySettingsFromData(self):
+        """
+        Apply concrete settings from values in self.settingsData dictionary;
+        """
         # Apply saved settings
         # print("applying settings")
         logger.info("applying settings")
