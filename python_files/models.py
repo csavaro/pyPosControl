@@ -214,7 +214,49 @@ class ModelSettings:
             baudrate=baudrate
         )
 
-    def getSettingsDict(self):
+    def getSettingsDict(self)->dict:
+        """
+        Returns a python dictionary with current settings.
+        
+        The dictionary is organized like :
+
+        ```python
+        {
+            "parameters": {
+                "platineX": {
+                    "name": "Platine X",
+                    "unit": "step/mm",
+                    "default": "Platine 1",
+                    "options": {
+                        #*other linear turntables/platines in self.platinesData*
+                    }
+                },
+                "port": {
+                    "name": "Port",
+                    "default": "COM3",
+                    "options": {
+                        #*other ports in self.portsData*
+                    }
+                },
+                "controller": {
+                    "name": "Controller",
+                    "unit": "baud/s",
+                    "default": "Controller 1",
+                    "options": {
+                        #*other controllers in self.controllersData*
+                    }
+                }
+            },
+            "configs": {
+                "Config 1": {
+                    "platineX": "Platine 1",
+                    "port": "COM3",
+                    "controller": "Controller 1"
+                }
+            }
+        }
+        ``` 
+        """
         settingDico = {
             "parameters": {},
             "configs": {}
@@ -272,10 +314,14 @@ class ModelSettings:
         
         return settingDico
 
-    def isAxisRelated(self, data: str):
+    def isAxisRelated(self, data: str)->tuple[bool,str]:
         """
-        First return: true if end of string data is in self.axis.
-        Second return: if found, return data without axis string, else return empty string.
+        Check if an axis name is at the end of a string.
+
+        :param data: data that will be look at
+        :type data: str
+        :return: Returns firstly a boolean value if end of data string is in self.axis. Second return value is the axis name if found, empty string otherwise.
+        :rtype: tuple[bool,str]
         """
         for oneAxis in self.axis:
             if oneAxis == data[-len(oneAxis):]:
@@ -283,6 +329,13 @@ class ModelSettings:
         return False,""
 
     def loadSettings(self, path):
+        """
+        Load settings from a json file into self.saveData, self.defaultData, self.platinesData, self.controllersData and self.configsData properties.
+        Will load settings_files\\save.json file and then controller, platines and config files specified in the save.json file.
+        
+        :param path: current path of the app files, will try to load the settings file at **path\\settings_files\\save.json**
+        :type path: str
+        """
         # Saved data
         with open(path+"settings_files\\save.json","r") as saveFile:
             saveData = json.load(saveFile)
@@ -337,6 +390,9 @@ class ModelSettings:
         # self.portsData = self.getAvailablePorts()
 
     def applyDefault(self):
+        """
+        Apply current settings with the current default values loaded in self.defaultData.
+        """
         self.defaultData: dict
         for key,defData in self.defaultData.items():
             arel,pname = self.isAxisRelated(key)
@@ -344,6 +400,13 @@ class ModelSettings:
                 self.default_speeds[key[len(pname):]] = defData
 
     def getAvailablePorts(self):
+        """
+        Read available ports from pyserial.Serial.
+        Returns format is like : { "COM3": { "name": "COM3", "value": "COM3" } }
+
+        :return: dictionary of available ports 
+        :rtype: dict[dict]
+        """
         return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
         # return {
         #     "COM1": { "name": "COM1", "value": "COM1"},
@@ -351,7 +414,21 @@ class ModelSettings:
         # }
 
 class ModelControl:
+    """
+    Core class of this project.
+
+    Launch commands, save current position, read settings from python_files.models.ModelSettings and save concrete settings.
+    Every actions is managed by this class.
+    """
     def __init__(self, axis_names, communication: com.Commands = None, settings: ModelSettings = None):
+        """
+        :param axis_names: axis names like ('X','Y'). Up to 3 axis supported.
+        :type axis_names: tuple | list
+        :param communication: concrete Commands class instance for the commands format.
+        :type communication: python_files.communications.Commands
+        :param settings: settings class to get values from
+        :type settings: python_files.models.ModelSettings 
+        """
         self.values     = { axis_name:0 for axis_name in axis_names } # usually in mm (unit)
         self.speeds     = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
         self.settings = settings
@@ -365,14 +442,40 @@ class ModelControl:
         self.teCommands.start()
     
     def setValue(self, axis, value):
+        """
+        Set current position value on the specified axis. Unit is mm.
+
+        :param axis: axis name
+        :type axis: str
+        :param value: position/movement value (mm)
+        :type value: float | int
+        """
         self.values.update({ axis:value })
 
     def setSpeed(self, axis, speed):
+        """
+        Set speed value on the specified axis. Unit is mm/s.
+
+        :param axis: axis name
+        :type axis: str
+        :param speed: speed value (mm/s)
+        :type speed: float | int
+        """
         self.speeds.update({ axis:speed })
 
     def calcMoveTime(self, axis_values: dict, axis_speeds: dict, bonus_time = 1)->float:
         """
-        bonus is additional time
+        Calculate the time expected to move from position 0 to axis_values position at axis_speeds speed.
+        Bonus is additional time (s).
+
+        :param axis_values: position values  for each axis formatted like { 'X': 50 }. Unit is mm
+        :type axis_values: dict[str:int|float]
+        :param axis_speeds: speed values  for each axis formatted like { 'X': 5 }. Unit is mm/s
+        :type axis_speeds: dict[str:int|float]
+        :param bonus_time: additional time (s).
+        :type bonus_time: float | int
+        :return: time expected to take to move to specified position from a position 0. Unit is s
+        :rtype: float | int
         """
         dtimes = []
         for axis in axis_values.keys():
@@ -385,6 +488,14 @@ class ModelControl:
 
 
     def convertMmToSteps(self, axis_values: dict):
+        """
+        Converts position values from mm to step units according to stepscale in self.settings.stepscales
+
+        :param axis_values: position values  for each axis formatted like { 'X': 50 }. Unit is mm
+        :type axis_values: dict[str:int|float]
+        :return: axis_values converted from mm to step units
+        :rtype: dict[str:int]
+        """
         axis_values = deepcopy(axis_values)
         for axis,value in axis_values.items():
             # print("val:",value," - stepscale:",self.settings.stepscales[axis])
@@ -394,10 +505,11 @@ class ModelControl:
     def checkSpeed(self, axis_speeds: dict):
         """
         check if axis_speed values are within the limits set in the ModelSettings linked.
-        Parameters:
-        - axis_speed: dictionary of str:float|int, speed unit should be mm/s.
-        Returns: 
-        - same format as axis_speed with speed limit as value if axis_speed values are not in range.
+
+        :param axis_speeds: speed values for each axis formatted like { 'X': 5 }. Unit is mm/s
+        :type axis_speeds: dict[str:int|float]
+        :return: axis_speed with speed limit as value if axis_speed values are not in range.
+        :rtype: dict[str:float|int]
         """
         for axis,speed in axis_speeds.items():
             smax = self.settings.speed_limits[axis]["max"]
@@ -411,11 +523,19 @@ class ModelControl:
     def incrMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         launch a command to move to axis_values without taking on board current position.
-        Parameters:
-        - axis_values: dict of str:float|int, values on axis to move to. Units should be mm.
-        - axis_speeds: dict of str:float|int, speed values on axis. Units should be mm/s.
-        Returns:
-        - command(s) sent to controller.
+
+        :param axis_values: position values to move to for each axis. Formatted like { 'X': 50 }. Unit is mm
+        :type axis_values: dict[str:int|float]
+        :param axis_speeds: speed values for each axis formatted like { 'X': 5 }. Unit is mm/s
+        :type axis_speeds: dict[str:int|float]
+        :param callbacks: actions to do at the end of the movement
+        :type callbacks: list[function]
+        :param: miss_val_cbs: actions to do if a python_files.connection.MissingValue exception is raised during the movement and the callbacks
+        :type miss_val_cbs: list[function]
+        :param finally_cbs: actions to do after the movement in a finally statement
+        :type finally_cbs: list[function]
+        :return: command(s) sent to controller
+        :rtype: str
         """
         axis_speeds = self.checkSpeed(axis_speeds)
         axis_values = self.convertMmToSteps(axis_values)
@@ -454,11 +574,19 @@ class ModelControl:
     def absMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         launch a command to move to axis_values from current position values.
-        Parameters:
-        - axis_values: dict of str:float|int, values on axis to move to. Units should be mm.
-        - axis_speeds: dict of str:float|int, speed values on axis. Units should be mm/s.
-        Returns:
-        - command(s) sent to controller.
+
+        :param axis_values: position values to move to for each axis. Formatted like { 'X': 50 }. Unit is mm
+        :type axis_values: dict[str:int|float]
+        :param axis_speeds: speed values for each axis formatted like { 'X': 5 }. Unit is mm/s
+        :type axis_speeds: dict[str:int|float]
+        :param callbacks: actions to do at the end of the movement
+        :type callbacks: list[function]
+        :param: miss_val_cbs: actions to do if a python_files.connection.MissingValue exception is raised during the movement and the callbacks
+        :type miss_val_cbs: list[function]
+        :param finally_cbs: actions to do after the movement in a finally statement
+        :type finally_cbs: list[function]
+        :return: command(s) sent to controller
+        :rtype: str
         """
         # Transform absolute values to relative values
         rel_axis_values = axis_values.copy()
@@ -502,8 +630,9 @@ class ModelControl:
     def stop(self):
         """
         launch a command to stop the controller in it's task.
-        Returns:
-        - command(s) sent to controller.
+
+        :return: command(s) sent to controller
+        :rtype: str
         """
         cmds = self.communication.stopCmd()
         # print("sending ",cmd)
@@ -517,8 +646,15 @@ class ModelControl:
         """
         launch a move command to controller to go position 0 on each axis from the current position values.
         Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.
-        Returns:
-        - command(s) sent to controller.
+
+        :param callbacks: actions to do at the end of the movement
+        :type callbacks: list[function]
+        :param: miss_val_cbs: actions to do if a python_files.connection.MissingValue exception is raised during the movement and the callbacks
+        :type miss_val_cbs: list[function]
+        :param finally_cbs: actions to do after the movement in a finally statement
+        :type finally_cbs: list[function]
+        :return: command(s) sent to controller
+        :rtype: str
         """
         # Getting axis delta to go to zero
         axis_values = {}
@@ -578,8 +714,9 @@ class ModelControl:
     def goHome(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         Set current position as home on the controller.
-        Returns:
-        - command(s) sent to controller.
+        
+        :return: command(s) sent to controller
+        :rtype: str
         """
         # functionList = []
         # functionList.append(lambda c=self.communication.goHome: self.connection.executeSelfCmd(c))
@@ -597,8 +734,9 @@ class ModelControl:
     def setHome(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         Go to current home position on the controller.
-        Returns:
-        - command(s) sent to controller.
+        
+        :return: command(s) sent to controller
+        :rtype: str
         """
         # functionList = []
         # functionList.append(lambda c=self.communication.setHome: self.connection.executeSelfCmd(c))
@@ -616,8 +754,9 @@ class ModelControl:
     def rawAction(self, commands: list[str], callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
         Send list of commands converted in ascii into the serial connection.
-        Returns:
-        - command(s) sent to controller.
+        
+        :return: command(s) sent to controller
+        :rtype: str
         """
         cmds = []
         for cmd in commands:
@@ -633,33 +772,77 @@ class ModelControl:
         return "\n".join(commands)
 
     def incrUpdate(self, axis_values: dict, axis_speeds: dict):
+        """
+        Update current position values after a incremental movement to the set of positions specified.
+
+        :param axis_values: position values to move to for each axis. Formatted like { 'X': 50 }. Unit is mm
+        :type axis_values: dict[str:int|float]
+        :param axis_speeds: speed values for each axis formatted like { 'X': 5 }. Unit is mm/s
+        :type axis_speeds: dict[str:int|float]
+        """
         # Deduce current value
         for key,incrVal in axis_values.items():
             if axis_speeds[key] > 0:
                 self.values[key] += incrVal / self.settings.stepscales[key]
 
     def absUpdate(self, axis_values: dict, axis_speeds: dict):
+        """
+        Update current position values after an absolute movement to the set of positions specified.
+
+        :param axis_values: position values to move to for each axis. Formatted like { 'X': 50 }. Unit is mm
+        :type axis_values: dict[str:int|float]
+        :param axis_speeds: speed values for each axis formatted like { 'X': 5 }. Unit is mm/s
+        :type axis_speeds: dict[str:int|float]
+        """
         # Deduce current value
         for key,absVal in axis_values.items():
             if axis_speeds[key] > 0:
                 self.values[key] = absVal #/ self.settings.stepscales[key]
 
     def zeroUpdate(self):
+        """
+        Update current position values to position 0.
+        """
         for axis in self.values.keys(): self.values[axis] = 0
 
     def quit(self):
+        """
+        Close and kill the thread waiting list used to execute actions like movements.
+        
+        Meant to be executed at the end of the program.
+        """
         if isinstance(self.teCommands,ThreadExecutor):
             self.connection.close()
             self.teCommands.kill()
 
 
 def inWithStartKeys(value: str, startkeys: list):
+    """
+    Returns if a start key has been found at the beginning of the value.
+
+    :param value: value to be check if a start key is in
+    :type value: str
+    :param startkeys: start keys to check inside value
+    :type startkeys: list[str]
+    :return: a start key has been found in value
+    :rtype: boolean
+    """
     for start_key in startkeys:
         if start_key == value[:len(start_key)]:
             return True
     return False
 
 def removeWithStartKey(dico: dict, startkey: str):
+    """
+    Remove the beginning of dico keys if startkey has been found.
+
+    :param dico: dictionary without startkey in it's keys
+    :type dico: dict[str:]
+    :param startkey: start key to remove in the dico
+    :type startkey: str
+    :return: dico without startkey in it's keys
+    :rtype: dict[str:]
+    """
     keys_to_remove = []
     # search for complete keys
     for key in dico.keys():
@@ -671,9 +854,18 @@ def removeWithStartKey(dico: dict, startkey: str):
     return dico
 
 class ThreadExecutor(Thread):
-    wait_list_size = 1
+    """
+    Thread waiting list.
+
+    wait_list_size is a static parameter.
+    """
+    wait_list_size: int = 1
 
     def __init__(self, name: str):
+        """
+        :param name: ThreadExecutor name shown in logger messages
+        :type name: str
+        """
         Thread.__init__(self)
         self.curr_thread: Thread = None
         self.wait_list  : list   = []
@@ -714,12 +906,14 @@ class ThreadExecutor(Thread):
     def addTask(self, newtask, *taskargs):
         """
         Create thread for the new task and add it to the waiting list.
-        Returns:
-        - thread : if everything went well.
-        - 1 : if waiting list was full and task not took into account.
+
+        :return: Added thread if everything went well, 1 if waiting list was full and task not took into account.
+        :rtype: Thread | int
         """
         thntask = Thread(target=newtask,args=taskargs)
-        self.addThreadedTask(thntask)
+        ret = self.addThreadedTask(thntask)
+        if ret != 0:
+            thntask = ret
         return thntask
         # return self.addThreadedTask(thntask)
 
@@ -727,9 +921,9 @@ class ThreadExecutor(Thread):
     def addThreadedTask(self, newthread: Thread):
         """
         Add task in a thread to the waiting list if not full.
-        Returns:
-        - 0 : if everything went well.
-        - 1 : if waiting list was full and task not took into account.
+
+        :return: 0 if everything went well, 1 if waiting list was full and task not took into account.
+        :rtype: int
         """
         # verification de la taille de la liste d attente
         if len(self.wait_list) < self.wait_list_size or (len(self.wait_list)==0 and not self.isRunning()):
@@ -744,6 +938,10 @@ class ThreadExecutor(Thread):
             return -1
 
     def isRunning(self):
+        """
+        :return: If running or not.
+        :rtype: bool
+        """
         return self.curr_thread is not None
 
     def getState(self):
@@ -754,6 +952,9 @@ class ThreadExecutor(Thread):
         - 2 : one task is running, waiting list is full.
         - 3 : one task is running, waiting list has some tasks.
         - 4 : no task is running but waiting list has some tasks.
+
+        :return: state of the ThreadExecutor
+        :rtype: int
         """
         if self.curr_thread is None and len(self.wait_list) == 0:
             # nothing running and waiting list is empty
@@ -776,10 +977,22 @@ class ThreadExecutor(Thread):
         
     # termine le threadexecutor
     def kill(self):
+        """
+        End the infinite loop of waiting and execute next action.
+        Does not interrupt an action.
+        """
         self.killed = True
 
 
 def functionPackage(callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
+    """
+    :param callbacks: list of functions to be executed in a try statement
+    :type callbacks: list[function]
+    :param miss_val_cbs: list of functions to be executed in a except python_files.connection.MissingValue statement.
+    :type miss_val_cbs: list[function]
+    :param finally_cbs: list of functions to be executed in a finally statement.
+    :type finally_cbs: list[function]
+    """
     try:
         if callbacks:
             for cb in callbacks:

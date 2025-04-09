@@ -40,7 +40,7 @@ class Commands(ABC):
         pass
 
     @abstractmethod
-    def commandsToString(self, commands: list)-> list:
+    def commandsToString(self, commands: list)-> str:
         """
         Returns a list of commands in string type
         """
@@ -100,7 +100,7 @@ class CSeries(Commands):
     def setHome(self, nbAxis: int)-> list:
         return [f"@0n{self.axisDefinition(nbAxis=nbAxis)}".encode("ascii")]
 
-    def commandsToString(self, commands: list)-> list:
+    def commandsToString(self, commands: list)-> str:
         cmds = [cmd.decode("utf-8")[:-2] for cmd in commands]
         return "\n".join(cmds)
 
