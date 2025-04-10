@@ -1,6 +1,6 @@
 # From LabView to Python
 
-[Documentation is available here](pacleme.github.io/pyposcontrol) *(still writing...)*
+[Documentation is available here](https://pacleme.github.io/pyposcontrol/) *(still writing...)*
 
 # Branches
 ### test_structure
