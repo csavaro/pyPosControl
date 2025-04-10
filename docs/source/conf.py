@@ -29,8 +29,9 @@ release = '0.1'
 
 extensions = [
     'sphinx.ext.autodoc',
+    # 'sphinx.ext.githubpages',
     #'recommonmark',
-    #'sphinx_rtd_theme',
+    'sphinx_rtd_theme',
 ]
 
 templates_path = ['_templates']
@@ -44,11 +45,12 @@ exclude_patterns = []
 # html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+# html_context = {'github_user_name': 'pacleme', 'github_repo_name': 'Pacleme.github.io','project_name': project}
 
-def skip(app, what, name, obj, would_skip, options):
-    if name == "__init__":
-        return False
-    return would_skip
+# def skip(app, what, name, obj, would_skip, options):
+#     if name == "__init__":
+#         return False
+#     return would_skip
 
-def setup(app):
-    app.connect("autodoc-skip-member", skip)
+# def setup(app):
+#     app.connect("autodoc-skip-member", skip)
