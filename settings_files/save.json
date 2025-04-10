@@ -1,0 +1,20 @@
+{
+    "files": {
+        "path": "current\\settings_files\\",
+        "controller": "controleurs.json",
+        "platine": "platines.json",
+        "configuration": "configurations.json"
+    },
+    "settings": {
+        "platineX": "Platine Equipax 1",
+        "platineY": "Platine Equipax 2",
+        "platineZ": "Platine initale",
+        "controller": "Controleur initial",
+        "port": "COM3"
+    },
+    "default": {
+        "speedX": 5,
+        "speedY": 5,
+        "speedZ": 10
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "Platine initiale": {
+        "stepscale": "100",
+        "vmax": 50,
+        "vmin": 0.5,
+
+        "rapport": "path",
+        "serial_number": 451
+    },
+    "Platine Equipax 1": {
+        "stepscale": "160",
+        "vmax": 90
+    },
+    "Platine Equipax 2": {
+        "stepscale": "800",
+        "vmax": 6
+    },
+
+    "Test Platine 2": {
+        "stepscale": "120",
+        "vmax": 60
+    },
+    "Test Platine 3": {
+        "stepscale": "130",
+        "vmin": 10
+    },
+    "Test Platine 4": {
+        "stepscale": "140"
+    },
+    "Test Platine 5": {
+        "stepscale": "150"
+    }
+}
