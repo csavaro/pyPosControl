@@ -6,8 +6,8 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "platineX": "Platine Equipax 1",
-        "platineY": "Platine Equipax 2",
+        "platineX": "Platine initiale",
+        "platineY": "Platine initiale",
         "platineZ": "Platine initale",
         "controller": "Controleur initial",
         "port": "COM3"
