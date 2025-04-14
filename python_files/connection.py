@@ -8,12 +8,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 class MissingValue(Exception):
+    """
+    Meant to be raise when a value like a setting is not set.
+    """
     pass
 
 class SerialConnection(Serial):
     """
-    Summary:
-        Manage a serial connection to send commands.
+    Manage a serial connection to send commands.
+    
     Attributes:
         - port: str, port name of the connection.
         - baudrate: int, information signal speed, unit is baud/s.
@@ -22,6 +25,12 @@ class SerialConnection(Serial):
         - parity 
     """
     def __init__(self, timeout: int = 10, bytesize: int = 8):
+        """
+        :param timeout: max waiting time when reading before aborting
+        :type timeout: float | int
+        :param bytesize: bytesize of the serial connection
+        :type bytesize: int
+        """
         super().__init__()
         self.port = None
         self.baudrate = 0
@@ -31,12 +40,12 @@ class SerialConnection(Serial):
 
     def available_serial_ports(self):
         """
-        Lists serial port names
+        Read the available serial ports names
 
         :raises EnvironmentError:
             On unsupported or unknown platforms
-        :returns:
-            A list of the serial ports available on the system
+        :return: A list of the serial ports available on the system
+        :rtype: list[str]
         """
         if sys.platform.startswith('win'):
             ports = ['COM%s' % (i + 1) for i in range(256)]
@@ -61,12 +70,18 @@ class SerialConnection(Serial):
     def executeSelfCmd(self, commands, port=None):
         """
         Execute a single command or a list of commands.
-        Params:
-            - commands: str,byte,list of str or list of bytes - commands to be executed, byte format should be ascii.
-            - port (Optional) : port to send to commands to.
-        Returns: 
-            - 0 if no acknowledge is recieved, all commands might not have been sent.
-            - 1 if all commands were sent and all acknowledges recieved.
+        Open the serial link if necessary but let it open afterwards.
+        
+        Return options :
+        - 0 if no acknowledge is recieved, all commands might not have been sent.
+        - 1 if all commands were sent and all acknowledge revieved.
+
+        :param commands: commands to be executed, byte format should be ascii.
+        :type commands: str | byte | list[str|byte]
+        :param port: *(Optional)* port to send commands to.
+        :type port: str
+        :return: success state of the transmission.
+        :rtype: int
         """
         if not port:
             port = self.port
@@ -132,12 +147,18 @@ class SerialConnection(Serial):
     def executeCmd(self, commands, port=None):
         """
         Execute a single command or a list of commands.
-        Params:
-            - commands: str,byte,list of str or list of bytes - commands to be executed, byte format should be ascii.
-            - port (Optional) : port to send to commands to.
-        Returns: 
-            - 0 if no acknowledge is recieved, all commands might not have been sent.
-            - 1 if all commands were sent and all acknowledges recieved.
+        Open a serial link and close it afterwards.
+        
+        Return options :
+        - 0 if no acknowledge is recieved, all commands might not have been sent.
+        - 1 if all commands were sent and all acknowledge revieved.
+
+        :param commands: commands to be executed, byte format should be ascii.
+        :type commands: str | byte | list[str|byte]
+        :param port: *(Optional)* port to send commands to.
+        :type port: str
+        :return: success state of the transmission.
+        :rtype: int
         """
         if not port:
             port = self.port
@@ -205,6 +226,9 @@ class SerialConnection(Serial):
         return 1
 
     def close(self):
+        """
+        Close the current serial link if it is open.
+        """
         if self.is_open:
             # print("Closing the serial")
             logger.debug("Closing the serial")
