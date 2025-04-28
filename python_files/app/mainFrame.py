@@ -16,7 +16,7 @@ from pathlib import Path
 path = ""
 
 class MainApp(tk.Tk):
-    def __init__(self, axis_names, title: str ="", *args, **kwargs):
+    def __init__(self, axis_names, title: str ="", wait_ack = True, *args, **kwargs):
         super().__init__(*args,**kwargs)
         self.title(title)
         self.protocol("WM_DELETE_WINDOW", self._close)
@@ -30,7 +30,7 @@ class MainApp(tk.Tk):
         # self.EventMoveFinished.trace_add("write",self.afterMove)
 
         # self.mSettings = models.ModelSettings(self.axis)
-        self.mSettings = ModelSettings(self.axis)
+        self.mSettings = ModelSettings(self.axis, wait_ack=wait_ack)
         self.mSettings.loadSettings(path)
         self.mSettings.applySettingsFromData()
         self.mSettings.applyDefault()

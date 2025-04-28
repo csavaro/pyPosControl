@@ -24,12 +24,14 @@ class SerialConnection(Serial):
         - bytesize: message length
         - parity 
     """
-    def __init__(self, timeout: int = 10, bytesize: int = 8):
+    def __init__(self, timeout: int = 10, bytesize: int = 8, wait_ack = True):
         """
         :param timeout: max waiting time when reading before aborting
         :type timeout: float | int
         :param bytesize: bytesize of the serial connection
         :type bytesize: int
+        :param wait_ack: *(Optional)* Wait for an acknowledge message after sending each command.
+        :type wait_ack: bool
         """
         super().__init__()
         self.port = None
@@ -37,6 +39,7 @@ class SerialConnection(Serial):
         self.timeout = timeout
         self.bytesize = bytesize
         self.parity = serial.PARITY_NONE
+        self.wait_ack = wait_ack
 
     def available_serial_ports(self):
         """
@@ -125,20 +128,21 @@ class SerialConnection(Serial):
                 # print("launch cmd: ",cmd)
                 logger.debug(f"launch cmd: {cmd}")
                 self.write(cmd)
-                # ack = self.readline()
-                ack = self.read()
-                try:
-                    # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
-                    logger.debug(f"raw recieved ({len(ack)}): {ack}")
-                    logger.debug(f"recieved ({len(ack)}): {ack.decode('utf-16')}")
-                except UnicodeDecodeError as e:
-                    # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
-                    logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
-                # check if an acknowledge is recieved
-                if len(ack) == 0:
-                    # print("no acknowledge recieved")
-                    logger.debug("no acknowledge recieved")
-                    # return 0
+                if self.wait_ack:
+                    # ack = self.readline()
+                    ack = self.read()
+                    try:
+                        # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                        logger.debug(f"raw recieved ({len(ack)}): {ack}")
+                        logger.debug(f"recieved ({len(ack)}): {ack.decode('utf-16')}")
+                    except UnicodeDecodeError as e:
+                        # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                        logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                    # check if an acknowledge is recieved
+                    if len(ack) == 0:
+                        # print("no acknowledge recieved")
+                        logger.debug("no acknowledge recieved")
+                        # return 0
         # end of command transmission
         # print("end of command transmission")
         logger.debug("end of command transmission")
@@ -207,18 +211,19 @@ class SerialConnection(Serial):
                     # print("launch cmd: ",cmd)
                     logger.debug(f"launch cmd: {cmd}")
                     ser.write(cmd)
-                    ack = ser.read()
-                    try:
-                        # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
-                        logger.debug(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
-                    except UnicodeDecodeError as e:
-                        # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
-                        logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
-                    # check if an acknowledge is recieved
-                    if len(ack) == 0:
-                        # print("no acknowledge recieved")
-                        logger.debug("no acknowledge recieved")
-                        # return 0
+                    if self.wait_ack:
+                        ack = ser.read()
+                        try:
+                            # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                            logger.debug(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                        except UnicodeDecodeError as e:
+                            # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                            logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                        # check if an acknowledge is recieved
+                        if len(ack) == 0:
+                            # print("no acknowledge recieved")
+                            logger.debug("no acknowledge recieved")
+                            # return 0
             # end of command transmission
             ser.close()
             # print("serial closed")

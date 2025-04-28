@@ -5,10 +5,10 @@ from ..connection import MissingValue
 path = ""
 
 class UiConsole:
-    def __init__(self, axis_names):
+    def __init__(self, axis_names, wait_ack=True):
         self.axis = axis_names
 
-        self.mSettings = ModelSettings(self.axis)
+        self.mSettings = ModelSettings(self.axis, wait_ack=wait_ack)
         self.mSettings.loadSettings(path)
         self.mSettings.applySettingsFromData()
         self.mSettings.applyDefault()

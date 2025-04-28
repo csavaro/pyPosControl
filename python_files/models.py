@@ -15,7 +15,7 @@ class ModelSettings:
     """
     axisParameters = ["platine"]
     
-    def __init__(self, axis_names : tuple):
+    def __init__(self, axis_names : tuple, wait_ack : bool = True):
         """
         :param axis_names: list of axis names, up to 3 axis implemented
         :type axis_names: tuple, list
@@ -29,7 +29,7 @@ class ModelSettings:
 
         self.default_speeds: dict = { axis_name:None for axis_name in axis_names } # default speed values
 
-        self.connection: co.SerialConnection = co.SerialConnection() # connection to controller
+        self.connection: co.SerialConnection = co.SerialConnection(wait_ack=wait_ack) # connection to controller
 
         # Ports data
         self.portsData = self.getAvailablePorts()

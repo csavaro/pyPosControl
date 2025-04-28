@@ -19,7 +19,11 @@ class MoveAndMeasure:
     - move_finished_event (threading.Event) : event when running, wait until set before doing a measurement.
     - settingsData (dict) : loaded and effective settings.
     """
-    def __init__(self, axis_names: tuple):
+    def __init__(self, axis_names: tuple, wait_ack=True):
+        """
+        :param wait_ack: *(Optional)* Wait for an acknowledge message after sending each command.
+        :type wait_ack: bool
+        """
         self.axis = axis_names
 
         self.roadmap = None
@@ -33,6 +37,12 @@ class MoveAndMeasure:
         # self.loadMoveSet(filepath=filepath)
 
     def loadMoveSet(self, filepath: str):
+        """
+        Load a list of positions from a csv or xlsx file.
+
+        :param filepath: absolute path to the csv or xlsx file
+        :type filepath: str
+        """
         self.roadmap = []
         if filepath[-3:] == "csv":
             df = pd.read_csv(filepath)
@@ -67,11 +77,13 @@ class MoveAndMeasure:
     def run(self, measurementFunc, speeds: list, *args, **kwargs):
         """
         Run a measure after every move. measurementFunc will be called as measurementFunc(position,*args,**kwargs)
-        Parameters :
-        - measurementFunc : a callable function without it's parameters.
-        - speeds (list) : list of speeds for each axis.
-        - *args : as many parameters without name for the measurementFunc.
-        - **kwargs : as many parameters with a name for the the measurementFunc.
+
+        :param measurementFunc: a callable function without it's parameters. Meant to be called on each position.
+        :type measurementFunc: function
+        :param speeds: list of speeds for each axis.
+        :type speeds: list[str:int]
+        :param *args: as many parameters without name for the measurementFunc.
+        :param **kwargs: as many parameters with a name for the the measurementFunc.
         """
         if self.roadmap is None:
             raise AttributeError("!! ERROR !! no roadmap has been loaded, use .loadMoveSet(filepath) before running")
@@ -101,6 +113,8 @@ class MoveAndMeasure:
         logger.info("MoveAndMeasure run ended")
 
     def saveSettings(self, platines: dict = None, controller: str = None, port: str = None):
+        """
+        """
         if platines != None:
             plChoosed = {}
             for oneAxis in self.axis:
@@ -125,4 +139,7 @@ class MoveAndMeasure:
         return "0"
 
     def quit(self):
+        """
+        Close and quit the ModelControl
+        """
         self.mControl.quit()
