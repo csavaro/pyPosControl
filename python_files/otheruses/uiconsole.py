@@ -12,7 +12,7 @@ class UiConsole:
         self.mSettings.loadSettings(path)
         self.mSettings.applySettingsFromData()
         self.mSettings.applyDefault()
-        self.mControl = ModelControl(self.axis, CSeries(axis_speeds=self.mSettings.default_speeds), settings=self.mSettings)
+        self.mControl = ModelControl(self.axis, settings=self.mSettings)
 
         self.actionDict = {
             "0": {

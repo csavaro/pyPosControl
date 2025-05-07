@@ -97,8 +97,10 @@ class ModelSettings:
 
         if (controller):
             baudrate = self.controllersData[controller]["value"]
+            communication = self.controllersData[controller]["communication"]
         else:
             baudrate = 0
+            communication = -1
 
         # Disgusting but should works, to change later
         if port == None:
@@ -109,15 +111,17 @@ class ModelSettings:
             speed_limits_dict = -1
         if controller == None:
             baudrate = -1
+            communication = -1
 
         self.applySettings(
             port=port, 
             stepscales=stepscales_dict,
             speed_limits=speed_limits_dict, 
-            baudrate=baudrate
+            baudrate=baudrate,
+            communication=communication
         )
 
-    def applySettings(self, port: str = -1, stepscales: dict = -1, speed_limits: dict = -1, baudrate: int = -1):
+    def applySettings(self, port: str = -1, stepscales: dict = -1, speed_limits: dict = -1, baudrate: int = -1, communication: str = -1):
         """
         Apply concrete settings from parameters to model properties
 
@@ -128,6 +132,9 @@ class ModelSettings:
         :param speed_limits: *(Optional)* speed limits in `mm/s` unit by axis as key used to secure speed in commands. *ex: `{ 'x':50 }`*
         :type speed_limits: dict[str:int]
         :param baudrate: *(Optional)* baudrate in `baud/s` unit to communicate with the controller.
+        :type baudrate: int
+        :param communication: *(Optional)* language of commands to communicate with the controller.
+        :type communication: str
         """
         if port != -1: # and port in self.portsData ?
             # print(f"ModelSetting: setting port as {port}")
@@ -170,6 +177,12 @@ class ModelSettings:
             self.baudrate = baudrate
             self.connection.baudrate = self.baudrate
 
+        if communication != -1:
+            if(not isinstance(communication,str)):
+                logger.warning(f"communication should be a str, not {type(communication)} [value:{communication}]")
+            logger.debug(f"ModelSetting: setting communication as {communication}")
+            self.communication = com.getCommandsClass(communication, self.default_speeds)
+
     def applySettingsFromData(self):
         """
         Apply concrete settings from values in self.settingsData dictionary;
@@ -205,13 +218,15 @@ class ModelSettings:
                     })
         if (self.settingsData["controller"]):
             baudrate = self.controllersData[self.settingsData["controller"]]["value"]
+            communication = self.controllersData[self.settingsData["controller"]]["communication"]
         else:
             baudrate = 0
         self.applySettings(
             port=self.settingsData["port"], 
             stepscales=stepscales_dict,
             speed_limits=speed_limits_dict, 
-            baudrate=baudrate
+            baudrate=baudrate,
+            communication=communication
         )
 
     def getSettingsDict(self)->dict:
@@ -377,7 +392,8 @@ class ModelSettings:
                 self.controllersData.update({
                     key: {
                         "name": key,
-                        "value": values["baudrate"]
+                        "value": values["baudrate"],
+                        "communication": values["communication"]
                     }
                 })
 
@@ -407,11 +423,13 @@ class ModelSettings:
         :return: dictionary of available ports 
         :rtype: dict[dict]
         """
-        return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
         # return {
         #     "COM1": { "name": "COM1", "value": "COM1"},
-        #     "COM3": { "name": "COM3", "value": "COM3"}
+        #     "COM2": { "name": "COM2", "value": "COM2"},
+        #     "COM3": { "name": "COM3", "value": "COM3"},
+        #     "COM4": { "name": "COM4", "value": "COM4"}
         # }
+        return { port: { "name": port, "value": port } for port in self.connection.available_serial_ports() }
 
 class ModelControl:
     """
@@ -420,7 +438,7 @@ class ModelControl:
     Launch commands, save current position, read settings from python_files.models.ModelSettings and save concrete settings.
     Every actions is managed by this class.
     """
-    def __init__(self, axis_names, communication: com.Commands = None, settings: ModelSettings = None):
+    def __init__(self, axis_names, settings: ModelSettings = None):
         """
         :param axis_names: axis names like ('X','Y'). Up to 3 axis supported.
         :type axis_names: tuple | list
@@ -433,7 +451,6 @@ class ModelControl:
         self.speeds     = { axis_name:0 for axis_name in axis_names } # usually in mm/s (unit/s)
         self.settings = settings
 
-        self.communication = communication # command's language
         self.connection = self.settings.connection # controller connection
 
         # self.teCommands = None
@@ -541,7 +558,7 @@ class ModelControl:
         axis_values = self.convertMmToSteps(axis_values)
         axis_speeds = self.convertMmToSteps(axis_speeds)
         # Create and execute command
-        cmds = self.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
+        cmds = self.settings.communication.moveCmd(axis_values=axis_values, axis_speeds=axis_speeds)
         # res = self.connection.executeSelfCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeSelfCmd, cmds)
 
@@ -568,7 +585,7 @@ class ModelControl:
         #             self.values[key] += incrVal / self.settings.stepscales[key]
         
         # print("curr pos: ",self.values)
-        return self.communication.commandsToString(cmds)
+        return self.settings.communication.commandsToString(cmds)
 
 
     def absMove(self, axis_values: dict, axis_speeds: dict = None, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
@@ -599,7 +616,7 @@ class ModelControl:
         # print(rel_axis_values)
 
         # Create and execute command
-        cmds = self.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
+        cmds = self.settings.communication.moveCmd(axis_values=rel_axis_values, axis_speeds=axis_speeds)
         # print("sending ",cmds)
         # res = self.connection.executeSelfCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeSelfCmd, cmds)
@@ -625,7 +642,7 @@ class ModelControl:
         #             self.values[key] = absVal #/ self.settings.stepscales[key]
 
         # print("curr pos: ",self.values)
-        return self.communication.commandsToString(cmds)
+        return self.settings.communication.commandsToString(cmds)
 
     def stop(self):
         """
@@ -634,13 +651,13 @@ class ModelControl:
         :return: command(s) sent to controller
         :rtype: str
         """
-        cmds = self.communication.stopCmd()
+        cmds = self.settings.communication.stopCmd()
         # print("sending ",cmd)
         logger.info("sending stop")
         Thread(target=self.connection.executeSelfCmd, args=(cmds,)).start()
 
-        
-        return self.communication.commandsToString(cmds)
+        return 0
+        return self.settings.communication.commandsToString(cmds)
 
     def goZero(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
         """
@@ -679,7 +696,7 @@ class ModelControl:
         axis_speeds = self.convertMmToSteps(axis_speeds)
 
         # Create and execute command
-        cmds = self.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
+        cmds = self.settings.communication.moveCmd(axis_values=axis_values,axis_speeds=axis_speeds)
         # print("go zero ",cmds)
         # res = self.connection.executeSelfCmd(cmds)
         # res = self.teCommands.addTask(self.connection.executeSelfCmd, cmds)
@@ -701,7 +718,7 @@ class ModelControl:
         #     # Update current position values
         #     for axis in self.values.keys(): self.values[axis] = 0
 
-        return self.communication.commandsToString(cmds)
+        return self.settings.communication.commandsToString(cmds)
     
     def setZero(self):
         """
@@ -719,16 +736,16 @@ class ModelControl:
         :rtype: str
         """
         # functionList = []
-        # functionList.append(lambda c=self.communication.goHome: self.connection.executeSelfCmd(c))
+        # functionList.append(lambda c=self.settings.communication.goHome: self.connection.executeSelfCmd(c))
         # if callbacks:
         #     functionList += callbacks
         # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
-        cmds = self.communication.goHome(len(self.settings.axis))
+        cmds = self.settings.communication.goHome(len(self.settings.axis))
         # print("sending ",cmd)
         logger.info("sending go home")
         self.connection.executeSelfCmd(cmds)
-        return self.communication.commandsToString(cmds)
+        return self.settings.communication.commandsToString(cmds)
 
 
     def setHome(self, callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):
@@ -739,16 +756,16 @@ class ModelControl:
         :rtype: str
         """
         # functionList = []
-        # functionList.append(lambda c=self.communication.setHome: self.connection.executeSelfCmd(c))
+        # functionList.append(lambda c=self.settings.communication.setHome: self.connection.executeSelfCmd(c))
         # if callbacks:
         #     functionList += callbacks
         # res = self.teCommands.addTask(lambda fl=functionList,mv=miss_val_cbs,fcb=finally_cbs: functionPackage(fl,mv,fcb))
 
-        cmds = self.communication.setHome(len(self.settings.axis))
+        cmds = self.settings.communication.setHome(len(self.settings.axis))
         # print("sending ",cmd)
         logger.info("sending set home")
         self.connection.executeSelfCmd(cmds)
-        return self.communication.commandsToString(cmds)
+        return self.settings.communication.commandsToString(cmds)
 
 
     def rawAction(self, commands: list[str], callbacks: list = None, miss_val_cbs: list = None, finally_cbs: list = None):

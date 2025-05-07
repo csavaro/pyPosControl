@@ -6,11 +6,11 @@
         "configuration": "configurations.json"
     },
     "settings": {
-        "platineX": "Platine Equipax 1",
+        "platineX": "Platine initiale",
         "platineY": "Platine Equipax 2",
-        "platineZ": "Platine initale",
+        "platineZ": "Platine initiale",
         "controller": "Controleur initial",
-        "port": "COM3"
+        "port": "COM2"
     },
     "default": {
         "speedX": 5,
