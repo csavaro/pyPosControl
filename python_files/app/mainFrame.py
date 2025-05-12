@@ -35,7 +35,7 @@ class MainApp(tk.Tk):
         self.mSettings.applySettingsFromData()
         self.mSettings.applyDefault()
         # self.mControl = models.ModelControl(self.axis, cmds.CSeries(axis_speeds=self.mSettings.default_speeds), settings=self.mSettings)
-        self.mControl = ModelControl(self.axis, CSeries(axis_speeds=self.mSettings.default_speeds), settings=self.mSettings)
+        self.mControl = ModelControl(self.axis, settings=self.mSettings)
 
         self.btnOpenSettings = tk.Button(self.frame.interior, text="Settings", command=self.openSettings, font=Font(family="Helvetica",size=12))
         self.btnOpenSettings.pack(expand=True, fill="both")

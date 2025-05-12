@@ -19,7 +19,7 @@ class Commands(ABC):
         pass
 
     @abstractmethod
-    def moveCmd(self, axis_values: dict)-> list:
+    def moveCmd(self, axis_values: dict, axis_speeds: dict = None)-> list:
         """
         Returns a list of commands to make a move.
         """
@@ -123,6 +123,36 @@ class CSeries(Commands):
         elif nbAxis == 3:
             axisDefCode = 7
         return axisDefCode
+
+class Test(Commands):
+    """
+    Summary:
+        Test commands that return "bonjour" commands.
+    """
+    def __init__(self, axis_speeds: dict = None):
+        self.speeds = axis_speeds
+    
+    def stopCmd(self)-> list:
+        return ["bonjour stop"]
+
+    def moveCmd(self, axis_values: dict, axis_speeds: dict = None)-> list:
+        return [f"bonjour move to {axis_values} at speeds {axis_speeds}"]
+
+    def goHome(self, nbAxis: int)-> list:
+        return [f"bonjour go home on {nbAxis} axis"]
+
+    def setHome(self, nbAxis: int)-> list:
+        return [f"bonjour set home on {nbAxis} axis"]
+
+    def commandsToString(self, commands: list)-> str:
+        return ["bonjour is the result"]
+
+
+def getCommandsClass(communication: str, *args, **kwargs)-> Commands:
+    if str.lower(communication) == "cseries":
+        return  CSeries(*args,**kwargs)
+    elif str.lower(communication) == "test":
+        return Test(*args,**kwargs)
 
 if __name__ == "__main__":
     print("start")

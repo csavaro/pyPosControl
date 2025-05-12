@@ -7,10 +7,10 @@
     },
     "settings": {
         "platineX": "Platine initiale",
-        "platineY": "Platine initiale",
-        "platineZ": "Platine initale",
+        "platineY": "Platine Equipax 2",
+        "platineZ": "Platine initiale",
         "controller": "Controleur initial",
-        "port": "COM3"
+        "port": "COM2"
     },
     "default": {
         "speedX": 5,
