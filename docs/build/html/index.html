@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyPosControl documentation &mdash; pyPosControl 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            pyPosControl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyPosControl.html">pyPosControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pyPosControl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pyPosControl documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyposcontrol-documentation">
+<h1>pyPosControl documentation<a class="headerlink" href="#pyposcontrol-documentation" title="Link to this heading"></a></h1>
+<p><strong>pyPosControl</strong> is a Python library used to control linear turntables passing by a controller.
+It converts actions with movement and speed values to commands to send to a serial port.
+Linear turntables are interpreted as stepper motors in the settings.</p>
+<blockquote>
+<div></div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This project was part of an intership at LMI ENSTA.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#main-graphical-interface">Main graphical interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#list-of-positions">List of positions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyPosControl.html">pyPosControl</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyPosControl.html#python-files-models">python_files.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl"><code class="docutils literal notranslate"><span class="pre">ModelControl</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.__init__"><code class="docutils literal notranslate"><span class="pre">ModelControl.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.absMove"><code class="docutils literal notranslate"><span class="pre">ModelControl.absMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.absUpdate"><code class="docutils literal notranslate"><span class="pre">ModelControl.absUpdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.calcMoveTime"><code class="docutils literal notranslate"><span class="pre">ModelControl.calcMoveTime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.checkSpeed"><code class="docutils literal notranslate"><span class="pre">ModelControl.checkSpeed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.convertMmToSteps"><code class="docutils literal notranslate"><span class="pre">ModelControl.convertMmToSteps()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.goHome"><code class="docutils literal notranslate"><span class="pre">ModelControl.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.goZero"><code class="docutils literal notranslate"><span class="pre">ModelControl.goZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.incrMove"><code class="docutils literal notranslate"><span class="pre">ModelControl.incrMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.incrUpdate"><code class="docutils literal notranslate"><span class="pre">ModelControl.incrUpdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.quit"><code class="docutils literal notranslate"><span class="pre">ModelControl.quit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.rawAction"><code class="docutils literal notranslate"><span class="pre">ModelControl.rawAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.setHome"><code class="docutils literal notranslate"><span class="pre">ModelControl.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.setSpeed"><code class="docutils literal notranslate"><span class="pre">ModelControl.setSpeed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.setValue"><code class="docutils literal notranslate"><span class="pre">ModelControl.setValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.setZero"><code class="docutils literal notranslate"><span class="pre">ModelControl.setZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.stop"><code class="docutils literal notranslate"><span class="pre">ModelControl.stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelControl.zeroUpdate"><code class="docutils literal notranslate"><span class="pre">ModelControl.zeroUpdate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.__init__"><code class="docutils literal notranslate"><span class="pre">ModelSettings.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.applyDefault"><code class="docutils literal notranslate"><span class="pre">ModelSettings.applyDefault()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.applySettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings.applySettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.applySettingsFromData"><code class="docutils literal notranslate"><span class="pre">ModelSettings.applySettingsFromData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.axisParameters"><code class="docutils literal notranslate"><span class="pre">ModelSettings.axisParameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.getAvailablePorts"><code class="docutils literal notranslate"><span class="pre">ModelSettings.getAvailablePorts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.getSettingsDict"><code class="docutils literal notranslate"><span class="pre">ModelSettings.getSettingsDict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.isAxisRelated"><code class="docutils literal notranslate"><span class="pre">ModelSettings.isAxisRelated()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.loadSettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings.loadSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ModelSettings.saveSettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings.saveSettings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.__init__"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.addTask"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.addTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.addThreadedTask"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.addThreadedTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.getState"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.getState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.isRunning"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.isRunning()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.kill"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.kill()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.run"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.models.ThreadExecutor.wait_list_size"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.wait_list_size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.models.functionPackage"><code class="docutils literal notranslate"><span class="pre">functionPackage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.models.inWithStartKeys"><code class="docutils literal notranslate"><span class="pre">inWithStartKeys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.models.removeWithStartKey"><code class="docutils literal notranslate"><span class="pre">removeWithStartKey()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyPosControl.html#python-files-communications">python_files.communications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries"><code class="docutils literal notranslate"><span class="pre">CSeries</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.__init__"><code class="docutils literal notranslate"><span class="pre">CSeries.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.axisDefinition"><code class="docutils literal notranslate"><span class="pre">CSeries.axisDefinition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.axisDefinitionCmd"><code class="docutils literal notranslate"><span class="pre">CSeries.axisDefinitionCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.commandsToString"><code class="docutils literal notranslate"><span class="pre">CSeries.commandsToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.goHome"><code class="docutils literal notranslate"><span class="pre">CSeries.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.moveCmd"><code class="docutils literal notranslate"><span class="pre">CSeries.moveCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.setHome"><code class="docutils literal notranslate"><span class="pre">CSeries.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.CSeries.stopCmd"><code class="docutils literal notranslate"><span class="pre">CSeries.stopCmd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands"><code class="docutils literal notranslate"><span class="pre">Commands</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands.__init__"><code class="docutils literal notranslate"><span class="pre">Commands.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands.commandsToString"><code class="docutils literal notranslate"><span class="pre">Commands.commandsToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands.goHome"><code class="docutils literal notranslate"><span class="pre">Commands.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands.moveCmd"><code class="docutils literal notranslate"><span class="pre">Commands.moveCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands.setHome"><code class="docutils literal notranslate"><span class="pre">Commands.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Commands.stopCmd"><code class="docutils literal notranslate"><span class="pre">Commands.stopCmd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test"><code class="docutils literal notranslate"><span class="pre">Test</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test.__init__"><code class="docutils literal notranslate"><span class="pre">Test.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test.commandsToString"><code class="docutils literal notranslate"><span class="pre">Test.commandsToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test.goHome"><code class="docutils literal notranslate"><span class="pre">Test.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test.moveCmd"><code class="docutils literal notranslate"><span class="pre">Test.moveCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test.setHome"><code class="docutils literal notranslate"><span class="pre">Test.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.communications.Test.stopCmd"><code class="docutils literal notranslate"><span class="pre">Test.stopCmd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.communications.getCommandsClass"><code class="docutils literal notranslate"><span class="pre">getCommandsClass()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyPosControl.html#python-files-connection">python_files.connection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.connection.MissingValue"><code class="docutils literal notranslate"><span class="pre">MissingValue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyPosControl.html#python_files.connection.SerialConnection"><code class="docutils literal notranslate"><span class="pre">SerialConnection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.connection.SerialConnection.__init__"><code class="docutils literal notranslate"><span class="pre">SerialConnection.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.connection.SerialConnection.available_serial_ports"><code class="docutils literal notranslate"><span class="pre">SerialConnection.available_serial_ports()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.connection.SerialConnection.close"><code class="docutils literal notranslate"><span class="pre">SerialConnection.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.connection.SerialConnection.executeCmd"><code class="docutils literal notranslate"><span class="pre">SerialConnection.executeCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyPosControl.html#python_files.connection.SerialConnection.executeSelfCmd"><code class="docutils literal notranslate"><span class="pre">SerialConnection.executeSelfCmd()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#module-python_files.app.mainFrame">python_files.app.mainFrame</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp"><code class="docutils literal notranslate"><span class="pre">MainApp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.__init__"><code class="docutils literal notranslate"><span class="pre">MainApp.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.absMove"><code class="docutils literal notranslate"><span class="pre">MainApp.absMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.afterMove"><code class="docutils literal notranslate"><span class="pre">MainApp.afterMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.applySettings"><code class="docutils literal notranslate"><span class="pre">MainApp.applySettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.apply_layout"><code class="docutils literal notranslate"><span class="pre">MainApp.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.changeStateMovementsButtons"><code class="docutils literal notranslate"><span class="pre">MainApp.changeStateMovementsButtons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.closeSettings"><code class="docutils literal notranslate"><span class="pre">MainApp.closeSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.createAbsoluteFrame"><code class="docutils literal notranslate"><span class="pre">MainApp.createAbsoluteFrame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.createIncrementalFrame"><code class="docutils literal notranslate"><span class="pre">MainApp.createIncrementalFrame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.goZeroAction"><code class="docutils literal notranslate"><span class="pre">MainApp.goZeroAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.incrMove"><code class="docutils literal notranslate"><span class="pre">MainApp.incrMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.openSettings"><code class="docutils literal notranslate"><span class="pre">MainApp.openSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.reset_layout"><code class="docutils literal notranslate"><span class="pre">MainApp.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.setZeroAction"><code class="docutils literal notranslate"><span class="pre">MainApp.setZeroAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.stopAction"><code class="docutils literal notranslate"><span class="pre">MainApp.stopAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.mainFrame.MainApp.updateCurrentPosition"><code class="docutils literal notranslate"><span class="pre">MainApp.updateCurrentPosition()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#module-python_files.app.guielements">python_files.app.guielements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtons"><code class="docutils literal notranslate"><span class="pre">AxisButtons</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtons.__init__"><code class="docutils literal notranslate"><span class="pre">AxisButtons.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtons.config_both"><code class="docutils literal notranslate"><span class="pre">AxisButtons.config_both()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtonsFrame"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtonsFrame.__init__"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtonsFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtonsFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisButtonsFrame.reverseButtons"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.reverseButtons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisFrame"><code class="docutils literal notranslate"><span class="pre">AxisFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisFrame.__init__"><code class="docutils literal notranslate"><span class="pre">AxisFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">AxisFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">AxisFrame.reset_layout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisLabeledEntry"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisLabeledEntry.__init__"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisLabeledEntry.checkSpeed"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry.checkSpeed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.AxisLabeledEntry.checkValue"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry.checkValue()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame"><code class="docutils literal notranslate"><span class="pre">ControlFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame.__init__"><code class="docutils literal notranslate"><span class="pre">ControlFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame.activateContent"><code class="docutils literal notranslate"><span class="pre">ControlFrame.activateContent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">ControlFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">ControlFrame.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame.setContent"><code class="docutils literal notranslate"><span class="pre">ControlFrame.setContent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlFrame.setOptions"><code class="docutils literal notranslate"><span class="pre">ControlFrame.setOptions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.GOZERO"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.GOZERO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.SETZERO"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.SETZERO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.STOP"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.STOP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.__init__"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.addCallback"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.addCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.goZero"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.goZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.setZero"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.setZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ControlGeneralFrame.stop"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.ScrollableFrame"><code class="docutils literal notranslate"><span class="pre">ScrollableFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.ScrollableFrame.__init__"><code class="docutils literal notranslate"><span class="pre">ScrollableFrame.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingLabeledEntry"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingLabeledEntry.__init__"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingLabeledEntry.applyOption"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry.applyOption()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingLabeledEntry.setVal"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry.setVal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame"><code class="docutils literal notranslate"><span class="pre">SettingsFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame.__init__"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame.addApplyCallback"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.addApplyCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame.apply"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.apply()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame.apply_config"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.apply_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.app.guielements.SettingsFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.reset_layout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.checkNumberInput"><code class="docutils literal notranslate"><span class="pre">checkNumberInput()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.checkPosInput"><code class="docutils literal notranslate"><span class="pre">checkPosInput()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.searchByName"><code class="docutils literal notranslate"><span class="pre">searchByName()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testAxisButtonsFrame"><code class="docutils literal notranslate"><span class="pre">testAxisButtonsFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testAxisConstruct"><code class="docutils literal notranslate"><span class="pre">testAxisConstruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testAxisFrame"><code class="docutils literal notranslate"><span class="pre">testAxisFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testControlFrame"><code class="docutils literal notranslate"><span class="pre">testControlFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testControlGeneralFrame"><code class="docutils literal notranslate"><span class="pre">testControlGeneralFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testDict"><code class="docutils literal notranslate"><span class="pre">testDict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testIconButton"><code class="docutils literal notranslate"><span class="pre">testIconButton()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.app.guielements.testSettingsFrame"><code class="docutils literal notranslate"><span class="pre">testSettingsFrame()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#module-python_files.otheruses.movemeasure">python_files.otheruses.movemeasure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.otheruses.movemeasure.MoveAndMeasure"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.movemeasure.MoveAndMeasure.__init__"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.movemeasure.MoveAndMeasure.loadMoveSet"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.loadMoveSet()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.movemeasure.MoveAndMeasure.quit"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.quit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.movemeasure.MoveAndMeasure.run"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.movemeasure.MoveAndMeasure.saveSettings"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.saveSettings()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#module-python_files.otheruses.uiconsole">python_files.otheruses.uiconsole</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole"><code class="docutils literal notranslate"><span class="pre">UiConsole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.__init__"><code class="docutils literal notranslate"><span class="pre">UiConsole.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.absMove"><code class="docutils literal notranslate"><span class="pre">UiConsole.absMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.controllerMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.controllerMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.goHome"><code class="docutils literal notranslate"><span class="pre">UiConsole.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.goZero"><code class="docutils literal notranslate"><span class="pre">UiConsole.goZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.incrMove"><code class="docutils literal notranslate"><span class="pre">UiConsole.incrMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.inputCmd"><code class="docutils literal notranslate"><span class="pre">UiConsole.inputCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.mainMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.mainMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.menu"><code class="docutils literal notranslate"><span class="pre">UiConsole.menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.platinesMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.platinesMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.portMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.portMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.printCurrentPosition"><code class="docutils literal notranslate"><span class="pre">UiConsole.printCurrentPosition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.printCurrentSettings"><code class="docutils literal notranslate"><span class="pre">UiConsole.printCurrentSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.quit"><code class="docutils literal notranslate"><span class="pre">UiConsole.quit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.rawCmd"><code class="docutils literal notranslate"><span class="pre">UiConsole.rawCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.saveSettings"><code class="docutils literal notranslate"><span class="pre">UiConsole.saveSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.setHome"><code class="docutils literal notranslate"><span class="pre">UiConsole.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.setZero"><code class="docutils literal notranslate"><span class="pre">UiConsole.setZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.settingsMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.settingsMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="applications.html#python_files.otheruses.uiconsole.UiConsole.stop"><code class="docutils literal notranslate"><span class="pre">UiConsole.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">maintenance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#manage-available-controllers">Manage available controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#manage-available-platines">Manage available platines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#manage-available-configurations">Manage available configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#manage-commands-languages">Manage commands languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#update-documentation">Update documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Clément PACAULT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

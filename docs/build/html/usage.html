@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage &mdash; pyPosControl 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyPosControl" href="pyPosControl.html" />
+    <link rel="prev" title="pyPosControl documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyPosControl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-graphical-interface">Main graphical interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-positions">List of positions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyPosControl.html">pyPosControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyPosControl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
+<section id="installation">
+<span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>download from <a class="reference external" href="https://github.com/Pacleme/pyPosControl">github</a> page in <a class="reference external" href="https://github.com/Pacleme/pyPosControl/tree/controlPosition">control position branch</a>.</p>
+</section>
+<section id="main-graphical-interface">
+<h2>Main graphical interface<a class="headerlink" href="#main-graphical-interface" title="Link to this heading"></a></h2>
+<p>Application used to manually control turntables positions in a graphical user interface.</p>
+<p>You can run <strong>main.py</strong> file.</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>You can configure names of axis and so their number when calling the <code class="docutils literal notranslate"><span class="pre">lauchApp</span></code> function.</dt><dd><p>Up to 3 axis are implemented.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">launchApp</span><span class="p">((</span><span class="s1">&#39;X&#39;</span><span class="p">))</span> <span class="c1"># example with one axis</span>
+<span class="n">launchApp</span><span class="p">((</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">))</span> <span class="c1"># example with two axis</span>
+<span class="n">launchApp</span><span class="p">((</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">))</span> <span class="c1"># example a third axis with a custom name</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><dl>
+<dt>You can also configure the console printed informations with the <code class="docutils literal notranslate"><span class="pre">logging.basicConfig</span></code> function.</dt><dd><p>There is 4 levels of informations :</p>
+<ul class="simple">
+<li><p>DEBUG : verbose, used when debugging the app, show all steps of actions.</p></li>
+<li><p>INFO : show the global steps of actions. Recommended to look at what’s currently happening.</p></li>
+<li><p>WARNING : show the low incidents and important informations.</p></li>
+<li><p>ERROR : show the errors, when an action fails for example.</p></li>
+<li><p>CRITICAL : show only the critical errors that prevents the app from working</p></li>
+</ul>
+<p>You can also redirect it’s informations to a file. Refer to the <strong>logging</strong> python documentation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>There is also the possibility to adjust default app window size when launched.</dt><dd><p>Update the tuple in the <code class="docutils literal notranslate"><span class="pre">app.geometry</span></code> function. Unit is in px.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p><em>from main.py file</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">launchApp</span><span class="p">(</span><span class="n">axis_names</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="s1">&#39;Z&#39;</span><span class="p">)):</span>
+    <span class="c1"># Current path used to find settings files</span>
+    <span class="n">mf</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">absolute</span><span class="p">())</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span> <span class="c1"># Here you can adapt showed/logged informations</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">MainApp</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;control app&quot;</span><span class="p">,</span><span class="n">axis_names</span><span class="o">=</span><span class="n">axis_names</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">x</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">600</span><span class="p">,</span><span class="n">app</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()))</span> <span class="c1"># Here you can adjust default app window size</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+
+    <span class="n">launchApp</span><span class="p">((</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">))</span> <span class="c1"># Here you can update axis names</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-of-positions">
+<h2>List of positions<a class="headerlink" href="#list-of-positions" title="Link to this heading"></a></h2>
+<p>Go to a list of positions and execute a function inbetween.</p>
+<p>You can run <strong>setofmoves.py</strong> file.</p>
+<p>Create a csv or xlsx file with your list of positions.</p>
+<ol class="arabic simple">
+<li><p>The first row is for axis names.</p></li>
+<li><p>Second row is platines/turntables names, when at default takes the ones in <code class="docutils literal notranslate"><span class="pre">save.json</span></code> file.</p></li>
+<li><p>Rest is absolute positions from init position when first launched. Unit is in <strong>mm</strong>.</p></li>
+</ol>
+<p><em>CSV example :</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span>      <span class="n">y</span>
+<span class="n">default</span><span class="p">,</span><span class="n">default</span>
+<span class="mi">10</span><span class="p">,</span>     <span class="mi">0</span>
+<span class="mi">44</span><span class="p">,</span>     <span class="mi">22</span>
+<span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Give the path to your list of positions file in the <code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.loadMoveSet</span></code> function.</p>
+<p><em>from setofmoves.py</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;/master/myListOfPositionsFile.csv&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">MaM</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">MoveAndMeasure</span><span class="p">(</span><span class="n">axis_names</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">))</span>
+
+    <span class="n">MaM</span><span class="o">.</span><span class="n">loadMoveSet</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span> <span class="c1"># Here you can add your list of positions file path</span>
+
+    <span class="n">MaM</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">measure</span><span class="p">,(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="s2">&quot;param1&quot;</span><span class="p">,</span><span class="n">par2</span><span class="o">=</span><span class="s2">&quot;param2&quot;</span><span class="p">)</span> <span class="c1"># Here you can add your function inbetween positions and it&#39;s parameters</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">MaM</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The function meant to be executed between each position must take a <code class="docutils literal notranslate"><span class="pre">position</span></code> parameter, which you can use as a tuple of int or float.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="pyPosControl documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyPosControl.html" class="btn btn-neutral float-right" title="pyPosControl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Clément PACAULT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

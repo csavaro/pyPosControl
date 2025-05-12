@@ -1,0 +1,1096 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyPosControl &mdash; pyPosControl 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="applications" href="applications.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyPosControl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyPosControl</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-files-models">python_files.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.models.ModelControl"><code class="docutils literal notranslate"><span class="pre">ModelControl</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.__init__"><code class="docutils literal notranslate"><span class="pre">ModelControl.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.absMove"><code class="docutils literal notranslate"><span class="pre">ModelControl.absMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.absUpdate"><code class="docutils literal notranslate"><span class="pre">ModelControl.absUpdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.calcMoveTime"><code class="docutils literal notranslate"><span class="pre">ModelControl.calcMoveTime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.checkSpeed"><code class="docutils literal notranslate"><span class="pre">ModelControl.checkSpeed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.convertMmToSteps"><code class="docutils literal notranslate"><span class="pre">ModelControl.convertMmToSteps()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.goHome"><code class="docutils literal notranslate"><span class="pre">ModelControl.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.goZero"><code class="docutils literal notranslate"><span class="pre">ModelControl.goZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.incrMove"><code class="docutils literal notranslate"><span class="pre">ModelControl.incrMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.incrUpdate"><code class="docutils literal notranslate"><span class="pre">ModelControl.incrUpdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.quit"><code class="docutils literal notranslate"><span class="pre">ModelControl.quit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.rawAction"><code class="docutils literal notranslate"><span class="pre">ModelControl.rawAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.setHome"><code class="docutils literal notranslate"><span class="pre">ModelControl.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.setSpeed"><code class="docutils literal notranslate"><span class="pre">ModelControl.setSpeed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.setValue"><code class="docutils literal notranslate"><span class="pre">ModelControl.setValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.setZero"><code class="docutils literal notranslate"><span class="pre">ModelControl.setZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.stop"><code class="docutils literal notranslate"><span class="pre">ModelControl.stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelControl.zeroUpdate"><code class="docutils literal notranslate"><span class="pre">ModelControl.zeroUpdate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.models.ModelSettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.__init__"><code class="docutils literal notranslate"><span class="pre">ModelSettings.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.applyDefault"><code class="docutils literal notranslate"><span class="pre">ModelSettings.applyDefault()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.applySettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings.applySettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.applySettingsFromData"><code class="docutils literal notranslate"><span class="pre">ModelSettings.applySettingsFromData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.axisParameters"><code class="docutils literal notranslate"><span class="pre">ModelSettings.axisParameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.getAvailablePorts"><code class="docutils literal notranslate"><span class="pre">ModelSettings.getAvailablePorts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.getSettingsDict"><code class="docutils literal notranslate"><span class="pre">ModelSettings.getSettingsDict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.isAxisRelated"><code class="docutils literal notranslate"><span class="pre">ModelSettings.isAxisRelated()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.loadSettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings.loadSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ModelSettings.saveSettings"><code class="docutils literal notranslate"><span class="pre">ModelSettings.saveSettings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.models.ThreadExecutor"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.__init__"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.addTask"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.addTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.addThreadedTask"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.addThreadedTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.getState"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.getState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.isRunning"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.isRunning()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.kill"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.kill()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.run"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.models.ThreadExecutor.wait_list_size"><code class="docutils literal notranslate"><span class="pre">ThreadExecutor.wait_list_size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.models.functionPackage"><code class="docutils literal notranslate"><span class="pre">functionPackage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.models.inWithStartKeys"><code class="docutils literal notranslate"><span class="pre">inWithStartKeys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.models.removeWithStartKey"><code class="docutils literal notranslate"><span class="pre">removeWithStartKey()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-files-communications">python_files.communications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.communications.CSeries"><code class="docutils literal notranslate"><span class="pre">CSeries</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.__init__"><code class="docutils literal notranslate"><span class="pre">CSeries.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.axisDefinition"><code class="docutils literal notranslate"><span class="pre">CSeries.axisDefinition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.axisDefinitionCmd"><code class="docutils literal notranslate"><span class="pre">CSeries.axisDefinitionCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.commandsToString"><code class="docutils literal notranslate"><span class="pre">CSeries.commandsToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.goHome"><code class="docutils literal notranslate"><span class="pre">CSeries.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.moveCmd"><code class="docutils literal notranslate"><span class="pre">CSeries.moveCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.setHome"><code class="docutils literal notranslate"><span class="pre">CSeries.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.CSeries.stopCmd"><code class="docutils literal notranslate"><span class="pre">CSeries.stopCmd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.communications.Commands"><code class="docutils literal notranslate"><span class="pre">Commands</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Commands.__init__"><code class="docutils literal notranslate"><span class="pre">Commands.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Commands.commandsToString"><code class="docutils literal notranslate"><span class="pre">Commands.commandsToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Commands.goHome"><code class="docutils literal notranslate"><span class="pre">Commands.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Commands.moveCmd"><code class="docutils literal notranslate"><span class="pre">Commands.moveCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Commands.setHome"><code class="docutils literal notranslate"><span class="pre">Commands.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Commands.stopCmd"><code class="docutils literal notranslate"><span class="pre">Commands.stopCmd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.communications.Test"><code class="docutils literal notranslate"><span class="pre">Test</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Test.__init__"><code class="docutils literal notranslate"><span class="pre">Test.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Test.commandsToString"><code class="docutils literal notranslate"><span class="pre">Test.commandsToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Test.goHome"><code class="docutils literal notranslate"><span class="pre">Test.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Test.moveCmd"><code class="docutils literal notranslate"><span class="pre">Test.moveCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Test.setHome"><code class="docutils literal notranslate"><span class="pre">Test.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.communications.Test.stopCmd"><code class="docutils literal notranslate"><span class="pre">Test.stopCmd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.communications.getCommandsClass"><code class="docutils literal notranslate"><span class="pre">getCommandsClass()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-files-connection">python_files.connection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.connection.MissingValue"><code class="docutils literal notranslate"><span class="pre">MissingValue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.connection.SerialConnection"><code class="docutils literal notranslate"><span class="pre">SerialConnection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.connection.SerialConnection.__init__"><code class="docutils literal notranslate"><span class="pre">SerialConnection.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.connection.SerialConnection.available_serial_ports"><code class="docutils literal notranslate"><span class="pre">SerialConnection.available_serial_ports()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.connection.SerialConnection.close"><code class="docutils literal notranslate"><span class="pre">SerialConnection.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.connection.SerialConnection.executeCmd"><code class="docutils literal notranslate"><span class="pre">SerialConnection.executeCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.connection.SerialConnection.executeSelfCmd"><code class="docutils literal notranslate"><span class="pre">SerialConnection.executeSelfCmd()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyPosControl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pyPosControl</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyPosControl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyposcontrol">
+<h1>pyPosControl<a class="headerlink" href="#pyposcontrol" title="Link to this heading"></a></h1>
+<section id="python-files-models">
+<span id="id1"></span><h2>python_files.models<a class="headerlink" href="#python-files-models" title="Link to this heading"></a></h2>
+<dl class="py class" id="module-python_files.models">
+<dt class="sig sig-object py" id="python_files.models.ModelControl">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.models.</span></span><span class="sig-name descname"><span class="pre">ModelControl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_files.models.ModelSettings" title="python_files.models.ModelSettings"><span class="pre">ModelSettings</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core class of this project.</p>
+<p>Launch commands, save current position, read settings from python_files.models.ModelSettings and save concrete settings.
+Every actions is managed by this class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_files.models.ModelSettings" title="python_files.models.ModelSettings"><span class="pre">ModelSettings</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_names</strong> (<em>tuple</em><em> | </em><em>list</em>) – axis names like (‘X’,’Y’). Up to 3 axis supported.</p></li>
+<li><p><strong>communication</strong> (<a class="reference internal" href="#python_files.communications.Commands" title="python_files.communications.Commands"><em>python_files.communications.Commands</em></a>) – concrete Commands class instance for the commands format.</p></li>
+<li><p><strong>settings</strong> (<a class="reference internal" href="#python_files.models.ModelSettings" title="python_files.models.ModelSettings"><em>python_files.models.ModelSettings</em></a>) – settings class to get values from</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.absMove">
+<span class="sig-name descname"><span class="pre">absMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.absMove" title="Link to this definition"></a></dt>
+<dd><p>launch a command to move to axis_values from current position values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_values</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – position values to move to for each axis. Formatted like { ‘X’: 50 }. Unit is mm</p></li>
+<li><p><strong>axis_speeds</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – speed values for each axis formatted like { ‘X’: 5 }. Unit is mm/s</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – actions to do at the end of the movement</p></li>
+<li><p><strong>finally_cbs</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – actions to do after the movement in a finally statement</p></li>
+</ul>
+</dd>
+<dt class="field-even">Param<span class="colon">:</span></dt>
+<dd class="field-even"><p>miss_val_cbs: actions to do if a python_files.connection.MissingValue exception is raised during the movement and the callbacks</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.absUpdate">
+<span class="sig-name descname"><span class="pre">absUpdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.absUpdate" title="Link to this definition"></a></dt>
+<dd><p>Update current position values after an absolute movement to the set of positions specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_values</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – position values to move to for each axis. Formatted like { ‘X’: 50 }. Unit is mm</p></li>
+<li><p><strong>axis_speeds</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – speed values for each axis formatted like { ‘X’: 5 }. Unit is mm/s</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.calcMoveTime">
+<span class="sig-name descname"><span class="pre">calcMoveTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bonus_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#python_files.models.ModelControl.calcMoveTime" title="Link to this definition"></a></dt>
+<dd><p>Calculate the time expected to move from position 0 to axis_values position at axis_speeds speed.
+Bonus is additional time (s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_values</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – position values  for each axis formatted like { ‘X’: 50 }. Unit is mm</p></li>
+<li><p><strong>axis_speeds</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – speed values  for each axis formatted like { ‘X’: 5 }. Unit is mm/s</p></li>
+<li><p><strong>bonus_time</strong> (<em>float</em><em> | </em><em>int</em>) – additional time (s).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>time expected to take to move to specified position from a position 0. Unit is s</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float | int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.checkSpeed">
+<span class="sig-name descname"><span class="pre">checkSpeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.checkSpeed" title="Link to this definition"></a></dt>
+<dd><p>check if axis_speed values are within the limits set in the ModelSettings linked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axis_speeds</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – speed values for each axis formatted like { ‘X’: 5 }. Unit is mm/s</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>axis_speed with speed limit as value if axis_speed values are not in range.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str:float|int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.convertMmToSteps">
+<span class="sig-name descname"><span class="pre">convertMmToSteps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.convertMmToSteps" title="Link to this definition"></a></dt>
+<dd><p>Converts position values from mm to step units according to stepscale in self.settings.stepscales</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axis_values</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – position values  for each axis formatted like { ‘X’: 50 }. Unit is mm</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>axis_values converted from mm to step units</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str:int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.goHome">
+<span class="sig-name descname"><span class="pre">goHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.goHome" title="Link to this definition"></a></dt>
+<dd><p>Set current position as home on the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.goZero">
+<span class="sig-name descname"><span class="pre">goZero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.goZero" title="Link to this definition"></a></dt>
+<dd><p>launch a move command to controller to go position 0 on each axis from the current position values.
+Speed of the movement is either mid value between max and min, or max/2 if no min, or min*2 if no max, 5mm/s instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callbacks</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – actions to do at the end of the movement</p></li>
+<li><p><strong>finally_cbs</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – actions to do after the movement in a finally statement</p></li>
+</ul>
+</dd>
+<dt class="field-even">Param<span class="colon">:</span></dt>
+<dd class="field-even"><p>miss_val_cbs: actions to do if a python_files.connection.MissingValue exception is raised during the movement and the callbacks</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.incrMove">
+<span class="sig-name descname"><span class="pre">incrMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.incrMove" title="Link to this definition"></a></dt>
+<dd><p>launch a command to move to axis_values without taking on board current position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_values</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – position values to move to for each axis. Formatted like { ‘X’: 50 }. Unit is mm</p></li>
+<li><p><strong>axis_speeds</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – speed values for each axis formatted like { ‘X’: 5 }. Unit is mm/s</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – actions to do at the end of the movement</p></li>
+<li><p><strong>finally_cbs</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – actions to do after the movement in a finally statement</p></li>
+</ul>
+</dd>
+<dt class="field-even">Param<span class="colon">:</span></dt>
+<dd class="field-even"><p>miss_val_cbs: actions to do if a python_files.connection.MissingValue exception is raised during the movement and the callbacks</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.incrUpdate">
+<span class="sig-name descname"><span class="pre">incrUpdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.incrUpdate" title="Link to this definition"></a></dt>
+<dd><p>Update current position values after a incremental movement to the set of positions specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_values</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – position values to move to for each axis. Formatted like { ‘X’: 50 }. Unit is mm</p></li>
+<li><p><strong>axis_speeds</strong> (<em>dict</em><em>[</em><em>str:int</em><em>|</em><em>float</em><em>]</em>) – speed values for each axis formatted like { ‘X’: 5 }. Unit is mm/s</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.quit" title="Link to this definition"></a></dt>
+<dd><p>Close and kill the thread waiting list used to execute actions like movements.</p>
+<p>Meant to be executed at the end of the program.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.rawAction">
+<span class="sig-name descname"><span class="pre">rawAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.rawAction" title="Link to this definition"></a></dt>
+<dd><p>Send list of commands converted in ascii into the serial connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.setHome">
+<span class="sig-name descname"><span class="pre">setHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.setHome" title="Link to this definition"></a></dt>
+<dd><p>Go to current home position on the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.setSpeed">
+<span class="sig-name descname"><span class="pre">setSpeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.setSpeed" title="Link to this definition"></a></dt>
+<dd><p>Set speed value on the specified axis. Unit is mm/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>str</em>) – axis name</p></li>
+<li><p><strong>speed</strong> (<em>float</em><em> | </em><em>int</em>) – speed value (mm/s)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.setValue">
+<span class="sig-name descname"><span class="pre">setValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.setValue" title="Link to this definition"></a></dt>
+<dd><p>Set current position value on the specified axis. Unit is mm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>str</em>) – axis name</p></li>
+<li><p><strong>value</strong> (<em>float</em><em> | </em><em>int</em>) – position/movement value (mm)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.setZero">
+<span class="sig-name descname"><span class="pre">setZero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.setZero" title="Link to this definition"></a></dt>
+<dd><p>Set current position values as zero on each axis without moving or sending a command to controller.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.stop" title="Link to this definition"></a></dt>
+<dd><p>launch a command to stop the controller in it’s task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command(s) sent to controller</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelControl.zeroUpdate">
+<span class="sig-name descname"><span class="pre">zeroUpdate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelControl.zeroUpdate" title="Link to this definition"></a></dt>
+<dd><p>Update current position values to position 0.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.models.</span></span><span class="sig-name descname"><span class="pre">ModelSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Load, store and update settings to send the signal.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axis_names</strong> (<em>tuple</em><em>, </em><em>list</em>) – list of axis names, up to 3 axis implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.applyDefault">
+<span class="sig-name descname"><span class="pre">applyDefault</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.applyDefault" title="Link to this definition"></a></dt>
+<dd><p>Apply current settings with the current default values loaded in self.defaultData.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.applySettings">
+<span class="sig-name descname"><span class="pre">applySettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepscales</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baudrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communication</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.applySettings" title="Link to this definition"></a></dt>
+<dd><p>Apply concrete settings from parameters to model properties</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<em>str</em>) – <em>(Optional)</em> computer port to communicate with the controller. <em>ex: `’COM3’`</em></p></li>
+<li><p><strong>stepscales</strong> (<em>dict</em><em>[</em><em>str:int</em><em>]</em>) – <em>(Optional)</em> stepscale of platines in <cite>step/mm</cite> unit by axis as key used to convert input to command. <em>ex: `{ ‘x’:500 }`</em></p></li>
+<li><p><strong>speed_limits</strong> (<em>dict</em><em>[</em><em>str:int</em><em>]</em>) – <em>(Optional)</em> speed limits in <cite>mm/s</cite> unit by axis as key used to secure speed in commands. <em>ex: `{ ‘x’:50 }`</em></p></li>
+<li><p><strong>baudrate</strong> (<em>int</em>) – <em>(Optional)</em> baudrate in <cite>baud/s</cite> unit to communicate with the controller.</p></li>
+<li><p><strong>communication</strong> (<em>str</em>) – <em>(Optional)</em> language of commands to communicate with the controller.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.applySettingsFromData">
+<span class="sig-name descname"><span class="pre">applySettingsFromData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.applySettingsFromData" title="Link to this definition"></a></dt>
+<dd><p>Apply concrete settings from values in self.settingsData dictionary;</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.axisParameters">
+<span class="sig-name descname"><span class="pre">axisParameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['platine']</span></em><a class="headerlink" href="#python_files.models.ModelSettings.axisParameters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.getAvailablePorts">
+<span class="sig-name descname"><span class="pre">getAvailablePorts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.getAvailablePorts" title="Link to this definition"></a></dt>
+<dd><p>Read available ports from pyserial.Serial.
+Returns format is like : { “COM3”: { “name”: “COM3”, “value”: “COM3” } }</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary of available ports</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.getSettingsDict">
+<span class="sig-name descname"><span class="pre">getSettingsDict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_files.models.ModelSettings.getSettingsDict" title="Link to this definition"></a></dt>
+<dd><p>Returns a python dictionary with current settings.</p>
+<p>The dictionary is organized like :</p>
+<p><a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">`</span></a>python
+{</p>
+<blockquote>
+<div><dl>
+<dt>“parameters”: {</dt><dd><dl>
+<dt>“platineX”: {</dt><dd><p>“name”: “Platine X”,
+“unit”: “step/mm”,
+“default”: “Platine 1”,
+“options”: {</p>
+<blockquote>
+<div><p>#*other linear turntables/platines in self.platinesData*</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>},
+“port”: {</p>
+<blockquote>
+<div><p>“name”: “Port”,
+“default”: “COM3”,
+“options”: {</p>
+<blockquote>
+<div><p>#*other ports in self.portsData*</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“controller”: {</p>
+<blockquote>
+<div><p>“name”: “Controller”,
+“unit”: “baud/s”,
+“default”: “Controller 1”,
+“options”: {</p>
+<blockquote>
+<div><p>#*other controllers in self.controllersData*</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>},
+“configs”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“Config 1”: {</dt><dd><p>“platineX”: “Platine 1”,
+“port”: “COM3”,
+“controller”: “Controller 1”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<section id="id6">
+<h3>}<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.isAxisRelated">
+<span class="sig-name descname"><span class="pre">isAxisRelated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_files.models.ModelSettings.isAxisRelated" title="Link to this definition"></a></dt>
+<dd><p>Check if an axis name is at the end of a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – data that will be look at</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns firstly a boolean value if end of data string is in self.axis. Second return value is the axis name if found, empty string otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[bool,str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.loadSettings">
+<span class="sig-name descname"><span class="pre">loadSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.loadSettings" title="Link to this definition"></a></dt>
+<dd><p>Load settings from a json file into self.saveData, self.defaultData, self.platinesData, self.controllersData and self.configsData properties.
+Will load settings_filessave.json file and then controller, platines and config files specified in the save.json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – current path of the app files, will try to load the settings file at <strong>pathsettings_filessave.json</strong></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ModelSettings.saveSettings">
+<span class="sig-name descname"><span class="pre">saveSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ModelSettings.saveSettings" title="Link to this definition"></a></dt>
+<dd><p>Save and apply settings in parameters and current into json files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – absolute path of the current app files, will be used to look at <cite>$settings_filessave.json</cite></p></li>
+<li><p><strong>port</strong> (<em>str</em>) – <em>(Optional)</em> computer port to communicate with the controller. <em>ex: `’COM3’`</em></p></li>
+<li><p><strong>platines</strong> (<em>dict</em><em>[</em><em>str:str</em><em>]</em>) – <em>(Optional)</em> platines settings as a dict with key as axis. <em>ex: `{ ‘x’:”Platine Name” }`</em></p></li>
+<li><p><strong>controller</strong> (<em>str</em>) – <em>(Optional)</em> controller name to communicate with.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.models.</span></span><span class="sig-name descname"><span class="pre">ThreadExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code></p>
+<p>Thread waiting list.</p>
+<p>wait_list_size is a static parameter.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – ThreadExecutor name shown in logger messages</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.addTask">
+<span class="sig-name descname"><span class="pre">addTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newtask</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">taskargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.addTask" title="Link to this definition"></a></dt>
+<dd><p>Create thread for the new task and add it to the waiting list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Added thread if everything went well, 1 if waiting list was full and task not took into account.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Thread | int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.addThreadedTask">
+<span class="sig-name descname"><span class="pre">addThreadedTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newthread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Thread</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.addThreadedTask" title="Link to this definition"></a></dt>
+<dd><p>Add task in a thread to the waiting list if not full.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if everything went well, 1 if waiting list was full and task not took into account.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.getState">
+<span class="sig-name descname"><span class="pre">getState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.getState" title="Link to this definition"></a></dt>
+<dd><p>Return value possibilities:
+- 0 : nothing is running.
+- 1 : one task is running, waiting list is empty.
+- 2 : one task is running, waiting list is full.
+- 3 : one task is running, waiting list has some tasks.
+- 4 : no task is running but waiting list has some tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>state of the ThreadExecutor</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.isRunning">
+<span class="sig-name descname"><span class="pre">isRunning</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.isRunning" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If running or not.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.kill">
+<span class="sig-name descname"><span class="pre">kill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.kill" title="Link to this definition"></a></dt>
+<dd><p>End the infinite loop of waiting and execute next action.
+Does not interrupt an action.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.ThreadExecutor.run" title="Link to this definition"></a></dt>
+<dd><p>Run until killed. Run tasks from it’s waiting list.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_files.models.ThreadExecutor.wait_list_size">
+<span class="sig-name descname"><span class="pre">wait_list_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#python_files.models.ThreadExecutor.wait_list_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.models.functionPackage">
+<span class="sig-prename descclassname"><span class="pre">python_files.models.</span></span><span class="sig-name descname"><span class="pre">functionPackage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miss_val_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finally_cbs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.functionPackage" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callbacks</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – list of functions to be executed in a try statement</p></li>
+<li><p><strong>miss_val_cbs</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – list of functions to be executed in a except python_files.connection.MissingValue statement.</p></li>
+<li><p><strong>finally_cbs</strong> (<em>list</em><em>[</em><em>function</em><em>]</em>) – list of functions to be executed in a finally statement.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.models.inWithStartKeys">
+<span class="sig-prename descclassname"><span class="pre">python_files.models.</span></span><span class="sig-name descname"><span class="pre">inWithStartKeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startkeys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.inWithStartKeys" title="Link to this definition"></a></dt>
+<dd><p>Returns if a start key has been found at the beginning of the value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>str</em>) – value to be check if a start key is in</p></li>
+<li><p><strong>startkeys</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – start keys to check inside value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a start key has been found in value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.models.removeWithStartKey">
+<span class="sig-prename descclassname"><span class="pre">python_files.models.</span></span><span class="sig-name descname"><span class="pre">removeWithStartKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dico</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startkey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.models.removeWithStartKey" title="Link to this definition"></a></dt>
+<dd><p>Remove the beginning of dico keys if startkey has been found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dico</strong> (<em>dict</em><em>[</em><em>str:</em><em>]</em>) – dictionary without startkey in it’s keys</p></li>
+<li><p><strong>startkey</strong> (<em>str</em>) – start key to remove in the dico</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dico without startkey in it’s keys</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str:]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="python-files-communications">
+<span id="id7"></span><h2>python_files.communications<a class="headerlink" href="#python-files-communications" title="Link to this heading"></a></h2>
+<dl class="py class" id="module-python_files.communications">
+<dt class="sig sig-object py" id="python_files.communications.CSeries">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.communications.</span></span><span class="sig-name descname"><span class="pre">CSeries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.communications.CSeries" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_files.communications.Commands" title="python_files.communications.Commands"><code class="xref py py-class docutils literal notranslate"><span class="pre">Commands</span></code></a></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Commands language C-series extended from Commands abstract class.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.communications.CSeries.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.axisDefinition">
+<span class="sig-name descname"><span class="pre">axisDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.axisDefinition" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.axisDefinitionCmd">
+<span class="sig-name descname"><span class="pre">axisDefinitionCmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.axisDefinitionCmd" title="Link to this definition"></a></dt>
+<dd><p>Parameters:
+- nbAxis : number of axis meant to move.
+Returns:
+- command to define axis meant to move.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.commandsToString">
+<span class="sig-name descname"><span class="pre">commandsToString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.commandsToString" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands in string type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.goHome">
+<span class="sig-name descname"><span class="pre">goHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.goHome" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to go home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.moveCmd">
+<span class="sig-name descname"><span class="pre">moveCmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.moveCmd" title="Link to this definition"></a></dt>
+<dd><p>Parameters:
+- axis_values : dictionary of positions by axis to move to. Move to the specified position from it’s current position. Unit is in steps.
+- axis_speeds : dictionary of speed values by axis. Speed set for each axis for the move to come. Unit is in step/s.
+Returns a list of two commands:
+- first one is to define axis that are concerned by the move.
+- second one is the movement command to specified position from current position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.setHome">
+<span class="sig-name descname"><span class="pre">setHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.setHome" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to set current position as home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.CSeries.stopCmd">
+<span class="sig-name descname"><span class="pre">stopCmd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_files.communications.CSeries.stopCmd" title="Link to this definition"></a></dt>
+<dd><p>Returns one command to make the controller stop it’s current action.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.communications.Commands">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.communications.</span></span><span class="sig-name descname"><span class="pre">Commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.communications.Commands" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Abstract class definining mandatory methods each command language need to have implemented.
+Currently stopCmd and moveCmd are the mandatory methods.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Commands.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.communications.Commands.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Commands.commandsToString">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">commandsToString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_files.communications.Commands.commandsToString" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands in string type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Commands.goHome">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">goHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Commands.goHome" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to go home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Commands.moveCmd">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">moveCmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Commands.moveCmd" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to make a move.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Commands.setHome">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Commands.setHome" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to set current position as home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Commands.stopCmd">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stopCmd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Commands.stopCmd" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to make a stop.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.communications.Test">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.communications.</span></span><span class="sig-name descname"><span class="pre">Test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.communications.Test" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_files.communications.Commands" title="python_files.communications.Commands"><code class="xref py py-class docutils literal notranslate"><span class="pre">Commands</span></code></a></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Test commands that return “bonjour” commands.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Test.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.communications.Test.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Test.commandsToString">
+<span class="sig-name descname"><span class="pre">commandsToString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_files.communications.Test.commandsToString" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands in string type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Test.goHome">
+<span class="sig-name descname"><span class="pre">goHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Test.goHome" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to go home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Test.moveCmd">
+<span class="sig-name descname"><span class="pre">moveCmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Test.moveCmd" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to make a move.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Test.setHome">
+<span class="sig-name descname"><span class="pre">setHome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nbAxis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Test.setHome" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to set current position as home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.communications.Test.stopCmd">
+<span class="sig-name descname"><span class="pre">stopCmd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#python_files.communications.Test.stopCmd" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of commands to make a stop.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.communications.getCommandsClass">
+<span class="sig-prename descclassname"><span class="pre">python_files.communications.</span></span><span class="sig-name descname"><span class="pre">getCommandsClass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">communication</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_files.communications.Commands" title="python_files.communications.Commands"><span class="pre">Commands</span></a></span></span><a class="headerlink" href="#python_files.communications.getCommandsClass" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="python-files-connection">
+<span id="id8"></span><h2>python_files.connection<a class="headerlink" href="#python-files-connection" title="Link to this heading"></a></h2>
+<dl class="py exception" id="module-python_files.connection">
+<dt class="sig sig-object py" id="python_files.connection.MissingValue">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.connection.</span></span><span class="sig-name descname"><span class="pre">MissingValue</span></span><a class="headerlink" href="#python_files.connection.MissingValue" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Meant to be raise when a value like a setting is not set.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.connection.SerialConnection">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.connection.</span></span><span class="sig-name descname"><span class="pre">SerialConnection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bytesize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.connection.SerialConnection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serial</span></code></p>
+<p>Manage a serial connection to send commands.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><ul class="simple">
+<li><p>port: str, port name of the connection.</p></li>
+<li><p>baudrate: int, information signal speed, unit is baud/s.</p></li>
+<li><p>timeout: int, maximum time to send a command without any response, unit is s.</p></li>
+<li><p>bytesize: message length</p></li>
+<li><p>parity</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.connection.SerialConnection.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bytesize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.connection.SerialConnection.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> (<em>float</em><em> | </em><em>int</em>) – max waiting time when reading before aborting</p></li>
+<li><p><strong>bytesize</strong> (<em>int</em>) – bytesize of the serial connection</p></li>
+<li><p><strong>wait_ack</strong> (<em>bool</em>) – <em>(Optional)</em> Wait for an acknowledge message after sending each command.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.connection.SerialConnection.available_serial_ports">
+<span class="sig-name descname"><span class="pre">available_serial_ports</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.connection.SerialConnection.available_serial_ports" title="Link to this definition"></a></dt>
+<dd><p>Read the available serial ports names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>EnvironmentError</strong> – On unsupported or unknown platforms</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the serial ports available on the system</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.connection.SerialConnection.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.connection.SerialConnection.close" title="Link to this definition"></a></dt>
+<dd><p>Close the current serial link if it is open.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.connection.SerialConnection.executeCmd">
+<span class="sig-name descname"><span class="pre">executeCmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.connection.SerialConnection.executeCmd" title="Link to this definition"></a></dt>
+<dd><p>Execute a single command or a list of commands.
+Open a serial link and close it afterwards.</p>
+<p>Return options :
+- 0 if no acknowledge is recieved, all commands might not have been sent.
+- 1 if all commands were sent and all acknowledge revieved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>commands</strong> (<em>str</em><em> | </em><em>byte</em><em> | </em><em>list</em><em>[</em><em>str</em><em>|</em><em>byte</em><em>]</em>) – commands to be executed, byte format should be ascii.</p></li>
+<li><p><strong>port</strong> (<em>str</em>) – <em>(Optional)</em> port to send commands to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>success state of the transmission.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.connection.SerialConnection.executeSelfCmd">
+<span class="sig-name descname"><span class="pre">executeSelfCmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.connection.SerialConnection.executeSelfCmd" title="Link to this definition"></a></dt>
+<dd><p>Execute a single command or a list of commands.
+Open the serial link if necessary but let it open afterwards.</p>
+<p>Return options :
+- 0 if no acknowledge is recieved, all commands might not have been sent.
+- 1 if all commands were sent and all acknowledge revieved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>commands</strong> (<em>str</em><em> | </em><em>byte</em><em> | </em><em>list</em><em>[</em><em>str</em><em>|</em><em>byte</em><em>]</em>) – commands to be executed, byte format should be ascii.</p></li>
+<li><p><strong>port</strong> (<em>str</em>) – <em>(Optional)</em> port to send commands to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>success state of the transmission.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="applications.html" class="btn btn-neutral float-right" title="applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Clément PACAULT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
