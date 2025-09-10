@@ -1,0 +1,959 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>applications &mdash; pyPosControl 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="maintenance" href="maintenance.html" />
+    <link rel="prev" title="pyPosControl" href="pyPosControl.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyPosControl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyPosControl.html">pyPosControl</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_files.app.mainFrame">python_files.app.mainFrame</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.mainFrame.MainApp"><code class="docutils literal notranslate"><span class="pre">MainApp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.__init__"><code class="docutils literal notranslate"><span class="pre">MainApp.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.absMove"><code class="docutils literal notranslate"><span class="pre">MainApp.absMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.afterMove"><code class="docutils literal notranslate"><span class="pre">MainApp.afterMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.applySettings"><code class="docutils literal notranslate"><span class="pre">MainApp.applySettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.apply_layout"><code class="docutils literal notranslate"><span class="pre">MainApp.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.changeStateMovementsButtons"><code class="docutils literal notranslate"><span class="pre">MainApp.changeStateMovementsButtons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.closeSettings"><code class="docutils literal notranslate"><span class="pre">MainApp.closeSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.createAbsoluteFrame"><code class="docutils literal notranslate"><span class="pre">MainApp.createAbsoluteFrame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.createIncrementalFrame"><code class="docutils literal notranslate"><span class="pre">MainApp.createIncrementalFrame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.goZeroAction"><code class="docutils literal notranslate"><span class="pre">MainApp.goZeroAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.incrMove"><code class="docutils literal notranslate"><span class="pre">MainApp.incrMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.openSettings"><code class="docutils literal notranslate"><span class="pre">MainApp.openSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.reset_layout"><code class="docutils literal notranslate"><span class="pre">MainApp.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.setZeroAction"><code class="docutils literal notranslate"><span class="pre">MainApp.setZeroAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.stopAction"><code class="docutils literal notranslate"><span class="pre">MainApp.stopAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.mainFrame.MainApp.updateCurrentPosition"><code class="docutils literal notranslate"><span class="pre">MainApp.updateCurrentPosition()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_files.app.guielements">python_files.app.guielements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.AxisButtons"><code class="docutils literal notranslate"><span class="pre">AxisButtons</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisButtons.__init__"><code class="docutils literal notranslate"><span class="pre">AxisButtons.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisButtons.config_both"><code class="docutils literal notranslate"><span class="pre">AxisButtons.config_both()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.AxisButtonsFrame"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisButtonsFrame.__init__"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisButtonsFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisButtonsFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisButtonsFrame.reverseButtons"><code class="docutils literal notranslate"><span class="pre">AxisButtonsFrame.reverseButtons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.AxisFrame"><code class="docutils literal notranslate"><span class="pre">AxisFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisFrame.__init__"><code class="docutils literal notranslate"><span class="pre">AxisFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">AxisFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">AxisFrame.reset_layout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.AxisLabeledEntry"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisLabeledEntry.__init__"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisLabeledEntry.checkSpeed"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry.checkSpeed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.AxisLabeledEntry.checkValue"><code class="docutils literal notranslate"><span class="pre">AxisLabeledEntry.checkValue()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.ControlFrame"><code class="docutils literal notranslate"><span class="pre">ControlFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlFrame.__init__"><code class="docutils literal notranslate"><span class="pre">ControlFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlFrame.activateContent"><code class="docutils literal notranslate"><span class="pre">ControlFrame.activateContent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">ControlFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">ControlFrame.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlFrame.setContent"><code class="docutils literal notranslate"><span class="pre">ControlFrame.setContent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlFrame.setOptions"><code class="docutils literal notranslate"><span class="pre">ControlFrame.setOptions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.GOZERO"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.GOZERO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.SETZERO"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.SETZERO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.STOP"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.STOP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.__init__"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.addCallback"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.addCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.goZero"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.goZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.reset_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.setZero"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.setZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ControlGeneralFrame.stop"><code class="docutils literal notranslate"><span class="pre">ControlGeneralFrame.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.ScrollableFrame"><code class="docutils literal notranslate"><span class="pre">ScrollableFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.ScrollableFrame.__init__"><code class="docutils literal notranslate"><span class="pre">ScrollableFrame.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.SettingLabeledEntry"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingLabeledEntry.__init__"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingLabeledEntry.applyOption"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry.applyOption()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingLabeledEntry.setVal"><code class="docutils literal notranslate"><span class="pre">SettingLabeledEntry.setVal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame"><code class="docutils literal notranslate"><span class="pre">SettingsFrame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame.__init__"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame.addApplyCallback"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.addApplyCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame.apply"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.apply()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame.apply_config"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.apply_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame.apply_layout"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.apply_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.app.guielements.SettingsFrame.reset_layout"><code class="docutils literal notranslate"><span class="pre">SettingsFrame.reset_layout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.checkNumberInput"><code class="docutils literal notranslate"><span class="pre">checkNumberInput()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.checkPosInput"><code class="docutils literal notranslate"><span class="pre">checkPosInput()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.searchByName"><code class="docutils literal notranslate"><span class="pre">searchByName()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testAxisButtonsFrame"><code class="docutils literal notranslate"><span class="pre">testAxisButtonsFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testAxisConstruct"><code class="docutils literal notranslate"><span class="pre">testAxisConstruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testAxisFrame"><code class="docutils literal notranslate"><span class="pre">testAxisFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testControlFrame"><code class="docutils literal notranslate"><span class="pre">testControlFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testControlGeneralFrame"><code class="docutils literal notranslate"><span class="pre">testControlGeneralFrame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testDict"><code class="docutils literal notranslate"><span class="pre">testDict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testIconButton"><code class="docutils literal notranslate"><span class="pre">testIconButton()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.app.guielements.testSettingsFrame"><code class="docutils literal notranslate"><span class="pre">testSettingsFrame()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_files.otheruses.movemeasure">python_files.otheruses.movemeasure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.otheruses.movemeasure.MoveAndMeasure"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.movemeasure.MoveAndMeasure.__init__"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.movemeasure.MoveAndMeasure.loadMoveSet"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.loadMoveSet()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.movemeasure.MoveAndMeasure.quit"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.quit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.movemeasure.MoveAndMeasure.run"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.movemeasure.MoveAndMeasure.saveSettings"><code class="docutils literal notranslate"><span class="pre">MoveAndMeasure.saveSettings()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_files.otheruses.uiconsole">python_files.otheruses.uiconsole</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole"><code class="docutils literal notranslate"><span class="pre">UiConsole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.__init__"><code class="docutils literal notranslate"><span class="pre">UiConsole.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.absMove"><code class="docutils literal notranslate"><span class="pre">UiConsole.absMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.controllerMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.controllerMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.goHome"><code class="docutils literal notranslate"><span class="pre">UiConsole.goHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.goZero"><code class="docutils literal notranslate"><span class="pre">UiConsole.goZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.incrMove"><code class="docutils literal notranslate"><span class="pre">UiConsole.incrMove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.inputCmd"><code class="docutils literal notranslate"><span class="pre">UiConsole.inputCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.mainMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.mainMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.menu"><code class="docutils literal notranslate"><span class="pre">UiConsole.menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.platinesMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.platinesMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.portMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.portMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.printCurrentPosition"><code class="docutils literal notranslate"><span class="pre">UiConsole.printCurrentPosition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.printCurrentSettings"><code class="docutils literal notranslate"><span class="pre">UiConsole.printCurrentSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.quit"><code class="docutils literal notranslate"><span class="pre">UiConsole.quit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.rawCmd"><code class="docutils literal notranslate"><span class="pre">UiConsole.rawCmd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.saveSettings"><code class="docutils literal notranslate"><span class="pre">UiConsole.saveSettings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.setHome"><code class="docutils literal notranslate"><span class="pre">UiConsole.setHome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.setZero"><code class="docutils literal notranslate"><span class="pre">UiConsole.setZero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.settingsMenu"><code class="docutils literal notranslate"><span class="pre">UiConsole.settingsMenu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python_files.otheruses.uiconsole.UiConsole.stop"><code class="docutils literal notranslate"><span class="pre">UiConsole.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyPosControl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">applications</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/applications.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="applications">
+<h1>applications<a class="headerlink" href="#applications" title="Link to this heading"></a></h1>
+<section id="module-python_files.app.mainFrame">
+<span id="python-files-app-mainframe"></span><span id="id1"></span><h2>python_files.app.mainFrame<a class="headerlink" href="#module-python_files.app.mainFrame" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.mainFrame.</span></span><span class="sig-name descname"><span class="pre">MainApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Tk</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.__init__" title="Link to this definition"></a></dt>
+<dd><p>Return a new top level widget on screen SCREENNAME. A new Tcl interpreter will
+be created. BASENAME will be used for the identification of the profile file (see
+readprofile).
+It is constructed from sys.argv[0] without extensions if None is given. CLASSNAME
+is the name of the widget class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.absMove">
+<span class="sig-name descname"><span class="pre">absMove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.absMove" title="Link to this definition"></a></dt>
+<dd><p>Disable movement buttons, then execute the absolute movement on model control for all axis.
+Add callbacks to enable back and update position after the move, and show error window if MissingValue is raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.afterMove">
+<span class="sig-name descname"><span class="pre">afterMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.afterMove" title="Link to this definition"></a></dt>
+<dd><p>Enable movement buttons and update current position labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.applySettings">
+<span class="sig-name descname"><span class="pre">applySettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.applySettings" title="Link to this definition"></a></dt>
+<dd><p>Save and apply current settings selected in setting window to the model setting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.apply_layout">
+<span class="sig-name descname"><span class="pre">apply_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.apply_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.changeStateMovementsButtons">
+<span class="sig-name descname"><span class="pre">changeStateMovementsButtons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.changeStateMovementsButtons" title="Link to this definition"></a></dt>
+<dd><p>Change the state of movement buttons, state can be set as “normal”, “disabled” or “active”.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.closeSettings">
+<span class="sig-name descname"><span class="pre">closeSettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.closeSettings" title="Link to this definition"></a></dt>
+<dd><p>Close setting window and enable back to button to open it again.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.createAbsoluteFrame">
+<span class="sig-name descname"><span class="pre">createAbsoluteFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Frame</span></span></span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.createAbsoluteFrame" title="Link to this definition"></a></dt>
+<dd><p>Create the absolute control frame with axis position and speed values inputs and the button to execute the movement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.createIncrementalFrame">
+<span class="sig-name descname"><span class="pre">createIncrementalFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Frame</span></span></span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.createIncrementalFrame" title="Link to this definition"></a></dt>
+<dd><p>Create the incremental control frame with axis position and speed values inputs and the buttons frame to execute the movements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.goZeroAction">
+<span class="sig-name descname"><span class="pre">goZeroAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.goZeroAction" title="Link to this definition"></a></dt>
+<dd><p>Disable movement buttons, then execute the go to zero movement on model control for all axis.
+Add callbacks to enable back and update position after the move, and show error window if MissingValue is raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.incrMove">
+<span class="sig-name descname"><span class="pre">incrMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.incrMove" title="Link to this definition"></a></dt>
+<dd><p>Disable movement buttons, then execute the incremental movement on model control for a single axis.
+Add callbacks to enable back and update position after the move, and show error window if MissingValue is raised. 
+Parameters:
+- sign : “+” or “-”, direction of the movement,
+- axis : axis on which the move need to be done.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.openSettings">
+<span class="sig-name descname"><span class="pre">openSettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.openSettings" title="Link to this definition"></a></dt>
+<dd><p>Create a setting window with the initial data from model setting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.reset_layout">
+<span class="sig-name descname"><span class="pre">reset_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.reset_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.setZeroAction">
+<span class="sig-name descname"><span class="pre">setZeroAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.setZeroAction" title="Link to this definition"></a></dt>
+<dd><p>Set current position as zero in model control data and update current position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.stopAction">
+<span class="sig-name descname"><span class="pre">stopAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.stopAction" title="Link to this definition"></a></dt>
+<dd><p>Execute stop from model control. Show an error window if MissingValue is raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.mainFrame.MainApp.updateCurrentPosition">
+<span class="sig-name descname"><span class="pre">updateCurrentPosition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.mainFrame.MainApp.updateCurrentPosition" title="Link to this definition"></a></dt>
+<dd><p>Update current position labels from model control data.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-python_files.app.guielements">
+<span id="python-files-app-guielements"></span><h2>python_files.app.guielements<a class="headerlink" href="#module-python_files.app.guielements" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtons">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">AxisButtons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtons" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Class containing two buttons. One with positive sign as a text, an another with minus.</p>
+</dd>
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>name : name of the axis those buttons should control</p></li>
+<li><p>btnPlus : button for positive direction</p></li>
+<li><p>btnMinus : button for negative direction</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtons.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtons.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtons.config_both">
+<span class="sig-name descname"><span class="pre">config_both</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtons.config_both" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtonsFrame">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">AxisButtonsFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtonsFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Frame containing buttons from 1 axis up to 3. Create and position them.</p>
+</dd>
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>btnAxis : list, instances of AxisButton for each axis specified.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtonsFrame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtonsFrame.__init__" title="Link to this definition"></a></dt>
+<dd><p>Construct a frame widget with the parent MASTER.</p>
+<p>Valid resource names: background, bd, bg, borderwidth, class,
+colormap, container, cursor, height, highlightbackground,
+highlightcolor, highlightthickness, relief, takefocus, visual, width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtonsFrame.apply_layout">
+<span class="sig-name descname"><span class="pre">apply_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtonsFrame.apply_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtonsFrame.reset_layout">
+<span class="sig-name descname"><span class="pre">reset_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtonsFrame.reset_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisButtonsFrame.reverseButtons">
+<span class="sig-name descname"><span class="pre">reverseButtons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisButtonsFrame.reverseButtons" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisFrame">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">AxisFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Tkinter frame with axis value inputs.
+Create necessary widgets and apply them a layout for their positions.
+Additional button to reset inputs.</p>
+</dd>
+<dt>Attributes:</dt><dd><ul class="simple">
+<li><p>axis: list, list of AxisLabeledEntry to have an input for each axis (label,input,unit).</p></li>
+<li><p>btnReset: button, reset all axis inputs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisFrame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisFrame.__init__" title="Link to this definition"></a></dt>
+<dd><p>Construct a frame widget with the parent MASTER.</p>
+<p>Valid resource names: background, bd, bg, borderwidth, class,
+colormap, container, cursor, height, highlightbackground,
+highlightcolor, highlightthickness, relief, takefocus, visual, width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisFrame.apply_layout">
+<span class="sig-name descname"><span class="pre">apply_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisFrame.apply_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisFrame.reset_layout">
+<span class="sig-name descname"><span class="pre">reset_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisFrame.reset_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisLabeledEntry">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">AxisLabeledEntry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisLabeledEntry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Bunch of tkinter widgets for axis.
+Used in AxisFrame class.</p>
+</dd>
+<dt>Attributes:</dt><dd><ul class="simple">
+<li><p>name: axis name</p></li>
+<li><p>lblAxis: label, title of the axis.</p></li>
+<li><p>spbAxis: spinbox, input of the axis value.</p></li>
+<li><p>inpAxis: doublevar, value from the input spbAxis.</p></li>
+<li><p>lblUnit (optional): label, additional info like unit of the axis value.</p></li>
+<li><p>spbSpeedAxis: spinbox, input of the axis speed value.</p></li>
+<li><p>inpSpeedAxis: doublevar, value from the input spbSpeedAxis.</p></li>
+<li><p>lblSpeedUnit (optional): label, additional info like unit of the axis speed value.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisLabeledEntry.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisLabeledEntry.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisLabeledEntry.checkSpeed">
+<span class="sig-name descname"><span class="pre">checkSpeed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisLabeledEntry.checkSpeed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.AxisLabeledEntry.checkValue">
+<span class="sig-name descname"><span class="pre">checkValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.AxisLabeledEntry.checkValue" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">ControlFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Frame with navbar buttons to display frames/functionalities.
+For example to swap from absolute movement to absolute movement.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame.__init__" title="Link to this definition"></a></dt>
+<dd><p>Construct a frame widget with the parent MASTER.</p>
+<p>Valid resource names: background, bd, bg, borderwidth, class,
+colormap, container, cursor, height, highlightbackground,
+highlightcolor, highlightthickness, relief, takefocus, visual, width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame.activateContent">
+<span class="sig-name descname"><span class="pre">activateContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame.activateContent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame.apply_layout">
+<span class="sig-name descname"><span class="pre">apply_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame.apply_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame.reset_layout">
+<span class="sig-name descname"><span class="pre">reset_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame.reset_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame.setContent">
+<span class="sig-name descname"><span class="pre">setContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame.setContent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlFrame.setOptions">
+<span class="sig-name descname"><span class="pre">setOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlFrame.setOptions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">ControlGeneralFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Frame that display axis values, with 3 buttons to do main actions quickly.
+Contain a button Stop, Set to zero and Go to zero plus labels for axis current values.</p>
+</dd>
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>btnStop : button, labeled “Stop movements”, meant to send a stop signal.</p></li>
+<li><p>btnSetZero : button, labeled “Set as zero”, meant to set current axis values to zero.</p></li>
+<li><p>btnGoZero : button, labeled “Go to zero”, meant send signals to get the current axis values to zero.</p></li>
+<li><p>lblNames : list of Label, axis names in front of their current values.</p></li>
+<li><p>inpAxisValues : dict of axis_names:DoubleVar, inputs containing current axis values.</p></li>
+<li><p>lblAxisValues : list of Label, labels displaying inpAxisValues values.</p></li>
+<li><p>callbacks : dict of btnName:list of functions, attribute callbacks to buttons of the frame.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.GOZERO">
+<span class="sig-name descname"><span class="pre">GOZERO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gozero'</span></em><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.GOZERO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.SETZERO">
+<span class="sig-name descname"><span class="pre">SETZERO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'setzero'</span></em><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.SETZERO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.STOP">
+<span class="sig-name descname"><span class="pre">STOP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stop'</span></em><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.STOP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.__init__" title="Link to this definition"></a></dt>
+<dd><p>Construct a frame widget with the parent MASTER.</p>
+<p>Valid resource names: background, bd, bg, borderwidth, class,
+colormap, container, cursor, height, highlightbackground,
+highlightcolor, highlightthickness, relief, takefocus, visual, width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.addCallback">
+<span class="sig-name descname"><span class="pre">addCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.addCallback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.apply_layout">
+<span class="sig-name descname"><span class="pre">apply_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.apply_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.goZero">
+<span class="sig-name descname"><span class="pre">goZero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.goZero" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.reset_layout">
+<span class="sig-name descname"><span class="pre">reset_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.reset_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.setZero">
+<span class="sig-name descname"><span class="pre">setZero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.setZero" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ControlGeneralFrame.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ControlGeneralFrame.stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.ScrollableFrame">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">ScrollableFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ScrollableFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.ScrollableFrame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.ScrollableFrame.__init__" title="Link to this definition"></a></dt>
+<dd><p>Construct a Ttk Frame with parent master.</p>
+<p>STANDARD OPTIONS</p>
+<blockquote>
+<div><p>class, cursor, style, takefocus</p>
+</div></blockquote>
+<p>WIDGET-SPECIFIC OPTIONS</p>
+<blockquote>
+<div><p>borderwidth, relief, padding, width, height</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingLabeledEntry">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">SettingLabeledEntry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingLabeledEntry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Bunch of tkinter widgets with their operations between them.
+Used in SettingsFrame class.</p>
+</dd>
+<dt>Attributes:</dt><dd><ul class="simple">
+<li><p>options (optional): dict, different preset values displayed by names in a combobox.</p></li>
+<li><p>lblSetting: label, title of the setting.</p></li>
+<li><p>entValue: entry, input/display of the setting value. Disabeled if there is a cmbSetting.</p></li>
+<li><p>inpValue: stringvar, value of the input/display entValue.</p></li>
+<li><dl class="simple">
+<dt>cmbSetting (optional): combobox, input of preset setting values by names from options.</dt><dd><p>When option selected, set it’s value in inpValue to be displayed in entValue.</p>
+</dd>
+</dl>
+</li>
+<li><p>lblUnit (optional): label, unit of the setting value.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingLabeledEntry.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingLabeledEntry.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingLabeledEntry.applyOption">
+<span class="sig-name descname"><span class="pre">applyOption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingLabeledEntry.applyOption" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingLabeledEntry.setVal">
+<span class="sig-name descname"><span class="pre">setVal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingLabeledEntry.setVal" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">SettingsFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="simple">
+<dt>Summary:</dt><dd><p>Tkinter frame of settings options.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame.__init__" title="Link to this definition"></a></dt>
+<dd><p>Construct a frame widget with the parent MASTER.</p>
+<p>Valid resource names: background, bd, bg, borderwidth, class,
+colormap, container, cursor, height, highlightbackground,
+highlightcolor, highlightthickness, relief, takefocus, visual, width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame.addApplyCallback">
+<span class="sig-name descname"><span class="pre">addApplyCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame.addApplyCallback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame.apply" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame.apply_config">
+<span class="sig-name descname"><span class="pre">apply_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame.apply_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame.apply_layout">
+<span class="sig-name descname"><span class="pre">apply_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame.apply_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.app.guielements.SettingsFrame.reset_layout">
+<span class="sig-name descname"><span class="pre">reset_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.SettingsFrame.reset_layout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.checkNumberInput">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">checkNumberInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DoubleVar</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.checkNumberInput" title="Link to this definition"></a></dt>
+<dd><p>Check if an input number like DoubleVar is really a number, and set is as 0 if not recognized.
+Also return -1 if the input value is not a number.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.checkPosInput">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">checkPosInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DoubleVar</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.checkPosInput" title="Link to this definition"></a></dt>
+<dd><p>Check if an input number like DoubleVar is negative, and remove it’s sign if so.
+Also return -1 if the input value is a wrong type.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.searchByName">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">searchByName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_files.app.guielements.searchByName" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testAxisButtonsFrame">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testAxisButtonsFrame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testAxisButtonsFrame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testAxisConstruct">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testAxisConstruct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testAxisConstruct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testAxisFrame">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testAxisFrame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testAxisFrame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testControlFrame">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testControlFrame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testControlFrame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testControlGeneralFrame">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testControlGeneralFrame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testControlGeneralFrame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testDict">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testDict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testDict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testIconButton">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testIconButton</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testIconButton" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_files.app.guielements.testSettingsFrame">
+<span class="sig-prename descclassname"><span class="pre">python_files.app.guielements.</span></span><span class="sig-name descname"><span class="pre">testSettingsFrame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.app.guielements.testSettingsFrame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-python_files.otheruses.movemeasure">
+<span id="python-files-otheruses-movemeasure"></span><h2>python_files.otheruses.movemeasure<a class="headerlink" href="#module-python_files.otheruses.movemeasure" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.otheruses.movemeasure.MoveAndMeasure">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.otheruses.movemeasure.</span></span><span class="sig-name descname"><span class="pre">MoveAndMeasure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.movemeasure.MoveAndMeasure" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Attributes :
+- axis (tuple) : names of axis ex (‘x’,’y’,’z’). Up to 3 axis supported.
+- roadmap (list[list[str]]) : 2d list of positions loaded.
+- move_finished_event (threading.Event) : event when running, wait until set before doing a measurement.
+- settingsData (dict) : loaded and effective settings.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.movemeasure.MoveAndMeasure.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.movemeasure.MoveAndMeasure.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wait_ack</strong> (<em>bool</em>) – <em>(Optional)</em> Wait for an acknowledge message after sending each command.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.movemeasure.MoveAndMeasure.loadMoveSet">
+<span class="sig-name descname"><span class="pre">loadMoveSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.movemeasure.MoveAndMeasure.loadMoveSet" title="Link to this definition"></a></dt>
+<dd><p>Load a list of positions from a csv or xlsx file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – absolute path to the csv or xlsx file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.movemeasure.MoveAndMeasure.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.movemeasure.MoveAndMeasure.quit" title="Link to this definition"></a></dt>
+<dd><p>Close and quit the ModelControl</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.movemeasure.MoveAndMeasure.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurementFunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.movemeasure.MoveAndMeasure.run" title="Link to this definition"></a></dt>
+<dd><p>Run a measure after every move. measurementFunc will be called as measurementFunc(position,*args,**kwargs)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurementFunc</strong> (<em>function</em>) – a callable function without it’s parameters. Meant to be called on each position.</p></li>
+<li><p><strong>speeds</strong> (<em>list</em><em>[</em><em>str:int</em><em>]</em>) – list of speeds for each axis.</p></li>
+<li><p><strong>*args</strong> – <p>as many parameters without name for the measurementFunc.</p>
+</p></li>
+<li><p><strong>**kwargs</strong> – <p>as many parameters with a name for the the measurementFunc.</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.movemeasure.MoveAndMeasure.saveSettings">
+<span class="sig-name descname"><span class="pre">saveSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.movemeasure.MoveAndMeasure.saveSettings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-python_files.otheruses.uiconsole">
+<span id="python-files-otheruses-uiconsole"></span><h2>python_files.otheruses.uiconsole<a class="headerlink" href="#module-python_files.otheruses.uiconsole" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_files.otheruses.uiconsole.</span></span><span class="sig-name descname"><span class="pre">UiConsole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_ack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.absMove">
+<span class="sig-name descname"><span class="pre">absMove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.absMove" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.controllerMenu">
+<span class="sig-name descname"><span class="pre">controllerMenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.controllerMenu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.goHome">
+<span class="sig-name descname"><span class="pre">goHome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.goHome" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.goZero">
+<span class="sig-name descname"><span class="pre">goZero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.goZero" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.incrMove">
+<span class="sig-name descname"><span class="pre">incrMove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.incrMove" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.inputCmd">
+<span class="sig-name descname"><span class="pre">inputCmd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.inputCmd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.mainMenu">
+<span class="sig-name descname"><span class="pre">mainMenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.mainMenu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.menu">
+<span class="sig-name descname"><span class="pre">menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">menuDict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_inp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.menu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.platinesMenu">
+<span class="sig-name descname"><span class="pre">platinesMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.platinesMenu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.portMenu">
+<span class="sig-name descname"><span class="pre">portMenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.portMenu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.printCurrentPosition">
+<span class="sig-name descname"><span class="pre">printCurrentPosition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.printCurrentPosition" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.printCurrentSettings">
+<span class="sig-name descname"><span class="pre">printCurrentSettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.printCurrentSettings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.quit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.rawCmd">
+<span class="sig-name descname"><span class="pre">rawCmd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.rawCmd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.saveSettings">
+<span class="sig-name descname"><span class="pre">saveSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.saveSettings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.setHome">
+<span class="sig-name descname"><span class="pre">setHome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.setHome" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.setZero">
+<span class="sig-name descname"><span class="pre">setZero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.setZero" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.settingsMenu">
+<span class="sig-name descname"><span class="pre">settingsMenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.settingsMenu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_files.otheruses.uiconsole.UiConsole.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_files.otheruses.uiconsole.UiConsole.stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyPosControl.html" class="btn btn-neutral float-left" title="pyPosControl" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="maintenance.html" class="btn btn-neutral float-right" title="maintenance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Clément PACAULT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

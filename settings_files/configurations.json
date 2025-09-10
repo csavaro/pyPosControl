@@ -1,16 +1,12 @@
 {
     "Config charly initale": {
         "name": "Config charly initale",
-        "speedX": 5,
-        "speedY": 5,
         "platineX": "Platine initiale",
         "platineY": "Platine initiale",
         "controller": "Controleur initial"
     },
     "Config equipax": {
         "name": "Config equipax",
-        "speedX": 10,
-        "speedY": 5,
         "platineX": "Platine Equipax 1",
         "platineY": "Platine Equipax 2",
         "controller": "Controleur initial"
@@ -18,26 +14,20 @@
 
     "test cnfg1": {
         "name": "Config 1",
-        "speedX": 60,
-        "speedY": 30,
         "platineX": "Platine 2",
         "platineY": "Platine 3",
         "platineZ": "Platine 2",
-        "controller": "Controller 2"
+        "controller": "Controller 2",
+        "port": "COM2"
     },
     "test cnfg2": {
         "name": "Config 2",
-        "speedX": 60,
-        "speedY": 30,
-        "speedZ": 50,
         "platineX": "Platine 2",
         "platineY": "Platine 3",
         "platineZ": "Platine 1"
     },
     "test cnfg3": {
         "name": "Config 3",
-        "speedX": 60,
-        "speedY": 30,
         "platineX": "Platine 2",
         "platineY": "Platine 3"
     }

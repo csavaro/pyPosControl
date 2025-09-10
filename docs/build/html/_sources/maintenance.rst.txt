@@ -11,10 +11,7 @@ You can add, remove or update a controller by only writting in the JSON settings
 In the JSON file for controllers *(if you don't know, you can find the path in the* ``settings_files/save.json`` *file)* controllers are specified like :
 
 .. code-block::
-<<<<<<< HEAD
-=======
 
->>>>>>> a5c71fda5a82dd1f9d34181e1f393456c8b10065
     {
         "Controller name": {
             "baudrate": 9600,
@@ -23,26 +20,16 @@ In the JSON file for controllers *(if you don't know, you can find the path in t
         ...
     }
 
-<<<<<<< HEAD
-- You need to specify the **baudrate** parameter which is for reading messages at the right frequency. Unit is in **baud / second**.
-
-- There is also the **communication** parameter to select the language in which the commands will be sent. 
-You can see the available ones in ``python_files/communications.py`` file at the ``getCommandsClass`` function.
-Currently there are two languages implemented :
-=======
 1. You need to specify the **baudrate** parameter which is for reading messages at the right frequency. Unit is **baud / second**.
 
 2. There is also the **communication** parameter to select the language in which the commands will be sent. 
 You can see the available ones in ``python_files/communications.py`` file at the ``getCommandsClass`` function.
 Currently there are two languages implemented :
 
->>>>>>> a5c71fda5a82dd1f9d34181e1f393456c8b10065
     - ``cseries`` : The CSeries commands used by charlyRobots for example.
     - ``test`` : A test language that is only meant for debugging.
 
 
-<<<<<<< HEAD
-=======
 .. _platine:
 
 Manage available platines
@@ -99,7 +86,6 @@ All of the following parameters are optional, you don't need to set all of them 
 - You can specify the **controller** parameter. It should be the name written in the controller JSON file.
 - You can specify the **port** parameter. It can be a string like ``"COM2"`` for windows OS for example.
 
->>>>>>> a5c71fda5a82dd1f9d34181e1f393456c8b10065
 .. _language:
 
 Manage commands languages
@@ -107,9 +93,6 @@ Manage commands languages
 
 You can intergrate a commands language using Python.
 For that you need to update the ``python_files/communications.py`` file.
-<<<<<<< HEAD
-Once there, you need to create 
-=======
 1. Once you're there, you need to create a new class extending the abstract class ``Commands``.
 Your class can look like this for example :
 
@@ -179,4 +162,3 @@ Use the command :
     sphinx-build.exe -M html ./source ./build
 
 Then you can take the web files and host them on your server.
->>>>>>> a5c71fda5a82dd1f9d34181e1f393456c8b10065
