@@ -17,7 +17,7 @@ Linear turntables are interpreted as stepper motors in the settings.
    Check out the :doc:`usage` section for further information.
 
 .. note::
-   This project is still under development.
+   This project was part of an intership at LMI ENSTA.
 
 .. autofunction::  ModelControl
 
@@ -26,6 +26,7 @@ Linear turntables are interpreted as stepper motors in the settings.
    usage
    pyPosControl
    applications
+   maintenance
 
 ..   :maxdepth: 2
 ..   :caption: Contents:

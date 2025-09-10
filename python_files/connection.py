@@ -129,17 +129,31 @@ class SerialConnection(Serial):
                 logger.debug(f"launch cmd: {cmd}")
                 self.write(cmd)
                 if self.wait_ack:
+                    ackrec = False
                     # ack = self.readline()
-                    ack = self.read()
+                    ack = b""
+                    Nb = 0
+                    while(Nbytes:=self.in_waiting)>0:
+                        ack += self.read(Nbytes)
+                        Nb+=Nbytes
+                        time.sleep(1)
+                        ackrec = True
                     try:
                         # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
-                        logger.debug(f"raw recieved ({len(ack)}): {ack}")
-                        logger.debug(f"recieved ({len(ack)}): {ack.decode('utf-16')}")
+                        # logger.debug(f"raw recieved ({Nb}): {ack}")
+                        logger.debug(f"recieved ({Nb}): {ack.decode('utf-8')} (utf8)")
                     except UnicodeDecodeError as e:
+                        logger.debug(f"WARNING : Could'nt decode data recieved after sending a command with utf8 \n{e}")
+                        try:
+                            # print(f"recieved ({len(ack)}): {str(ack,'UTF-8')}")
+                            # logger.debug(f"raw recieved ({Nb}): {ack}")
+                            logger.debug(f"recieved ({Nb}): {ack.decode('utf-16')} (utf16)")
+                        except UnicodeDecodeError as e:
                         # print(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
-                        logger.warning(f"WARNING : Could'nt decode a byte recieved after sending a command\n{e}")
+                            logger.warning(f"WARNING : Could'nt decode data recieved after sending a command\n{e}")
+
                     # check if an acknowledge is recieved
-                    if len(ack) == 0:
+                    if not ackrec:
                         # print("no acknowledge recieved")
                         logger.debug("no acknowledge recieved")
                         # return 0
@@ -237,6 +251,8 @@ class SerialConnection(Serial):
         if self.is_open:
             # print("Closing the serial")
             logger.debug("Closing the serial")
+            self.reset_input_buffer()
+            self.reset_output_buffer()
             super().close()
         else:
             # print("serial is not open, already closed")
